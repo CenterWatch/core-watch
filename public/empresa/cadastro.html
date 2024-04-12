@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div>
+        <label for="">Nome fantasia:</label>
+        <input type="text" id="input_nomeFantasia">
+    </div>
+    <div>
+        <label for="">RazaoSocial</label>
+        <input type="text" id="input_razaoSocial">
+    </div>
+    <div>
+        <label for="">CNPJ</label>
+        <input type="text" id="input_cnpj">
+    </div>
+    <div>
+        <input type="radio" name="opcao" id="input_filial">
+        <label for="input_filial">É Filial</label>
+        <input type="radio" name="opcao" id="input_nao_filial">
+        <label for="input_nao_filial">Não é Filial</label>
+    </div>
+
+
+    <div>
+        <button onclick="cadastrar()">Cadastrar empresa</button>
+    </div>
+
+    <script>
+
+        function cadastrar(){
+            var nome = input_nomeFantasia.value;
+            var razaoSocial = input_razaoSocial.value;
+            var cnpj = input_cnpj.value;
+            var filial;
+
+            if(document.getElementById('input_filial').checked){
+                filial = true;
+            }else{
+                filial = false;
+            }
+
+            fetch("/empresas/cadastrar", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    nomeServer: nome,
+                    razaoServer: razaoSocial,
+                    cnpjServer: cnpj,
+                    filialServer: filial
+                })
+            })
+            .then(function (resposta) {
+                console.log("resposta:",resposta)
+
+                if (resposta.ok) {
+
+                    console.log("Cadastro realizado com sucesso")
+
+                } else {
+                    console.log("Houve um erro ao tentar realizar o cadastro!");
+                }
+
+            }).catch(function (erro) {
+                console.log(erro);
+            })
+
+            return false;
+        }
+
+    </script>
+</body>
+</html>
