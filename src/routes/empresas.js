@@ -8,5 +8,8 @@ var empresaController = require("../controllers/empresaController");
 router.post("/cadastrar", function (req, res) {
     empresaController.cadastrar(req, res);
 });
+router.get("/buscarEmpresas", function (req,res){
+    empresaController.buscarEmpresas(req, res);
+})
 
 module.exports = router;

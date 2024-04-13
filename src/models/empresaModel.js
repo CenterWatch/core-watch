@@ -9,6 +9,15 @@ function cadastrar(nomeFantasia,razaoSocial,cnpj,filial){
     return database.executar(instrucao);
 }
 
+function buscarEmpresas(){
+    var instrucao = `
+        select nome_fantasia,id_empresa from  empresa;
+    `
+    console.log("Executando a instrução SQL: \n" + instrucao);
+    return database.executar(instrucao);
+}
+
 module.exports = {
-    cadastrar
+    cadastrar,
+    buscarEmpresas
 };

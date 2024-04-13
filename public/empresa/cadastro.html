@@ -7,23 +7,32 @@
 </head>
 <body>
     <div>
-        <label for="">Nome fantasia:</label>
-        <input type="text" id="input_nomeFantasia">
-    </div>
-    <div>
-        <label for="">RazaoSocial</label>
-        <input type="text" id="input_razaoSocial">
-    </div>
-    <div>
-        <label for="">CNPJ</label>
-        <input type="text" id="input_cnpj">
-    </div>
-    <div>
-        <input type="radio" name="opcao" id="input_filial">
-        <label for="input_filial">É Filial</label>
         <input type="radio" name="opcao" id="input_nao_filial">
         <label for="input_nao_filial">Não é Filial</label>
+        <input type="radio" name="opcao" id="input_filial">
+        <label for="input_filial">É Filial</label>
     </div>
+
+    <div id="naoFilial">
+        <div>
+            <label for="">Nome fantasia:</label>
+            <input type="text" id="input_nomeFantasia">
+        </div>
+        <div>
+            <label for="">RazaoSocial</label>
+            <input type="text" id="input_razaoSocial">
+        </div>
+        <div>
+            <label for="">CNPJ</label>
+            <input type="text" id="input_cnpj">
+        </div>
+    </div>
+    <div id="filial">
+        <select name="empresas" id="select_empresas">
+        
+        </select>
+    </div>
+
 
 
     <div>
@@ -31,6 +40,47 @@
     </div>
 
     <script>
+        var listaEmpresas = [];
+        var selectEmpresas = document.getElementById('select_empresas');
+        var divCadastro = document.getElementById('cadastro');
+
+        fetch("/empresas/buscarEmpresas").then(res => {
+            if(!res.ok){
+                throw new Error(`Erro na solicitação: ${res.statusText}`);
+            }
+            return  res.json();
+        })
+        .then(res => {
+            listaEmpresas = res;
+            enviarDadosSelect();
+        })
+        
+        function enviarDadosSelect(){
+            listaEmpresas.forEach(element => {
+                const option = document.createElement('option');
+                option.text = element.nome_fantasia;
+                option.value = element.id_empresa;
+                selectEmpresas.appendChild(option);
+            });
+        }
+
+        const radioInputs = document.querySelectorAll('input[type="radio"]');
+
+        radioInputs.forEach(input => {
+            input.addEventListener('change', event => {
+                if(document.getElementById('input_filial').checked){
+                    document.getElementById('naoFilial').style.display = 'none'
+                    document.getElementById('filial').style.display = 'block'
+                }else{
+                    document.getElementById('naoFilial').style.display = 'block'
+                    document.getElementById('filial').style.display = 'none'
+                }
+            })
+        })
+        
+        if(document.getElementById('input_filial').checked){
+            divCadastro.innerHTML = "tteste"
+        }
 
         function cadastrar(){
             var nome = input_nomeFantasia.value;
