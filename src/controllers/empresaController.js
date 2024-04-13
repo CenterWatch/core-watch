@@ -6,6 +6,13 @@ function cadastrar(req, res) {
     var cnpj = req.body.cnpjServer;
     var filial = req.body.filialServer;
 
+    var logradouro = req.body.logradouroServer;
+    var cep = req.body.cepServer;
+    var numero = req.body.numeroServer;
+    var complemento = req.body.complementoServer;
+    var cidade = req.body.cidadeServer;
+    var estado = req.body.estadoServer;
+
     if(filial == false){
         filial = null;
     }else{
@@ -18,7 +25,7 @@ function cadastrar(req, res) {
         res.status(400).send("Razão social está indefinida!");
     } else {
 
-            empresaModel.cadastrar(nome,razaoSocial,cnpj,filial)
+            empresaModel.cadastrarEndereco(logradouro,cep,numero,complemento,cidade,estado,nome,razaoSocial,cnpj,filial)
             .then(function (cadastroResultado) {
                 res.json(cadastroResultado);
             })

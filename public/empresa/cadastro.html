@@ -33,6 +33,32 @@
         </select>
     </div>
 
+    <div id="endereco">
+        <div>
+            <label for="">Logradouro</label>
+            <input id="input_logradouro" type="text">
+        </div>
+        <div>
+            <label for="">CEP</label>
+            <input id="input_cep" type="text">
+        </div>
+        <div>
+            <label for="">Numero</label>
+            <input id="input_numero"" type="text">
+        </div>
+        <div>
+            <label for="">Complemento</label>
+            <input id="input_complemento" type="text">
+        </div>
+        <div>
+            <label for="">Cidade</label>
+            <input id="input_cidade" type="text">
+        </div>        <div>
+            <label for="">Estado</label>
+            <select name="" id="select_estados"></select>
+        </div>
+    </div>
+
 
 
     <div>
@@ -88,6 +114,13 @@
             var cnpj = input_cnpj.value;
             var filial;
 
+            var logradouro = input_logradouro.value;
+            var cep = input_cep.value;;
+            var numero = input_numero.value;
+            var complemento = input_complemento.value;
+            var cidade = input_cidade.value;
+            var estado = select_estados.value;
+
             if(document.getElementById('input_filial').checked){
                 filial = true;
             }else{
@@ -103,7 +136,13 @@
                     nomeServer: nome,
                     razaoServer: razaoSocial,
                     cnpjServer: cnpj,
-                    filialServer: filial
+                    filialServer: filial,
+                    logradouroServer: logradouro,
+                    cepServer: cep,
+                    numeroServer: numero,
+                    complementoServer: complemento,
+                    cidadeServer: cidade,
+                    estadoServer: estado
                 })
             })
             .then(function (resposta) {
@@ -124,6 +163,15 @@
             return false;
         }
 
+        var selectEstado = document.getElementById('select_estados')
+        var listaEstados = [ "AC", "AL", "AP", "AM", "BA", "CE", "DF", "ES", "GO", "MA", "MT", "MS", "MG", "PA", "PB", "PR", "PE", "PI", "RJ", "RN", "RS", "RO", "RR", "SC", "SP", "SE", "TO"];
+
+        listaEstados.forEach(estado => {
+            const option = document.createElement('option');
+            option.text = estado;
+            option.value = estado;
+            selectEstado.appendChild(option);
+        })
     </script>
 </body>
 </html>
