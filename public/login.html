@@ -15,8 +15,8 @@
         <div class="form">
             <div class="input-field">
                 <label for="">Usuário</label>
-                <input type="text" name="username" id="input_email"
-                    placeholder="user@domain.com">
+                <input type="text" name="username" id="input_usuario"
+                    placeholder="user">
                 <div class="underline"></div>
             </div>
             <div class="input-field">
@@ -35,7 +35,7 @@
     <script>
 
         function logar(){
-            var email = input_email.value;
+            var usuario = input_usuario.value;
             var senha = input_senha.value;
 
             fetch("/usuarios/autenticar", {
@@ -44,7 +44,7 @@
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify({
-                    emailServer: email,
+                    usuarioServer: usuario,
                     senhaServer: senha,
                 })
             }).then(function (resposta) {
@@ -59,9 +59,12 @@
                         sessionStorage.EMAIL_USUARIO = json.email;
                         sessionStorage.NOME_USUARIO = json.nome;
                         sessionStorage.ID_USUARIO = json.id;
-
+                        sessionStorage.SOBRENOME_USUARIO = json.sobrenome;
+                        sessionStorage.USERNAME_USUARIO = json.usuario;
+                        sessionStorage.EMPRESA_USUARIO = json.empresa;
+                        sessionStorage.ID_EMPRESA_USUARIO = json.id_empresa;
                         setTimeout(function () {
-                            window.location = "/index.html";
+                            window.location = "./dashboard/dashboard.html";
                         }, 1500); 
 
                     });
