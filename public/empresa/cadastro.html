@@ -86,7 +86,7 @@
             listaEmpresas.forEach(element => {
                 const option = document.createElement('option');
                 option.text = element.nome_fantasia;
-                option.value = element.id_empresa;
+                option.value = element.id_empresa + ',' + element.nome_fantasia;
                 selectEmpresas.appendChild(option);
             });
         }
@@ -104,19 +104,18 @@
                 }
             })
         })
-        
-        if(document.getElementById('input_filial').checked){
-            divCadastro.innerHTML = "tteste"
-        }
 
         function cadastrar(){
             var nome = input_nomeFantasia.value;
             var razaoSocial = input_razaoSocial.value;
             var cnpj = input_cnpj.value;
             if(document.getElementById('input_filial').checked){
-                var matriz = select_empresas.value;
+                // var matriz = select_empresas.value;
+                var matriz = select_empresas.value.split(',')[0];
+                var nomeFantasia = select_empresas.value.split(',')[1];
             }else{
                 var matriz = null
+                var nomeFantasia = input_nomeFantasia.value;
             }
             var logradouro = input_logradouro.value;
             var cep = input_cep.value;;
@@ -135,7 +134,7 @@
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify({
-                    nomeServer: nome,
+                    nomeServer: nomeFantasia,
                     razaoServer: razaoSocial,
                     cnpjServer: cnpj,
                     matrizServer: matriz,
