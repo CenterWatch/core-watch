@@ -4,7 +4,7 @@ function cadastrar(req, res) {
     var nome = req.body.nomeServer;
     var razaoSocial = req.body.razaoServer;
     var cnpj = req.body.cnpjServer;
-    var filial = req.body.filialServer;
+    var matriz = req.body.matrizServer;
 
     var logradouro = req.body.logradouroServer;
     var cep = req.body.cepServer;
@@ -13,11 +13,10 @@ function cadastrar(req, res) {
     var cidade = req.body.cidadeServer;
     var estado = req.body.estadoServer;
 
-    if(filial == false){
-        filial = null;
-    }else{
-        filial = null;
+    if(matriz == ''){
+        matriz = null
     }
+
 
     if (nome == undefined) {
         res.status(400).send("Seu nome está undefined!");
@@ -25,7 +24,7 @@ function cadastrar(req, res) {
         res.status(400).send("Razão social está indefinida!");
     } else {
 
-            empresaModel.cadastrarEndereco(logradouro,cep,numero,complemento,cidade,estado,nome,razaoSocial,cnpj,filial)
+            empresaModel.cadastrarEndereco(logradouro,cep,numero,complemento,cidade,estado,nome,razaoSocial,cnpj,matriz)
             .then(function (cadastroResultado) {
                 res.json(cadastroResultado);
             })
@@ -39,8 +38,8 @@ function cadastrar(req, res) {
 
 }
 
-function buscarEmpresas(req,res){
-    empresaModel.buscarEmpresas()
+function buscarMatriz(req,res){
+    empresaModel.buscarMatriz()
     .then(function (buscaResultado){
         res.json(buscaResultado);
     })
@@ -53,5 +52,5 @@ function buscarEmpresas(req,res){
 
 module.exports = {
     cadastrar,
-    buscarEmpresas
+    buscarMatriz
 }

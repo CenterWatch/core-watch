@@ -18,21 +18,22 @@
             <label for="">Nome fantasia:</label>
             <input type="text" id="input_nomeFantasia">
         </div>
-        <div>
-            <label for="">RazaoSocial</label>
-            <input type="text" id="input_razaoSocial">
-        </div>
-        <div>
-            <label for="">CNPJ</label>
-            <input type="text" id="input_cnpj">
-        </div>
+
     </div>
-    <div id="filial">
+    <div id="filial" style="display: none;">
+        <label for="">Matriz</label>
         <select name="empresas" id="select_empresas">
         
         </select>
     </div>
-
+    <div>
+        <label for="">RazaoSocial</label>
+        <input type="text" id="input_razaoSocial">
+    </div>
+    <div>
+        <label for="">CNPJ</label>
+        <input type="text" id="input_cnpj">
+    </div>
     <div id="endereco">
         <div>
             <label for="">Logradouro</label>
@@ -70,7 +71,7 @@
         var selectEmpresas = document.getElementById('select_empresas');
         var divCadastro = document.getElementById('cadastro');
 
-        fetch("/empresas/buscarEmpresas").then(res => {
+        fetch("/empresas/buscarMatriz").then(res => {
             if(!res.ok){
                 throw new Error(`Erro na solicitação: ${res.statusText}`);
             }
@@ -112,8 +113,11 @@
             var nome = input_nomeFantasia.value;
             var razaoSocial = input_razaoSocial.value;
             var cnpj = input_cnpj.value;
-            var filial;
-
+            if(document.getElementById('input_filial').checked){
+                var matriz = select_empresas.value;
+            }else{
+                var matriz = null
+            }
             var logradouro = input_logradouro.value;
             var cep = input_cep.value;;
             var numero = input_numero.value;
@@ -121,12 +125,10 @@
             var cidade = input_cidade.value;
             var estado = select_estados.value;
 
-            if(document.getElementById('input_filial').checked){
-                filial = true;
+            if(matriz == '' && document.getElementById('input_filial').checked){
+                alert("Escolha uma matriz")
+                
             }else{
-                filial = false;
-            }
-
             fetch("/empresas/cadastrar", {
                 method: "POST",
                 headers: {
@@ -136,7 +138,7 @@
                     nomeServer: nome,
                     razaoServer: razaoSocial,
                     cnpjServer: cnpj,
-                    filialServer: filial,
+                    matrizServer: matriz,
                     logradouroServer: logradouro,
                     cepServer: cep,
                     numeroServer: numero,
@@ -159,6 +161,7 @@
             }).catch(function (erro) {
                 console.log(erro);
             })
+        }
 
             return false;
         }

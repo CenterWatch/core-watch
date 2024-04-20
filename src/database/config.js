@@ -4,8 +4,8 @@ var mysql = require("mysql2");
 var mySqlConfig = {
     host: "localhost",
     database: "cwdb",
-    user: "",
-    password: "",
+    user: "root",
+    password: "root",
 };
 
 // CONEXÃO DO MYSQL WORKBENCH - remoto
