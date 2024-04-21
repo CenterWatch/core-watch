@@ -11,5 +11,10 @@ router.post("/cadastrar", function (req, res) {
 router.get("/buscarMatriz", function (req,res){
     empresaController.buscarMatriz(req, res);
 })
-
+router.get("/buscarFiliais", function (req, res){
+    empresaController.buscarFiliais(req, res);
+})
+router.get("/buscarFunc",  function (req, res){
+    empresaController.buscarFunc(req, res);
+})
 module.exports = router;

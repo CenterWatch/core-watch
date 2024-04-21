@@ -33,8 +33,26 @@ function buscarMatriz(){
     return database.executar(instrucao);
 }
 
+function buscarFiliais(id_empresa){
+    var instrucao =  `
+        select * from  empresa where fk_matriz = ${id_empresa} or id_empresa = ${id_empresa};
+    `
+    console.log("executando instrucao sql: "+instrucao)
+    return database.executar(instrucao)
+}
+
+function  buscarFunc(id_empresa){
+    var instrucao = `
+        select * from funcionario where fk_empresa = ${id_empresa};
+    `
+    console.log(`Executando a instrucao sql: ${instrucao}`)
+    return database.executar(instrucao)
+}
+
 module.exports = {
     cadastrarEndereco,
     cadastrar,
-    buscarMatriz
+    buscarMatriz,
+    buscarFiliais,
+    buscarFunc
 };

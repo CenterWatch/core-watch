@@ -63,8 +63,14 @@
                         sessionStorage.USERNAME_USUARIO = json.usuario;
                         sessionStorage.EMPRESA_USUARIO = json.empresa;
                         sessionStorage.ID_EMPRESA_USUARIO = json.id_empresa;
+                        sessionStorage.CARGO_USUARIO = json.cargo;
+                        if(json.cargo == "diretor"){
+                            var enderecaPara = "./empresa/selecionaFilial.html"
+                        }else{
+                            var enderecaPara = "./dashboard/dashboard.html"
+                        }
                         setTimeout(function () {
-                            window.location = "./dashboard/dashboard.html";
+                            window.location = enderecaPara;
                         }, 1500); 
 
                     });

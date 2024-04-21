@@ -25,7 +25,8 @@ function autenticar(req, res) {
                             sobrenome: resultadoAutenticar[0].sobrenome,
                             usuario: resultadoAutenticar[0].usuario,
                             empresa: resultadoAutenticar[0].razao_social,
-                            id_empresa: resultadoAutenticar[0].id_empresa 
+                            id_empresa: resultadoAutenticar[0].id_empresa,
+                            cargo: resultadoAutenticar[0].cargo
                         });
                         
                     } else if (resultadoAutenticar.length == 0) {

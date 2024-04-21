@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../js/sessao.js"></script>
+</head>
+<body onload="validarSessao(),buscarFiliais()">
+    
+
+    <div class="empresas" id="empresas">
+
+    </div>
+
+
+    <script>
+        var idEmpresa = sessionStorage.ID_EMPRESA_USUARIO;
+        var listaEmpresas = [];
+        var divEmpresa = document.getElementById('empresas');
+        function buscarFiliais(){
+            fetch(`/empresas/buscarFiliais?idEmpresa=${idEmpresa}`).then(res => {
+                if(!res.ok){
+                    throw new Error(`Erro na solicitação: ${res.statusText}`);
+                }
+                return res.json();
+            })
+                .then(res => {
+                    listaEmpresas = res;
+
+                    for(var i = 0; i < listaEmpresas.length; i++){
+                        divEmpresa.innerHTML +=    `
+                                            <div>
+                                                <a onclick="enviarDash(${listaEmpresas[i].id_empresa},'${listaEmpresas[i].razao_social}')">${listaEmpresas[i].razao_social}</a>
+                                            </div>
+                                            `
+                    }
+                    
+                })
+                .catch(erro => {
+                    console.log(erro);
+                    console.log("Não foi possivel realizar o select: ",erro);
+                })
+        }
+
+        function enviarDash(id_empresa, razao_social){
+            sessionStorage.ID_EMPRESA_USUARIO = id_empresa;
+            sessionStorage.EMPRESA_USUARIO = razao_social;
+
+            window.location = "../dashboard/dashboard.html"
+        }
+    </script>
+</body>
+</html>

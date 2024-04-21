@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
-<body>
+<body onload="buscarFunc()">
 
     <div id="add_func">
         <div>
@@ -45,6 +45,9 @@
     <button onclick="abre_janela()">+</button>
 </div>
 
+<div id="listaFunc">
+
+</div>
 
     <script>
         var janela = document.getElementById('add_func');
@@ -104,6 +107,33 @@
             })
             .catch(function (erro) {
                 console.log("Erro: ",erro)
+            })
+        }
+
+        function buscarFunc(){
+            var idEmpresa = sessionStorage.ID_EMPRESA_USUARIO;
+            var listaFunc = [];
+            var divLista = document.getElementById('listaFunc');
+            fetch(`/empresas/buscarFunc?idEmpresa=${idEmpresa}`).then(res => {
+                if(!res.ok){
+                    throw new Error(`Erro na solicitação: ${res.statusText}`);
+                }
+                return res.json();
+            })
+            .then(res => {
+                listaFunc = res;
+
+                for(var i = 0; i < listaFunc.length; i++){
+                    divLista.innerHTML +=   `
+                                                <div>
+                                                    <span>${listaFunc[i].primeiro_nome} ${listaFunc[i].sobrenome} - ${listaFunc[i].cargo}</span>
+                                                </div>
+                                            `
+                }
+            })
+            .catch(erro => {
+                console.log(erro);
+                console.log("Não foi  possivel realizar o select: ", erro);
             })
         }
 

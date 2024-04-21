@@ -50,7 +50,33 @@ function buscarMatriz(req,res){
     })
 }
 
+function buscarFiliais(req, res){
+    var idEmpresa = req.query.idEmpresa;
+    empresaModel.buscarFiliais(idEmpresa)
+    .then(function (resBuscar){
+        res.json(resBuscar);
+    })
+    .catch(function (erro){
+        console.log(erro)
+        console.log(`houve um erro ao realizar select, erro: ${erro}`)
+    })
+}
+
+function buscarFunc(req, res){
+    var idEmpresa = req.query.idEmpresa;
+    empresaModel.buscarFunc(idEmpresa)
+    .then(function (resBuscar){
+        res.json(resBuscar);
+    })
+    .catch(function (erro){
+        console.log(erro)
+        console.log(`houve um erro ao realizar o select, erro: ${erro}`)
+    })
+}
+
 module.exports = {
     cadastrar,
-    buscarMatriz
+    buscarMatriz,
+    buscarFiliais,
+    buscarFunc
 }
