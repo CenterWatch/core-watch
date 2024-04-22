@@ -35,7 +35,7 @@
                 <div class="profile-container">
                     <div class="user-wrap">
                         <img src="../img/user_placeholder.png" class="img-user">
-                        <span>Usuário</span>
+                        <span id="nome-usuario" >Usuário</span>
                         <i class="fa-solid fa-angle-down"></i>
                     </div>
                     <div>
@@ -184,6 +184,9 @@
         `;
     }
 
+    var usuario = sessionStorage.USERNAME_USUARIO;
+    var txt_nome = document.getElementById('nome-usuario');
+    txt_nome.innerHTML = `${usuario}`
 
     const ctxRam = document.getElementById('chartRam');
 
