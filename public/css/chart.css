@@ -1,0 +1,29 @@
+.line-chart-container {
+    display: flex;
+    gap: 30px;
+}
+
+.line-chart {
+    width: 50%;
+    height: 75%;
+}
+
+.pizza-chart-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.pizza-chart-wrapper {
+    display: flex;
+    overflow: scroll;
+}
+
+.pizza-chart-wrapper::-webkit-scrollbar {
+    display: none;
+  }
+
+.disco-chart {
+    width: 250px;
+    height: 250px;
+}

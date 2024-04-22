@@ -64,11 +64,27 @@
                         sessionStorage.EMPRESA_USUARIO = json.empresa;
                         sessionStorage.ID_EMPRESA_USUARIO = json.id_empresa;
                         sessionStorage.CARGO_USUARIO = json.cargo;
-                        if(json.cargo == "diretor"){
-                            var enderecaPara = "./empresa/selecionaFilial.html"
-                        }else{
-                            var enderecaPara = "./dashboard/dashboard.html"
+
+                        switch (json.cargo) {
+                            case "Diretor":
+                                var enderecaPara = "./empresa/selecionaFilial.html"
+                                break;
+                            case "Supervisor":
+                                var enderecaPara = "./dashboard/dashboardSupervisor.html"
+                                break;
+                            case "Suporte":
+                                var enderecaPara = "./dashboard/dashboardSuporte.html"
+                                break;
+                            case "Operador":
+                                var enderecaPara = "./dashboard/dashboardOperador.html"
+                                break;
+                        
+                            default:
+                                // Cargo desconhecido
+                                var enderecaPara = "";
+                                break;
                         }
+                        
                         setTimeout(function () {
                             window.location = enderecaPara;
                         }, 1500); 
@@ -76,7 +92,7 @@
                     });
 
                 } else {
-                    console.log("Houve um erro ao tentar realizar o login!");
+                    console.log("Houve um erro ao tentar realizar o login!");   
                     console.log("Os  dados nao confererm")
                 }
 

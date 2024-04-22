@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../css/dashboards.css">
+    <link rel="stylesheet" href="../css/chart.css">
+    <script src="https://kit.fontawesome.com/384071f692.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+
+    <section class="section-body">
+        <div class="leftbar">
+            <div class="links-nav">
+                <img class="logo text-logo" src="https://i.imgur.com/RjhX0a9.png" alt="">
+                <a class="nav-btn btn-ativo" href="#"><i
+                        class="fa-solid fa-square-poll-vertical"></i><span></i>Dashboard</span></a>
+                <a class="nav-btn" href="chamados.html"><i class="fa-solid fa-headset"></i><span></i>Chamados</span></a>
+                <a class="nav-btn" href="artigos.html"><i class="fa-solid fa-book"></i><span>Artigos</span></a>
+
+            </div>
+            <div class="cfg-nav">
+                <a class="nav-btn" href="configuracoes.html"><i
+                        class="fa-solid fa-gear"></i><span>Configurações</span></a>
+                <a class="nav-btn" href=""><i class="fa-solid fa-arrow-right-from-bracket"></i><span>Sair</span></a>
+            </div>
+        </div>
+        <div class="main">
+            <div class="upbar">
+                <input class="buscar-inp" type="text" placeholder="Buscar">
+                <div class="profile-container">
+                    <div class="user-wrap">
+                        <img src="../img/user_placeholder.png" class="img-user">
+                        <span>Usuário</span>
+                        <i class="fa-solid fa-angle-down"></i>
+                    </div>
+                    <div>
+                        <i class="fa-solid fa-bell"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="visao-geral">
+                <div class="titulo">
+                    Dashboard
+                </div>
+                <div class="cards">
+                    <div onclick="abrirModal('DESKTOP-002')" class="card-pc selecionar-hover card-error">
+                        <span class="card-title">DESKTOP-002</span>
+                        <span class="power-off"><i class="fa-solid fa-power-off"></i></span>
+                        <i class="fa-solid fa-desktop"></i>
+                        <span class="card-user">Jorge Operador</span>
+                    </div>
+                    <div onclick="abrirModal('DESKTOP-003')" class="card-pc selecionar-hover card-error">
+                        <span class="card-title">DESKTOP-003</span>
+                        <span class="power-off"><i class="fa-solid fa-microchip"></i></span>
+                        <i class="fa-solid fa-desktop"></i>
+                        <span class="card-user">Jorge Operador</span>
+                    </div>
+                    <div onclick="abrirModal('DESKTOP-001')" class="card-pc">
+                        <span class="card-title">DESKTOP-001</span>
+                        <span class="card-circle"><i class="fa-solid fa-check"></i></span>
+                        <i class="fa-solid fa-desktop"></i>
+                        <span class="card-user">Jorge Operador</span>
+                    </div>
+                </div>
+                <dialog id="modalDetalhes">
+                    <div class="card-detalhes">
+                        <div class="fechar-wrap">
+                            <span onclick="fecharModal()" class="fechar-btn"><i class="fa-solid fa-xmark"></i></span>
+                        </div>
+                        <span class="titulo-detalhes" id="tituloDetalhes"></span>
+                        <div class="linha-horizontal"></div>
+                        <div class="line-chart-container">
+                            <div class="line-chart chart-ram">
+                                <canvas id="chartRam"></canvas>
+                            </div>
+                            <div class="line-chart chart-cpu">
+                                <canvas id="chartCpu"></canvas>
+                            </div>
+                        </div>
+                        <div class="linha-horizontal"></div>
+                        <div class="pizza-chart-container">
+                            <span class="titulo-detalhes" class="pizza-titulo">Volumes disponíveis</span>
+                            <div class="pizza-chart-wrapper">
+                                <div class="disco-chart chart-disco">
+                                    <canvas id="chartDisco1"></canvas>
+                                </div>
+                                <div class="disco-chart chart-disco">
+                                    <canvas id="chartDisco2"></canvas>
+                                </div>
+                                <div class="disco-chart chart-disco">
+                                    <canvas id="chartDisco3"></canvas>
+                                </div>
+                                <div class="disco-chart chart-disco">
+                                    <canvas id="chartDisco4"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="linha-horizontal"></div>
+                        <div class="sessao-container">
+                            <div class="sessao sessao-info">
+                                <span class="titulo-detalhes" class="info-titulo">Informações</span>
+                                <div class="info-wrapper">
+                                    <ul id="listaInfo">
+                                        <li>Nome de Host: <span class="sys-info" id="hostname">DESKTOP</span></li>
+                                        <li>Sistema operacional: <span class="sys-info" id="so">Windows</span></li>
+                                        <li>CPU: <span class="sys-info" id="cpu">AMD Ryzen 7 5700U with Radeon
+                                                Graphics</span></li>
+                                        <li>Total RAM: <span class="sys-info" id="ram">19,2 GB</span></li>
+                                        <li>Última sessão: <span class="sys-info" id="ultsessao">21/04/24, 07:57</span>
+                                        </li>
+                                        <li>Ligado à <span class="sys-info" id="uptime">6,5</span> horas</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="sessao sessao-historico">
+                                <span class="titulo-detalhes" class="info-titulo">Chamados relacionados</span>
+                                <div class="historico-wrapper">
+                                    <ul id="listaChamados">
+                                        <li class="chamado-item selecionar-hover"><i class="fa-solid fa-circle-user"></i>Trocar teclado
+                                            <span class="data-chamado">24 de maio</span>
+                                        </li>
+                                        <li class="chamado-item selecionar-hover"><i class="fa-solid fa-circle-user"></i>Trocar teclado
+                                            <span class="data-chamado">24 de maio</span>
+                                        </li>
+                                        <li class="chamado-item selecionar-hover"><i class="fa-solid fa-circle-user"></i>Trocar teclado
+                                            <span class="data-chamado">24 de maio</span>
+                                        </li>
+                                        <li class="chamado-item selecionar-hover"><i class="fa-solid fa-circle-user"></i>Trocar teclado
+                                            <span class="data-chamado">24 de maio</span>
+                                        </li>
+                                        <li class="chamado-item selecionar-hover"><i class="fa-solid fa-circle-user"></i>Trocar teclado
+                                            <span class="data-chamado">24 de maio</span>
+                                        </li>
+                                        <li class="chamado-item selecionar-hover"><i class="fa-solid fa-circle-user"></i>Trocar teclado
+                                            <span class="data-chamado">24 de maio</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="linha-horizontal"></div>
+                    </div>
+                </dialog>
+            </div>
+            <div>
+    </section>
+
+
+</body>
+
+</html>
+
+<script>
+    function abrirModal(titulo) {
+        document.getElementById("tituloDetalhes").innerHTML = titulo;
+        document.getElementById("modalDetalhes").showModal();
+    }
+
+    function fecharModal() {
+        document.getElementById("modalDetalhes").close();
+    }
+
+    var cardsElements = document.getElementsByClassName("cards")[0];
+    var qtdPcs = 50;
+
+    for (let i = 4; i < qtdPcs + 4; i++) {
+
+        n = i;
+
+        if (i < 10) n = `0${i}`;
+
+        cardsElements.innerHTML += `
+        <div onclick="abrirModal('DESKTOP-0${n}')" class="card-pc selecionar-hover">
+            <span class="card-title">DESKTOP-0${n}</span>
+            <span class="card-circle"><i class="fa-solid fa-check"></i></span>
+            <i class="fa-solid fa-desktop"></i>
+            <span class="card-user">Jorge Operador</span>
+        </div>
+        `;
+    }
+
+
+    const ctxRam = document.getElementById('chartRam');
+
+    new Chart(ctxRam, {
+        type: 'line',
+        data: {
+            labels: ['09:22:37', '09:22:35', '09:22:33', '09:22:31', '09:22:29', '09:22:27'],
+            datasets: [{
+                label: '',
+                data: [70, 71, 68, 64, 62, 65],
+                fill: true,
+                backgroundColor: '#3D3D3D30',
+                borderColor: '#3D3D3D',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    min: 0,
+                    max: 100,
+                    beginAtZero: true,
+                    ticks: {
+                        stepSize: 100,
+                        callback: function (value, index, values) {
+                            return (value == 0 || value == 100) ? value + '%' : '';
+                        }
+                    }
+                }
+            },
+            plugins: {
+                title: {
+                    display: true,
+                    text: 'Uso da Memória RAM',
+                    font: {
+                        size: 18
+                    }
+                },
+                legend: {
+                    display: false
+                }
+            }
+        }
+    });
+
+    const ctxCpu = document.getElementById('chartCpu');
+
+    new Chart(ctxCpu, {
+        type: 'line',
+        data: {
+            labels: ['09:22:37', '09:22:35', '09:22:33', '09:22:31', '09:22:29', '09:22:27'],
+            datasets: [{
+                label: '',
+                data: [65, 66, 68, 64, 59, 55],
+                fill: true,
+                backgroundColor: '#52C3E350',
+                borderColor: '#52C3E3',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    min: 0,
+                    max: 100,
+                    beginAtZero: true,
+                    ticks: {
+                        stepSize: 100,
+                        callback: (value) => {return (value == 0 || value == 100) ? value + '%' : '';}
+                    }
+                }
+            },
+            plugins: {
+                title: {
+                    display: true,
+                    text: 'Uso da CPU',
+                    font: {
+                        size: 18
+                    }
+                },
+                legend: {
+                    display: false
+                }
+            }
+        }
+    });
+
+
+
+    const discos = document.getElementsByClassName('chart-disco');
+
+    for (let i = 1; i <= discos.length; i++) {
+        const ctxDisco = document.getElementById(`chartDisco${i}`);
+
+        new Chart(ctxDisco, {
+            type: 'pie',
+            data: {
+                labels: [
+                    'Espaço livre',
+                    'Espaço usado'
+                ],
+                datasets: [{
+                    label: '%',
+                    data: [70, 30],
+                    backgroundColor: [
+                        '#52C3E3',
+                        '#3D3D3D'
+                    ],
+                    hoverOffset: 4
+                }]
+            },
+            options: {
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Disco C:\\'
+                    },
+                    legend: {
+                        position: "bottom"
+                    }
+                }
+            }
+        });
+    }
+</script>
