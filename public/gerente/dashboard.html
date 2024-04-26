@@ -45,19 +45,22 @@
             </div>
             <div class="visao-geral">
                 <div class="dados-geral">
+                    <h1>Dashboard</h1>
                     <div class="cards">
                         <div class="card-kpi">
-                            <span class="card-title">KPI</span>
-                            <span class="card-user"></span>
+                            <span class="card-title">Perdas em ociosidade</span>
+                            <span class="card-user">R$ <span class="card-user-valor">5850,00</span></span>
+
+                        </div>
+
+                        <div class="card-kpi" id="card-kpi-center">
+                            <span class="card-title">Tarefas em atraso </span>
+                            <span class="card-user"><span class="card-user-valor">9 </span>tarefas de <br><span
+                                    class="card-user-valor">7</span> colaboradores</span>
                         </div>
 
                         <div class="card-kpi">
-                            <span class="card-title">KPI</span>
-                            <span class="card-user"></span>
-                        </div>
-
-                        <div class="card-kpi">
-                            <span class="card-title">KPI</span>
+                            <h4 class="card-title">Satisfação </h4><i class="fa-solid fa-face-laugh-beam"></i>
                             <span class="card-user"></span>
                         </div>
                     </div>
@@ -66,7 +69,11 @@
                             <canvas id="myChart" class="dash-tarefas"></canvas>
                         </div>
                         <div class="card-op">
-                            <span class="card-title">Operadores com tarefas atrasadas <br> recorrentes </span>
+                            <h5 class="card-title-op" style=""><b><strong>Operadores com tarefas atrasadas recorrentes
+                                    </strong></h5></b></h5>
+                            <span><i class="fa-solid fa-circle-user" style="color: #e9e2e2; "></i>Jorge operador</span>
+                            <span><i class="fa-solid fa-circle-user" style="color: #e9e2e2;"></i>Jorge operador</span>
+                            <span><i class="fa-solid fa-circle-user" style="color: #e9e2e2;"></i>Jorge operador</span>
 
                         </div>
                     </div>
@@ -90,10 +97,16 @@
         data: {
             labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
             datasets: [{
-                label: '# of Votes',
+                label: 'Tarefas atrasadas ',
+                data: [2, 9, 3, 5, 9, 3],
+                borderWidth: 2
+            },{
+                label: 'Tempo ocioso por operador',
                 data: [12, 19, 3, 5, 2, 3],
-                borderWidth: 1
-            }]
+                borderWidth: 2,
+            }],
+            
+            
         },
         options: {
             scales: {
@@ -101,6 +114,7 @@
                     beginAtZero: true
                 }
             }
-        }
+        }, 
+        
     });
 </script>
