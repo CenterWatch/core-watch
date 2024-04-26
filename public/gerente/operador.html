@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../css/navbar.css">
+    <link rel="stylesheet" href="../css/gerente/operador.css">
+</head>
+
+<body onload="buscarFunc()">
+
+    <section class="section-body">
+        <div class="leftbar">
+            <div class="links-nav">
+                <img class="logo text-logo" src="https://i.imgur.com/RjhX0a9.png" alt="">
+                <a class="nav-btn btn-ativo" href="#"><i
+                        class="fa-solid fa-square-poll-vertical"></i><span></i>Dashboard</span></a>
+                <a class="nav-btn" href="chamados.html"><i class="fa-solid fa-headset"></i><span></i>Chamados</span></a>
+                <a class="nav-btn" href="artigos.html"><i class="fa-solid fa-book"></i><span>Artigos</span></a>
+
+            </div>
+            <div class="cfg-nav">
+                <a class="nav-btn" href="configuracoes.html"><i
+                        class="fa-solid fa-gear"></i><span>Configurações</span></a>
+                <a class="nav-btn" href=""><i class="fa-solid fa-arrow-right-from-bracket"></i><span>Sair</span></a>
+            </div>
+        </div>
+        <div class="main">
+            <div class="upbar">
+                <input class="buscar-inp" type="text" placeholder="Buscar">
+                <div class="profile-container">
+                    <div class="user-wrap">
+                        <img src="../img/user_placeholder.png" class="img-user">
+                        <span id="nome-usuario">Usuário</span>
+                        <i class="fa-solid fa-angle-down"></i>
+                    </div>
+                    <div>
+                        <i class="fa-solid fa-bell"></i>
+                    </div>
+                </div>
+            </div>
+
+
+            </div>
+    </section>
+
+    <div class="container-funcionario">
+        <div id="add_func">
+            <div>
+                <label for="#">Nome</label>
+                <input type="text" id="nome_input">
+            </div>
+            <div>
+                <label for="#">Sobrenome</label>
+                <input type="text" id="sobrenome_input">
+            </div>
+            <div>
+                <label for="#">Celular</label>
+                <input type="text" id="celular_input">
+            </div>
+            <div>
+                <label for="#">telefone</label>
+                <input type="text" id="telefone_input">
+            </div>
+            <div>
+                <label for="#">email</label>
+                <input type="text" id="email_input">
+            </div>
+            <div>
+                <label for="#">usuario</label>
+                <input type="text" id="usuario_input">
+            </div>
+            <div>
+                <label for="#">senha</label>
+                <input type="text" id="senha_input">
+            </div>
+            <div>
+                <button onclick="cadastrar()">Cadastrar funcionário</button>
+            </div>
+        </div>
+    
+        <div id="btn-janela">
+            <button onclick="abre_janela()">+</button>
+        </div>
+    
+        <div id="listaFunc">
+    
+        </div>
+
+
+    <script>
+        var janela = document.getElementById('add_func');
+        var btnJanela = document.getElementById("btn-janela");
+        function abre_janela() {
+            janela.style.display = "flex"
+            btnJanela.innerHTML = `<button onclick="fecha_janela()">X</button>`
+        }
+
+        function fecha_janela() {
+            janela.style.display = "none"
+            btnJanela.innerHTML = `<button onclick="abre_janela()">+</button>`
+        }
+
+        function cadastrar() {
+            var nome = nome_input.value;
+            var sobrenome = sobrenome_input.value;
+            var celular = celular_input.value;
+            var telefone = telefone_input.value;
+            var email = email_input.value;
+            var cpf = "123.123.123-12";
+            var usuario = usuario_input.value;
+            var senha = senha_input.value;
+            var superVisor = sessionStorage.ID_USUARIO;
+            var empresa = sessionStorage.ID_EMPRESA_USUARIO;
+
+            fetch("/usuarios/cadastrar", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    nomeServer: nome,
+                    sobrenomeServer: sobrenome,
+                    celularServer: celular,
+                    telefoneServer: telefone,
+                    emailServer: email,
+                    cpfServer: cpf,
+                    usuarioServer: usuario,
+                    senhaServer: senha,
+                    superVisorServer: superVisor,
+                    empresaServer: empresa
+                }),
+            })
+                .then(function (res) {
+                    console.log("Resposta: ", res);
+
+                    if (res.ok) {
+                        alert("Funcionário cadastrado com sucesso!")
+
+                        setTimeout(() => {
+                            window.location.reload();;
+                        }, 1500);
+                    } else {
+                        alert("Dados de funcionário inválido!")
+                    }
+                })
+                .catch(function (erro) {
+                    console.log("Erro: ", erro)
+                })
+        }
+
+        function buscarFunc() {
+            var idEmpresa = sessionStorage.ID_EMPRESA_USUARIO;
+            var listaFunc = [];
+            var divLista = document.getElementById('listaFunc');
+            fetch(`/empresas/buscarFunc?idEmpresa=${idEmpresa}`).then(res => {
+                if (!res.ok) {
+                    throw new Error(`Erro na solicitação: ${res.statusText}`);
+                }
+                return res.json();
+            })
+                .then(res => {
+                    listaFunc = res;
+
+                    for (var i = 0; i < listaFunc.length; i++) {
+                        divLista.innerHTML += `
+                                                <div>
+                                                    <span>${listaFunc[i].primeiro_nome} ${listaFunc[i].sobrenome} - ${listaFunc[i].cargo}</span>
+                                                </div>
+                                            `
+                    }
+                })
+                .catch(erro => {
+                    console.log(erro);
+                    console.log("Não foi  possivel realizar o select: ", erro);
+                })
+        }
+
+    </script>
+
+    <style>
+        #add_func {
+            display: none;
+            flex-direction: column;
+
+            div {
+                display: flex;
+            }
+        }
+    </style>
+
+</body>
+
+</html>

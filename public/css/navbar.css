@@ -1,0 +1,146 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+    font-weight: normal;
+}
+
+.section-body {
+    display: flex;
+}
+
+section {
+    display: flex;
+    width: 100%;
+}
+
+/* Leftbar */
+
+.leftbar {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 240px;
+    background-color: #3D3D3D;
+    height: 100vh;
+    position: fixed;
+
+    align-items: center;
+}
+
+.leftbar div {
+    display: flex;
+    flex-direction: column;
+}
+
+.leftbar a {
+    text-decoration: none;
+    color: #B1B1B1;
+    font-size: 12pt;
+}
+
+.nav-btn {
+    padding: 12px 20px 12px 20px;
+    border-radius: 5px;
+}
+
+.nav-btn:hover {
+    background-color: #3f4a4e;
+    span {
+        color: #fff;
+    }
+    .fa-solid {
+        color: #52C3E3;
+    }
+}
+
+.btn-ativo {
+    background-color: #3f4a4e;
+    span {
+        color: #fff;
+    }
+    .fa-solid {
+        color: #52C3E3;
+    }
+}
+
+.links-nav {
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+.cfg-nav {
+    margin-bottom: 15px;
+}
+.links-nav, .cfg-nav {
+    width: 80%;
+}
+.links-nav .nav-btn:nth-child(2){
+    margin-top: 35px;
+}
+.leftbar span {
+    margin-left: 8px;
+}
+
+/* Main */
+
+.upbar {
+    margin-left: 240px;
+    background-color: #52C3E3;
+    height: 64px;
+    width: calc(100vw - 240px);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.upbar .buscar-inp {
+    width: 50%;
+    height: 32px;
+    border-radius: 5px;
+    border: none;
+    margin-left: 40px;
+    padding-left: 10px;
+    outline: none;
+}
+
+.text-logo {
+    width: 156px;
+}
+
+.img-user {
+    width: 32px;
+    height: 32px;
+}
+
+.profile-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.profile-container div {
+    display: flex;
+    align-items: center;
+    margin-right: 30px;
+}
+
+.profile-container span {
+    color: #1f384c;
+}
+
+.profile-container .fa-angle-down {
+    color: #387d97;
+}
+
+.profile-container .fa-bell {
+    color: white;
+}
+
+.user-wrap {
+    display: flex;
+    gap: 15px;
+}

@@ -187,6 +187,18 @@ section {
     position: relative;
     transition: 200ms;
 }
+.card-op{
+    display: flex;
+    background-color: #13b7c9;
+    height: 250px;
+    width: 300px;
+    border-radius: 5px;
+}
+.monitorar-atrasados{
+    width: 80%;
+    display: flex;
+    justify-content: space-between;
+}
 
 .selecionar-hover:hover {
     cursor: pointer;
@@ -279,6 +291,13 @@ section {
     background-color: #cdcdcd00;
     margin: 40px 0;
     border-radius: 4px;
+}
+.tarefas-atrasadas{
+    width: 500px;
+}
+.visao-geral {
+    display: flex;
+    justify-content: center;
 }
 
 .sessao-container {

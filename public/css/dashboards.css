@@ -269,6 +269,11 @@ section {
     top: 0;
     bottom: 0;
     margin: auto;
+    box-shadow: 6px 2px 20px 2px #222;
+}
+
+.card-pc selecionar-hover{
+    box-shadow: 6px 2px 20px 2px #222;
 }
 
 .linha-horizontal {
