@@ -167,14 +167,14 @@ section {
 .cards {
     padding: 30px;
     display: flex;
-    justify-content: space-evenly;
-    gap: 30px;
+    justify-content: start;
+    gap: 20px;
     flex-wrap: wrap;
 }
 
 .card-kpi {
-    width: 180px;
-    height: 180px;
+    width: 170px;
+    height: 120px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -187,17 +187,22 @@ section {
     position: relative;
     transition: 200ms;
 }
+.dash-tarefas{
+width: 400px;;
+}
 .card-op{
     display: flex;
     background-color: #13b7c9;
     height: 250px;
     width: 300px;
     border-radius: 5px;
+    padding: 2%;
 }
 .monitorar-atrasados{
-    width: 80%;
+    width: 100%;
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
+    gap: 30px;
 }
 
 .selecionar-hover:hover {
@@ -293,7 +298,12 @@ section {
     border-radius: 4px;
 }
 .tarefas-atrasadas{
-    width: 500px;
+    width: 70%;
+    height: 250px;
+    display: flex;
+    justify-content: center;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+
 }
 .visao-geral {
     display: flex;
