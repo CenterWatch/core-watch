@@ -51,7 +51,7 @@ section {
     span {
         color: #fff;
     }
-    .fa-solid {
+    .icon-gerente {
         color: #52C3E3;
     }
 }
@@ -61,7 +61,7 @@ section {
     span {
         color: #fff;
     }
-    .fa-solid {
+    .icon-gerente {
         color: #52C3E3;
     }
 }
@@ -166,14 +166,15 @@ section {
 .cards {
     padding: 30px;
     display: flex;
-    justify-content: start;
+    justify-content: space-evenly;
     gap: 20px;
     flex-wrap: wrap;
+    height: 30vh;
 }
 
 .card-kpi {
-    width: 160px;
-    height: 100px;
+    width: 25%;
+    height: 80%;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -204,26 +205,32 @@ width: 400px;;
     display: flex;
     background-color: white;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-    height: 250px;
+    height: 350px;
     width: 300px;
     border-radius: 5px;
     padding: 2%;
     gap: 10px;
 }
-.fa-regular{
+
+.card-op span{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+/* .fa-regular{
     background-color:#cdcdcd;
     border-radius: 50%;
 
-}
-.fa-solid{
+} */
+/* .fa-solid{
     border-radius: 50%;
     margin-right: 25px;
-}
+} */
 .monitorar-atrasados{
     width: 100%;
     display: flex;
-    justify-content: space-around;
-    gap: 30px;
+    justify-content: space-evenly;
+    gap: 20px;
 }
 
 .selecionar-hover:hover {
@@ -237,10 +244,10 @@ width: 400px;;
 }
 
 .card-title {
-    font-size: 8pt;
+    font-size: 14pt;
     font-weight: normal;
 }
-.fa-solid {
+.icon-gerente {
     font-size: 28pt;
     color: #13b7c9;
 }
@@ -250,7 +257,7 @@ width: 400px;;
 }
 
 .card-user {
-    font-size: 10pt;
+    font-size: 16pt;
 }
 
 .card-circle {
@@ -328,8 +335,8 @@ width: 400px;;
     border-radius: 4px;
 }
 .tarefas-atrasadas{
-    width: 70%;
-    height: 250px;
+    height: 350px;
+    width: 60%;
     display: flex;
     justify-content: center;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
@@ -432,3 +439,17 @@ width: 400px;;
     background-color: #52C3E3;
     cursor: pointer;
 }
+
+.dados-geral{
+    width: 80%;
+}
+
+.dash-titulo{
+    width: 100%;
+    display: flex;
+    justify-content: start;
+    color: #335357;
+    margin-top: 15px;
+    margin-right: 50px;
+}
+

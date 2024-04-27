@@ -45,7 +45,7 @@
             </div>
             <div class="visao-geral">
                 <div class="dados-geral">
-                    <h1>Dashboard</h1>
+                    <h1 class="dash-titulo">Dashboard</h1>
                     <div class="cards">
                         <div class="card-kpi">
                             <span class="card-title">Perdas em ociosidade</span>
@@ -55,13 +55,13 @@
 
                         <div class="card-kpi" id="card-kpi-center">
                             <span class="card-title">Tarefas em atraso </span>
-                            <span class="card-user"><span class="card-user-valor">9 </span>tarefas de <br><span
-                                    class="card-user-valor">7</span> colaboradores</span>
+                            <span class="card-user"><span class="card-user-valor">9 </span>tarefas de <br>
+                            <span class="card-user-valor">7</span> colaboradores</span>
                         </div>
 
                         <div class="card-kpi">
-                            <h4 class="card-title">Satisfação </h4><i class="fa-solid fa-face-laugh-beam"></i>
-                            <span class="card-user"></span>
+                            <h4 class="card-title">Satisfação </h4><i class="fa-solid fa-face-laugh-beam icon-gerente"></i>
+                            <span class="card-user "></span>
                         </div>
                     </div>
                     <div class="monitorar-atrasados">
@@ -71,9 +71,9 @@
                         <div class="card-op">
                             <h5 class="card-title-op" style=""><b><strong>Operadores com tarefas atrasadas recorrentes
                                     </strong></h5></b></h5>
-                            <span><i class="fa-solid fa-circle-user" style="color: #e9e2e2; "></i>Jorge operador</span>
-                            <span><i class="fa-solid fa-circle-user" style="color: #e9e2e2;"></i>Jorge operador</span>
-                            <span><i class="fa-solid fa-circle-user" style="color: #e9e2e2;"></i>Jorge operador</span>
+                            <span><i class="fa-solid fa-circle-user icon-gerente" style="color: #000000; "></i>Jorge operador</span>
+                            <span><i class="fa-solid fa-circle-user icon-gerente" style="color: #000000;"></i>Jorge operador</span>
+                            <span><i class="fa-solid fa-circle-user icon-gerente"  style="color: #000000;"></i>Jorge operador</span>
 
                         </div>
                     </div>
@@ -95,15 +95,19 @@
     new Chart(ctx, {
         type: 'bar',
         data: {
-            labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+            labels: ['Gabriel', 'Denis', 'Juliana', 'Fabiana', 'Paula', 'Fernanda'],
             datasets: [{
                 label: 'Tarefas atrasadas ',
                 data: [2, 9, 3, 5, 9, 3],
-                borderWidth: 2
+                borderWidth: 2,
+                backgroundColor: '#313131',
+                borderColor: '#313131'
             },{
                 label: 'Tempo ocioso por operador',
                 data: [12, 19, 3, 5, 2, 3],
                 borderWidth: 2,
+                backgroundColor: '#52c3e3',
+                borderColor: '#cdcdcd'
             }],
             
             
@@ -113,7 +117,8 @@
                 y: {
                     beginAtZero: true
                 }
-            }
+            },
+            
         }, 
         
     });
