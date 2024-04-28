@@ -43,9 +43,9 @@ CREATE TABLE funcionario (
     dt_nasc DATE,
     cpf CHAR(14) NOT NULL,
     cargo VARCHAR(45), -- Picklist
-    fk_supervisor INT,
+    fk_gerente INT,
     fk_empresa INT,
-    CONSTRAINT fk_supervisor_funcionario FOREIGN KEY (fk_supervisor) REFERENCES funcionario(id_funcionario),
+    CONSTRAINT fk_gerente_funcionario FOREIGN KEY (fk_gerente) REFERENCES funcionario(id_funcionario),
     CONSTRAINT fk_empresa_funcionario FOREIGN KEY (fk_empresa) REFERENCES empresa(id_empresa)
 );
 
@@ -68,14 +68,14 @@ CREATE TABLE tarefa (
     concluida TINYINT DEFAULT 0,
     dt_concluida DATE DEFAULT (CURRENT_DATE),
     fk_funcionario INT NOT NULL,
-    fk_supervisor INT NOT NULL,
+    fk_gerente INT NOT NULL,
     CONSTRAINT fk_funcionario_tarefa FOREIGN KEY (fk_funcionario) REFERENCES funcionario(id_funcionario),
-    CONSTRAINT fk_supervisor_tarefa FOREIGN KEY (fk_supervisor) REFERENCES funcionario(id_funcionario)
+    CONSTRAINT fk_gerente_tarefa FOREIGN KEY (fk_gerente) REFERENCES funcionario(id_funcionario)
 );
 
 CREATE TABLE usuario (
     id_usuario INT PRIMARY KEY,
-    usuario VARCHAR(80),
+    username VARCHAR(80),
     senha VARCHAR(80),
     dt_criado DATETIME DEFAULT CURRENT_TIMESTAMP,
     CONSTRAINT fk_funcionario_usuario FOREIGN KEY (id_usuario) REFERENCES funcionario(id_funcionario)

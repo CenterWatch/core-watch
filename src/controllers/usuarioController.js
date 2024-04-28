@@ -23,7 +23,7 @@ function autenticar(req, res) {
                             email: resultadoAutenticar[0].email,
                             nome: resultadoAutenticar[0].primeiro_nome,
                             sobrenome: resultadoAutenticar[0].sobrenome,
-                            usuario: resultadoAutenticar[0].usuario,
+                            usuario: resultadoAutenticar[0].username,
                             empresa: resultadoAutenticar[0].razao_social,
                             id_empresa: resultadoAutenticar[0].id_empresa,
                             cargo: resultadoAutenticar[0].cargo
@@ -65,14 +65,14 @@ function cadastrar(req, res){
     var email = req.body.emailServer;
     var usuario = req.body.usuarioServer;
     var senha = req.body.senhaServer;
-    var supervisor = req.body.superVisorServer;
+    var gerente = req.body.gerenteServer;
     var empresa = req.body.empresaServer;
     var cpf = req.body.cpfServer;
 
     if(nome.length < 4 || usuario.length < 4 || senha.length < 4){
         res.status(400).send("Dados inválidos para cadastro")
     }else{
-        usuarioModel.cadastrarFunc(nome,sobrenome,celular,telefone,email,usuario,senha, supervisor, empresa,cpf)
+        usuarioModel.cadastrarFunc(nome,sobrenome,celular,telefone,email,usuario,senha, gerente, empresa,cpf)
         .then(function (cadastroResultado) {
             res.json(cadastroResultado);
         })

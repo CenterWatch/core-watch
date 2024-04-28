@@ -112,7 +112,7 @@
             var cpf = "123.123.123-12";
             var usuario = usuario_input.value;
             var senha = senha_input.value;
-            var superVisor = sessionStorage.ID_USUARIO;
+            var gerente = sessionStorage.ID_USUARIO;
             var empresa = sessionStorage.ID_EMPRESA_USUARIO;
 
             fetch("/usuarios/cadastrar", {
@@ -129,7 +129,7 @@
                     cpfServer: cpf,
                     usuarioServer: usuario,
                     senhaServer: senha,
-                    superVisorServer: superVisor,
+                    gerenteServer: gerente,
                     empresaServer: empresa
                 }),
             })

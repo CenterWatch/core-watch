@@ -35,7 +35,7 @@
                 <div class="profile-container">
                     <div class="user-wrap">
                         <img src="../img/user_placeholder.png" class="img-user">
-                        <span>Usuário</span>
+                        <span id="nome-usuario"></span>
                         <i class="fa-solid fa-angle-down"></i>
                     </div>
                     <div>
@@ -60,8 +60,16 @@
                         </div>
 
                         <div class="card-kpi">
-                            <h4 class="card-title">Satisfação </h4><i class="fa-solid fa-face-laugh-beam icon-gerente"></i>
-                            <span class="card-user "></span>
+                            <h4 class="card-title">Satisfação</h4>
+                            <div class="satisfacao">
+                                <i class="fa-solid fa-face-laugh-beam icon-gerente"></i>
+                                <span class="pontuacao">9,3</span>
+                                <div class="seta-indicador">
+                                    <i class="fa-solid fa-arrow-trend-up"></i>
+                                    <span>3,6%</span>
+                                </div>
+                            </div>
+
                         </div>
                     </div>
                     <div class="monitorar-atrasados">
@@ -69,12 +77,12 @@
                             <canvas id="myChart" class="dash-tarefas"></canvas>
                         </div>
                         <div class="card-op">
-                            <h5 class="card-title-op" style=""><b><strong>Operadores com tarefas atrasadas recorrentes
-                                    </strong></h5></b></h5>
-                            <span><i class="fa-solid fa-circle-user icon-gerente" style="color: #000000; "></i>Jorge operador</span>
-                            <span><i class="fa-solid fa-circle-user icon-gerente" style="color: #000000;"></i>Jorge operador</span>
-                            <span><i class="fa-solid fa-circle-user icon-gerente"  style="color: #000000;"></i>Jorge operador</span>
-
+                            <span class="card-title-op">Operadores com tarefas atrasadas recorrentes</span>
+                            <ul>
+                                <li><span><i class="fa-solid fa-circle-user" style="color: #313131; "></i>Jorge operador</span></li>
+                                <li><span><i class="fa-solid fa-circle-user" style="color: #313131; "></i>Jorge operador</span></li>
+                                <li><span><i class="fa-solid fa-circle-user" style="color: #313131; "></i>Jorge operador</span></li>
+                            </ul>
                         </div>
                     </div>
                 </div>
@@ -90,6 +98,10 @@
 </html>
 
 <script>
+
+    var usuario = sessionStorage.USERNAME_USUARIO;
+    var txt_nome = document.getElementById('nome-usuario');
+    txt_nome.innerHTML = `${usuario}`
 
     const ctx = document.getElementById('myChart');
     new Chart(ctx, {
@@ -118,7 +130,15 @@
                     beginAtZero: true
                 }
             },
-            
+            plugins: {
+                title: {
+                    display: true,
+                    text: 'Tarefas atrasadas x tempo ocioso por operador',
+                    font: {
+                        size: 18
+                    }
+                }
+            }
         }, 
         
     });

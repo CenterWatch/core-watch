@@ -201,7 +201,6 @@ width: 400px;;
 }
 .card-op{
     flex-direction: column;
-    justify-content: space-evenly;
     display: flex;
     background-color: white;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
@@ -209,7 +208,7 @@ width: 400px;;
     width: 300px;
     border-radius: 5px;
     padding: 2%;
-    gap: 10px;
+    gap: 30px;
 }
 
 .card-op span{
@@ -233,6 +232,25 @@ width: 400px;;
     gap: 20px;
 }
 
+.monitorar-atrasados ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    
+
+    li {
+        padding: 10px;
+        border-radius: 8px;
+        border: 1px #cdcdcd solid;
+        font-size: 16px;
+
+        i {
+            font-size: 30px;
+         }
+    }
+}
+
 .selecionar-hover:hover {
     cursor: pointer;
     filter: brightness(0.97);
@@ -248,11 +266,10 @@ width: 400px;;
     font-weight: normal;
 }
 .icon-gerente {
-    font-size: 28pt;
+    font-size: 70px;
     color: #13b7c9;
 }
 .card-title-op{
-    font-weight: bold; 
     text-align: center;
 }
 
@@ -340,8 +357,8 @@ width: 400px;;
     display: flex;
     justify-content: center;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-
 }
+
 .visao-geral {
     display: flex;
     justify-content: center;
@@ -453,3 +470,23 @@ width: 400px;;
     margin-right: 50px;
 }
 
+.seta-indicador {
+    color: rgb(1, 168, 1);
+    display: flex;
+    flex-direction: column;
+    font-size: 12pt;
+}
+
+.satisfacao {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    gap: 10px;
+}
+
+.satisfacao .pontuacao {
+    font-size: 30pt;
+    color: #313131;
+    font-weight: 500;
+    margin-right: 10px; 
+}
