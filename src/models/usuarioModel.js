@@ -3,7 +3,7 @@ var database = require("../database/config")
 function autenticar(usuario, senha) {
     console.log("ACESSEI O USUARIO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function entrar(): ", usuario, senha)
     var instrucao = `
-    SELECT id_funcionario,username, primeiro_nome, sobrenome, razao_social, id_empresa, cargo  FROM usuario join funcionario join empresa WHERE fk_empresa = id_empresa and username = '${usuario}' AND senha = '${senha}' and id_usuario = id_funcionario;
+    SELECT * FROM usuario join funcionario join empresa WHERE fk_empresa = id_empresa and username = '${usuario}' AND senha = '${senha}' and id_usuario = id_funcionario;
     `;
     console.log("Executando a instrução SQL: \n" + instrucao);
     return database.executar(instrucao);
@@ -38,9 +38,15 @@ function cadastrarUser(usuario, senha, id_funcionario){
     return database.executar(instrucao);
 }
 
+function listarOperadores(idGerente){
+    var instrucao = `select f.* from funcionario f join funcionario g on g.id_funcionario = f.fk_gerente where g.id_funcionario = ${idGerente};`
+    return database.executar(instrucao);
+}
+
 module.exports = {
     autenticar,
     listar,
     cadastrarFunc,
-    cadastrarUser
+    cadastrarUser,
+    listarOperadores
 };

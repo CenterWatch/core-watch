@@ -9,4 +9,8 @@ router.post("/cadastrar", function (req, res) {
     maquinaController.cadastrar(req, res);
 });
 
+router.post("/listarMaquinas", function (req, res) {
+    maquinaController.listarMaquinas(req, res);
+});
+
 module.exports = router;

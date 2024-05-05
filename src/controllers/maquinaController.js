@@ -20,6 +20,53 @@ function cadastrar(req, res){
 
 }
 
+function listarMaquinas(req, res) {
+    var idEmpresa = req.body.idEmpresaServer;
+    
+    maquinaModel.listarMaquinas(idEmpresa)
+        .then(
+            function (resultadoListarMaquinas) {
+                console.log(`\nResultados encontrados: ${resultadoListarMaquinas.length}`);
+                console.log(`Resultados: ${JSON.stringify(resultadoListarMaquinas)}`);
+
+                if (resultadoListarMaquinas.length != 0) {
+                    console.log(resultadoListarMaquinas);
+                    res.json({
+                        maquinas: resultadoListarMaquinas
+                    });
+                } else {
+                    res.status(403).send("Máquinas não encontradas!");
+                }
+            }
+        ).catch(
+            function (erro) {
+                console.log(erro);
+                console.log("\nHouve um erro ao buscar as máquinas! Erro: ", erro.sqlMessage);
+                res.status(500).json(erro.sqlMessage);
+            }
+        );
+}
+
+function buscarRegitros(req, res){
+    idEmpresa
+}
+
+function verificarMaquinaOff(res, req){
+    const idSessao = req.body.idSessao;
+    const idMaquina = req.body.idMaquina;
+
+    maquinaModel.verificarMaquinaOff(idSessao, idMaquina)
+    .then(function (resSegundos){
+        res.json(resSegundos);
+    })
+    .catch(function (erro){
+        console.log(erro)
+        console.log(`houve um erro ao realizar o select, erro: ${erro}`)
+    })
+}
+
 module.exports = {
-    cadastrar
+    cadastrar,
+    listarMaquinas,
+    verificarMaquinaOff
 }

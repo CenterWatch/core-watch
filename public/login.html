@@ -64,12 +64,13 @@
                         sessionStorage.EMPRESA_USUARIO = json.empresa;
                         sessionStorage.ID_EMPRESA_USUARIO = json.id_empresa;
                         sessionStorage.CARGO_USUARIO = json.cargo;
+                        sessionStorage.ID_SESSAO = json.id_sessao;
 
                         switch (json.cargo) {
                             case "Diretor":
                                 var enderecaPara = "./empresa/selecionaFilial.html"
                                 break;
-                            case "Gerente":
+                            case "gerente":
                                 var enderecaPara = "./gerente/dashboard.html"
                                 break;
                             case "Suporte":

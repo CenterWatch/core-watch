@@ -86,7 +86,7 @@
         </div>
     
         <div id="listaFunc">
-    
+            
         </div>
 
 
@@ -150,27 +150,21 @@
                     console.log("Erro: ", erro)
                 })
         }
-
+        var listaFunc = [];
         function buscarFunc() {
             var idEmpresa = sessionStorage.ID_EMPRESA_USUARIO;
-            var listaFunc = [];
+            const idUsuario = sessionStorage.ID_USUARIO;
+            
             var divLista = document.getElementById('listaFunc');
-            fetch(`/empresas/buscarFunc?idEmpresa=${idEmpresa}`).then(res => {
+            fetch(`/usuarios/listarOperadores?idGerenteServer=${idUsuario}`).then(res => {
                 if (!res.ok) {
                     throw new Error(`Erro na solicitação: ${res.statusText}`);
                 }
                 return res.json();
             })
                 .then(res => {
-                    listaFunc = res;
-
-                    for (var i = 0; i < listaFunc.length; i++) {
-                        divLista.innerHTML += `
-                                                <div>
-                                                    <span>${listaFunc[i].primeiro_nome} ${listaFunc[i].sobrenome} - ${listaFunc[i].cargo}</span>
-                                                </div>
-                                            `
-                    }
+                    console.log(res);
+                    sessionStorage.FUNCIONARIOS = JSON.stringify(res);
                 })
                 .catch(erro => {
                     console.log(erro);

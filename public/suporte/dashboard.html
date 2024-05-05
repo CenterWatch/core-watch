@@ -11,7 +11,7 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
-<body>
+<body onload="listarMaquina()">
 
     <section class="section-body">
         <div class="leftbar">
@@ -156,6 +156,40 @@
 </html>
 
 <script>
+
+    function listarMaquina(){
+        console.log("listando máquina")
+            fetch("/maquina/listarMaquinas", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    idEmpresaServer: sessionStorage.ID_EMPRESA_USUARIO
+                })
+            }).then(function (resposta) {
+                console.log("ESTOU NO THEN DO listarMaquina()!")
+
+                if (resposta.ok) {
+                    console.log(resposta);
+
+                    resposta.json().then(json => {
+                        console.log(json);
+                        console.log(JSON.stringify(json));
+                        sessionStorage.MAQUINAS = JSON.stringify(json.maquinas);
+                    });
+
+                } else {
+                    console.log("Houve um erro ao tentar listar as máquinas!");
+                }
+
+            }).catch(function (erro) {
+                console.log(erro);
+            })
+
+            return false;
+        }
+
     function abrirModal(titulo) {
         document.getElementById("tituloDetalhes").innerHTML = titulo;
         document.getElementById("modalDetalhes").showModal();

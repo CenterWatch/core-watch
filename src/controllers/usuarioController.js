@@ -26,7 +26,8 @@ function autenticar(req, res) {
                             usuario: resultadoAutenticar[0].username,
                             empresa: resultadoAutenticar[0].razao_social,
                             id_empresa: resultadoAutenticar[0].id_empresa,
-                            cargo: resultadoAutenticar[0].cargo
+                            cargo: resultadoAutenticar[0].cargo,
+                            sessao: resultadoAutenticar[0].sessao
                         });
                         
                     } else if (resultadoAutenticar.length == 0) {
@@ -46,8 +47,10 @@ function autenticar(req, res) {
 
 }
 
-function listar(req, res){
-    usuarioModel.listar()
+function listarOperadores(req, res){
+    var idGerente = req.query.idGerenteServer;
+
+    usuarioModel.listarOperadores(idGerente)
         .then(result => {
             res.status(200).json(result);
         })
@@ -86,6 +89,6 @@ function cadastrar(req, res){
 
 module.exports = {
     autenticar,
-    listar,
+    listarOperadores,
     cadastrar
 }
