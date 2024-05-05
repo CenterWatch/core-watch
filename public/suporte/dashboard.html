@@ -11,7 +11,7 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
-<body onload="listarMaquina()">
+<body onload="listarMaquinas()">
 
     <section class="section-body">
         <div class="leftbar">
@@ -29,13 +29,13 @@
                 <a class="nav-btn" href=""><i class="fa-solid fa-arrow-right-from-bracket"></i><span>Sair</span></a>
             </div>
         </div>
-        <div class="main">
+        <div id="mainDiv" class="main">
             <div class="upbar">
                 <input class="buscar-inp" type="text" placeholder="Buscar">
                 <div class="profile-container">
                     <div class="user-wrap">
                         <img src="../img/user_placeholder.png" class="img-user">
-                        <span id="nome-usuario" >Usuário</span>
+                        <span id="nome-usuario">Usuário</span>
                         <i class="fa-solid fa-angle-down"></i>
                     </div>
                     <div>
@@ -48,7 +48,7 @@
                     Dashboard
                 </div>
                 <div class="cards">
-                    <div onclick="abrirModal('DESKTOP-002')" class="card-pc selecionar-hover card-error">
+                    <!-- <div onclick="abrirModal('DESKTOP-002')" class="card-pc selecionar-hover card-error">
                         <span class="card-title">DESKTOP-002</span>
                         <span class="power-off"><i class="fa-solid fa-power-off"></i></span>
                         <i class="fa-solid fa-desktop"></i>
@@ -59,93 +59,9 @@
                         <span class="power-off"><i class="fa-solid fa-microchip"></i></span>
                         <i class="fa-solid fa-desktop"></i>
                         <span class="card-user">Jorge Operador</span>
-                    </div>
-                    <div onclick="abrirModal('DESKTOP-001')" class="card-pc">
-                        <span class="card-title">DESKTOP-001</span>
-                        <span class="card-circle"><i class="fa-solid fa-check"></i></span>
-                        <i class="fa-solid fa-desktop"></i>
-                        <span class="card-user">Jorge Operador</span>
-                    </div>
+                    </div> -->
                 </div>
-                <dialog id="modalDetalhes">
-                    <div class="card-detalhes">
-                        <div class="fechar-wrap">
-                            <span onclick="fecharModal()" class="fechar-btn"><i class="fa-solid fa-xmark"></i></span>
-                        </div>
-                        <span class="titulo-detalhes" id="tituloDetalhes"></span>
-                        <div class="linha-horizontal"></div>
-                        <div class="line-chart-container">
-                            <div class="line-chart chart-ram">
-                                <canvas id="chartRam"></canvas>
-                            </div>
-                            <div class="line-chart chart-cpu">
-                                <canvas id="chartCpu"></canvas>
-                            </div>
-                        </div>
-                        <div class="linha-horizontal"></div>
-                        <div class="pizza-chart-container">
-                            <span class="titulo-detalhes" class="pizza-titulo">Volumes disponíveis</span>
-                            <div class="pizza-chart-wrapper">
-                                <div class="disco-chart chart-disco">
-                                    <canvas id="chartDisco1"></canvas>
-                                </div>
-                                <div class="disco-chart chart-disco">
-                                    <canvas id="chartDisco2"></canvas>
-                                </div>
-                                <div class="disco-chart chart-disco">
-                                    <canvas id="chartDisco3"></canvas>
-                                </div>
-                                <div class="disco-chart chart-disco">
-                                    <canvas id="chartDisco4"></canvas>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="linha-horizontal"></div>
-                        <div class="sessao-container">
-                            <div class="sessao sessao-info">
-                                <span class="titulo-detalhes" class="info-titulo">Informações</span>
-                                <div class="info-wrapper">
-                                    <ul id="listaInfo">
-                                        <li>Nome de Host: <span class="sys-info" id="hostname">DESKTOP</span></li>
-                                        <li>Sistema operacional: <span class="sys-info" id="so">Windows</span></li>
-                                        <li>CPU: <span class="sys-info" id="cpu">AMD Ryzen 7 5700U with Radeon
-                                                Graphics</span></li>
-                                        <li>Total RAM: <span class="sys-info" id="ram">19,2 GB</span></li>
-                                        <li>Última sessão: <span class="sys-info" id="ultsessao">21/04/24, 07:57</span>
-                                        </li>
-                                        <li>Ligado à <span class="sys-info" id="uptime">6,5</span> horas</li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="sessao sessao-historico">
-                                <span class="titulo-detalhes" class="info-titulo">Chamados relacionados</span>
-                                <div class="historico-wrapper">
-                                    <ul id="listaChamados">
-                                        <li class="chamado-item selecionar-hover"><i class="fa-solid fa-circle-user"></i>Trocar teclado
-                                            <span class="data-chamado">24 de maio</span>
-                                        </li>
-                                        <li class="chamado-item selecionar-hover"><i class="fa-solid fa-circle-user"></i>Trocar teclado
-                                            <span class="data-chamado">24 de maio</span>
-                                        </li>
-                                        <li class="chamado-item selecionar-hover"><i class="fa-solid fa-circle-user"></i>Trocar teclado
-                                            <span class="data-chamado">24 de maio</span>
-                                        </li>
-                                        <li class="chamado-item selecionar-hover"><i class="fa-solid fa-circle-user"></i>Trocar teclado
-                                            <span class="data-chamado">24 de maio</span>
-                                        </li>
-                                        <li class="chamado-item selecionar-hover"><i class="fa-solid fa-circle-user"></i>Trocar teclado
-                                            <span class="data-chamado">24 de maio</span>
-                                        </li>
-                                        <li class="chamado-item selecionar-hover"><i class="fa-solid fa-circle-user"></i>Trocar teclado
-                                            <span class="data-chamado">24 de maio</span>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="linha-horizontal"></div>
-                    </div>
-                </dialog>
+
             </div>
             <div>
     </section>
@@ -156,65 +72,321 @@
 </html>
 
 <script>
+    const mapMaquinas = new Map();
+    const mapVolumes = new Map();
+    var cardsElements = document.getElementsByClassName("cards")[0];
 
-    function listarMaquina(){
-        console.log("listando máquina")
-            fetch("/maquina/listarMaquinas", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                    idEmpresaServer: sessionStorage.ID_EMPRESA_USUARIO
-                })
-            }).then(function (resposta) {
-                console.log("ESTOU NO THEN DO listarMaquina()!")
+    function listarMaquinas() {
+        fetch("/maquina/listarMaquinas", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                idEmpresaServer: sessionStorage.ID_EMPRESA_USUARIO
+            })
+        }).then(function (resposta) {
+            console.log("ESTOU NO THEN DO listarMaquinas()!")
 
-                if (resposta.ok) {
-                    console.log(resposta);
+            if (resposta.ok) {
+                console.log(resposta);
 
-                    resposta.json().then(json => {
-                        console.log(json);
-                        console.log(JSON.stringify(json));
-                        sessionStorage.MAQUINAS = JSON.stringify(json.maquinas);
+                resposta.json().then(json => {
+                    console.log(json);
+                    console.log(JSON.stringify(json));
+                    sessionStorage.MAQUINAS = JSON.stringify(json.maquinas);
+                    sessionStorage.VOLUMES = JSON.stringify(json.volumes);
+
+                    json.maquinas.forEach(function (item) {
+                        mapMaquinas.set(item.hostname, item);
                     });
 
-                } else {
-                    console.log("Houve um erro ao tentar listar as máquinas!");
-                }
+                    const volumesAgrupadosPorMaquina = Object.groupBy(json.volumes, ({ hostname }) => hostname);
+                    mapearVolumePorMaquina(json.volumes)
 
-            }).catch(function (erro) {
-                console.log(erro);
-            })
+                    desenharMaquinas(json.maquinas);
 
-            return false;
-        }
+                    json.maquinas.forEach(function (maquina) {
+                        desenharModal(maquina.hostname);
+                    });
+                });
 
-    function abrirModal(titulo) {
-        document.getElementById("tituloDetalhes").innerHTML = titulo;
-        document.getElementById("modalDetalhes").showModal();
+            } else {
+                console.log("Houve um erro ao tentar listar as máquinas!");
+            }
+
+        }).catch(function (erro) {
+            console.log(erro);
+        })
+
+        return false;
     }
 
-    function fecharModal() {
-        document.getElementById("modalDetalhes").close();
+
+    function fecharModal(hostname) {
+        document.getElementById(`modalDetalhes${hostname}`).close();
     }
 
-    var cardsElements = document.getElementsByClassName("cards")[0];
-    var qtdPcs = 50;
-
-    for (let i = 4; i < qtdPcs + 4; i++) {
-
-        n = i;
-
-        if (i < 10) n = `0${i}`;
-
-        cardsElements.innerHTML += `
-        <div onclick="abrirModal('DESKTOP-0${n}')" class="card-pc selecionar-hover">
-            <span class="card-title">DESKTOP-0${n}</span>
+    function desenharMaquinas(maquinas) {
+        maquinas.forEach(function (maquina) {
+            cardsElements.innerHTML += `
+        <div onclick="abrirModal('${maquina.hostname}')" class="card-pc selecionar-hover">
+            <span class="card-title">${maquina.hostname}</span>
             <span class="card-circle"><i class="fa-solid fa-check"></i></span>
             <i class="fa-solid fa-desktop"></i>
             <span class="card-user">Jorge Operador</span>
         </div>
+        `;
+        });
+    }
+
+    function mapearVolumePorMaquina(volumes) {
+        var hostnameAtual = volumes[0].hostname;
+        var volumesAgrupados = [];
+
+        volumesAgrupados.push(volumes[0])
+
+        for (let i = 1; i < volumes.length; i++) {
+
+            const volumeAtual = volumes[i];
+            const volumeAnterior = volumes[i - 1];
+
+            if (volumeAtual.hostname === volumeAnterior.hostname) {
+                volumesAgrupados.push(volumeAtual);
+            } else {
+                mapVolumes.set(volumeAnterior.hostname, volumesAgrupados);
+                hostnameAtual = volumeAtual.hostname;
+
+                volumesAgrupados = [];
+                volumesAgrupados.push(volumeAtual);
+            }
+        }
+
+        mapVolumes.set(volumes[volumes.length - 1].hostname, volumesAgrupados);
+    }
+
+    function abrirModal(hostname) {
+        mainDiv.innerHTML += ``;
+
+        var modal = document.getElementById(`modalDetalhes${hostname}`)
+
+        const modelHn = document.getElementById(`hostname${hostname}`);
+        const modelSo = document.getElementById(`so${hostname}`);
+        const modelCpu = document.getElementById(`cpu${hostname}`);
+        const modelRam = document.getElementById(`ram${hostname}`);
+        const modelUlt = document.getElementById(`ultsessao${hostname}`);
+        const modelUp = document.getElementById(`uptime${hostname}`);
+
+        const maquinaAtual = mapMaquinas.get(hostname);
+
+        modelHn.innerHTML = maquinaAtual.hostname;
+        modelSo.innerHTML = maquinaAtual.so;
+        modelCpu.innerHTML = maquinaAtual.cpu;
+        modelRam.innerHTML = maquinaAtual.ram;
+
+        document.getElementById(`tituloDetalhes${hostname}`).innerHTML = hostname;
+
+        // TODO: trazer dados de última sessão e uptime
+        // modelUlt.innerHTML = mapMaquinas.get(titulo).us;
+        // modelUp.innerHTML = mapMaquinas.get(titulo).up;
+
+        document.getElementById(`modalDetalhes${hostname}`).showModal();
+        desenharGraficos(hostname);
+    }
+
+    function desenharGraficos(hostname) {
+        const ctxRam = document.getElementById(`chartRam${hostname}`);
+
+        new Chart(ctxRam, {
+            type: 'line',
+            data: {
+                labels: ['09:22:37', '09:22:35', '09:22:33', '09:22:31', '09:22:29', '09:22:27'],
+                datasets: [{
+                    label: '',
+                    data: [70, 71, 68, 64, 62, 65],
+                    fill: true,
+                    backgroundColor: '#3D3D3D30',
+                    borderColor: '#3D3D3D',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        min: 0,
+                        max: 100,
+                        beginAtZero: true,
+                        ticks: {
+                            stepSize: 100,
+                            callback: function (value, index, values) {
+                                return (value == 0 || value == 100) ? value + '%' : '';
+                            }
+                        }
+                    }
+                },
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Uso da Memória RAM',
+                        font: {
+                            size: 18
+                        }
+                    },
+                    legend: {
+                        display: false
+                    }
+                }
+            }
+        });
+
+        const ctxCpu = document.getElementById(`chartCpu${hostname}`);
+
+        new Chart(ctxCpu, {
+            type: 'line',
+            data: {
+                labels: ['09:22:37', '09:22:35', '09:22:33', '09:22:31', '09:22:29', '09:22:27'],
+                datasets: [{
+                    label: '',
+                    data: [65, 66, 68, 64, 59, 55],
+                    fill: true,
+                    backgroundColor: '#52C3E350',
+                    borderColor: '#52C3E3',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        min: 0,
+                        max: 100,
+                        beginAtZero: true,
+                        ticks: {
+                            stepSize: 100,
+                            callback: (value) => { return (value == 0 || value == 100) ? value + '%' : ''; }
+                        }
+                    }
+                },
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Uso da CPU',
+                        font: {
+                            size: 18
+                        }
+                    },
+                    legend: {
+                        display: false
+                    }
+                }
+            }
+        });
+
+        desenharVolumesPorMaquina(hostname);
+    }
+
+    function desenharVolumesPorMaquina(hostname) {
+
+        var volumes = mapVolumes.get(hostname);
+        document.getElementById(`volumesContainer${hostname}`).innerHTML = '';
+
+        for (let i = 0; i < volumes.length; i++) {
+            document.getElementById(`volumesContainer${hostname}`).innerHTML += `
+            <div class="disco-chart chart-disco">
+                <canvas id="chart${hostname}Volume${i}"></canvas>
+            </div>
+            `;
+        }
+
+        for (let i = 0; i < volumes.length; i++) {
+            const ctxDisco = document.getElementById(`chart${hostname}Volume${i}`);
+            console.log(ctxDisco)
+
+            new Chart(ctxDisco, {
+                type: 'pie',
+                data: {
+                    labels: [
+                        'Espaço livre',
+                        'Espaço usado'
+                    ],
+                    datasets: [{
+                        label: '%',
+                        data: [70, 30],
+                        backgroundColor: [
+                            '#52C3E3',
+                            '#3D3D3D'
+                        ],
+                        hoverOffset: 4
+                    }]
+                },
+                options: {
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: volumes[i].nome
+                        },
+                        legend: {
+                            position: "bottom"
+                        }
+                    }
+                }
+            });
+        }
+    }
+
+    function desenharModal(hostname) {
+        document.getElementById("mainDiv").innerHTML += `
+        <dialog class="modal-detalhes" id="modalDetalhes${hostname}">
+                <div class="card-detalhes">
+                    <div class="fechar-wrap">
+                        <span onclick="fecharModal('${hostname}')" class="fechar-btn"><i class="fa-solid fa-xmark"></i></span>
+                    </div>
+                    <span class="titulo-detalhes" id="tituloDetalhes${hostname}"></span>
+                    <div class="linha-horizontal"></div>
+                    <div class="line-chart-container">
+                        <div class="line-chart chart-ram">
+                            <canvas id="chartRam${hostname}"></canvas>
+                        </div>
+                        <div class="line-chart chart-cpu">
+                            <canvas id="chartCpu${hostname}"></canvas>
+                        </div>
+                    </div>
+                    <div class="linha-horizontal"></div>
+                    <div class="pizza-chart-container">
+                        <span class="titulo-detalhes" class="pizza-titulo">Volumes disponíveis</span>
+                        <div id="volumesContainer${hostname}" class="pizza-chart-wrapper">
+                        </div>
+                    </div>
+                    <div class="linha-horizontal"></div>
+                    <div class="sessao-container">
+                        <div class="sessao sessao-info">
+                            <span class="titulo-detalhes" class="info-titulo">Informações</span>
+                            <div class="info-wrapper">
+                                <ul id="listaInfo">
+                                    <li>Nome de Host: <span class="sys-info" id="hostname${hostname}"></span></li>
+                                    <li>Sistema operacional: <span class="sys-info" id="so${hostname}"></span></li>
+                                    <li>CPU: <span class="sys-info" id="cpu${hostname}"></span></li>
+                                    <li>Total RAM: <span class="sys-info" id="ram${hostname}"></span> GB</li>
+                                    <li>Última sessão: <span class="sys-info" id="ultsessao${hostname}">21/04/24, 07:57</span>
+                                    </li>
+                                    <li>Ligado à <span class="sys-info" id="uptime${hostname}">6,5</span> horas</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="sessao sessao-historico">
+                            <span class="titulo-detalhes" class="info-titulo">Chamados relacionados</span>
+                            <div class="historico-wrapper">
+                                <ul class="lista-chamados" id="listaChamados${hostname}">
+                                    <li class="chamado-item selecionar-hover"><i
+                                            class="fa-solid fa-circle-user"></i>Trocar teclado
+                                        <span class="data-chamado">24 de maio</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="linha-horizontal"></div>
+                </div>
+            </dialog>
         `;
     }
 
@@ -222,127 +394,4 @@
     var txt_nome = document.getElementById('nome-usuario');
     txt_nome.innerHTML = `${usuario}`
 
-    const ctxRam = document.getElementById('chartRam');
-
-    new Chart(ctxRam, {
-        type: 'line',
-        data: {
-            labels: ['09:22:37', '09:22:35', '09:22:33', '09:22:31', '09:22:29', '09:22:27'],
-            datasets: [{
-                label: '',
-                data: [70, 71, 68, 64, 62, 65],
-                fill: true,
-                backgroundColor: '#3D3D3D30',
-                borderColor: '#3D3D3D',
-                borderWidth: 1
-            }]
-        },
-        options: {
-            scales: {
-                y: {
-                    min: 0,
-                    max: 100,
-                    beginAtZero: true,
-                    ticks: {
-                        stepSize: 100,
-                        callback: function (value, index, values) {
-                            return (value == 0 || value == 100) ? value + '%' : '';
-                        }
-                    }
-                }
-            },
-            plugins: {
-                title: {
-                    display: true,
-                    text: 'Uso da Memória RAM',
-                    font: {
-                        size: 18
-                    }
-                },
-                legend: {
-                    display: false
-                }
-            }
-        }
-    });
-
-    const ctxCpu = document.getElementById('chartCpu');
-
-    new Chart(ctxCpu, {
-        type: 'line',
-        data: {
-            labels: ['09:22:37', '09:22:35', '09:22:33', '09:22:31', '09:22:29', '09:22:27'],
-            datasets: [{
-                label: '',
-                data: [65, 66, 68, 64, 59, 55],
-                fill: true,
-                backgroundColor: '#52C3E350',
-                borderColor: '#52C3E3',
-                borderWidth: 1
-            }]
-        },
-        options: {
-            scales: {
-                y: {
-                    min: 0,
-                    max: 100,
-                    beginAtZero: true,
-                    ticks: {
-                        stepSize: 100,
-                        callback: (value) => {return (value == 0 || value == 100) ? value + '%' : '';}
-                    }
-                }
-            },
-            plugins: {
-                title: {
-                    display: true,
-                    text: 'Uso da CPU',
-                    font: {
-                        size: 18
-                    }
-                },
-                legend: {
-                    display: false
-                }
-            }
-        }
-    });
-
-
-
-    const discos = document.getElementsByClassName('chart-disco');
-
-    for (let i = 1; i <= discos.length; i++) {
-        const ctxDisco = document.getElementById(`chartDisco${i}`);
-
-        new Chart(ctxDisco, {
-            type: 'pie',
-            data: {
-                labels: [
-                    'Espaço livre',
-                    'Espaço usado'
-                ],
-                datasets: [{
-                    label: '%',
-                    data: [70, 30],
-                    backgroundColor: [
-                        '#52C3E3',
-                        '#3D3D3D'
-                    ],
-                    hoverOffset: 4
-                }]
-            },
-            options: {
-                plugins: {
-                    title: {
-                        display: true,
-                        text: 'Disco C:\\'
-                    },
-                    legend: {
-                        position: "bottom"
-                    }
-                }
-            }
-        });
-    }
 </script>

@@ -240,7 +240,7 @@ section {
     border-radius: 14px;
 }
 
-#modalDetalhes {
+.modal-detalhes {
     outline: none;
     border: none;
     width: 100vw;
@@ -248,7 +248,7 @@ section {
     background-color: #ffffff00;
 }
 
-#tituloDetalhes {
+.titulo-detalhes {
     font-size: 30px;
     width: 100%;
     text-align: center;
@@ -344,7 +344,7 @@ section {
     font-size: 30px;
 }
 
-#listaChamados {
+.lista-chamados {
     display: flex;
     flex-direction: column;
     gap: 12px;
