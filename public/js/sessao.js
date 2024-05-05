@@ -6,3 +6,8 @@ function validarSessao(){
     var empresa = sessionStorage.EMPRESA_USUARIO;
     var idEmpresa = sessionStorage.ID_EMPRESA_USUARIO;
 }
+
+function sair() {
+    sessionStorage.clear();
+    window.location = '../login.html'
+}
