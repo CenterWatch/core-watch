@@ -56,10 +56,6 @@ function listarMaquinas(req, res) {
         );
 }
 
-function buscarRegitros(req, res) {
-    idEmpresa
-}
-
 function verificarMaquinaOff(res, req) {
     const idSessao = req.body.idSessao;
     const idMaquina = req.body.idMaquina;

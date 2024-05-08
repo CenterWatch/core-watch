@@ -8,7 +8,7 @@
     <script src="../js/sessao.js"></script>
     <script src="https://kit.fontawesome.com/384071f692.js" crossorigin="anonymous"></script>
 </head>
-<body>
+<body onload="buscarArtigos()">
 
     <section class="section-body">
         <div class="leftbar">
@@ -47,7 +47,26 @@
             </div>
         <div>
     </section>
-
-
 </body>
 </html>
+
+<script>
+    function buscarArtigos() {
+        var idEmpresa = sessionStorage.ID_EMPRESA_USUARIO;
+
+        fetch(`/artigos/buscarArtigos?idEmpresaServer=${idEmpresa}`).then(res => {
+            if (!res.ok) {
+                throw new Error(`Erro na solicitação: ${res.statusText}`);
+            }
+            return res.json();
+        })
+            .then(res => {
+                console.log(res);
+                sessionStorage.ARTIGOS = JSON.stringify(res);
+            })
+            .catch(erro => {
+                console.log(erro);
+                console.log("Não foi  possivel realizar o select: ", erro);
+            })
+    }
+</script>
