@@ -1,12 +1,21 @@
-# Imagem do mysql para o container do banco
-FROM mysql:latest 
-ENV MYSQL_ROOT_PASSWORD="root"
+# Configuração do Node.js
+FROM node:20 AS build 
+WORKDIR /app
+COPY package*.json ./
+RUN npm install 
+COPY . .
 
-# Rodar o script de criação das tabelas. OBS: Ao subir o container, o docker roda automaticamente o script
+# Configuração do MySQL
+FROM mysql:latest AS bd
+ENV MYSQL_ROOT_PASSWORD="root"
 COPY ./src/database/script-tabelas.sql /docker-entrypoint-initdb.d/
 
-# Imagem do nodejs para container do servidor
-FROM node:20
-COPY . /app 
+# Definir a imagem final para a aplicação Node.js
+FROM build AS app
 WORKDIR /app
-RUN npm install
+
+# Expor a porta da aplicação Node.js (se necessário)
+EXPOSE 3000
+
+# Comando de inicialização da aplicação Node.js
+CMD ["npm", "start"]
