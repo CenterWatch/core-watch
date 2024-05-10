@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="../css/navbar.css">
     <link rel="stylesheet" href="../css/dashboards.css">
     <link rel="stylesheet" href="../css/gerente/operador.css">
+    <link rel="stylesheet" href="../css/gerente/funcionarios.css">
     <script src="../js/sessao.js"></script>
     <script src="https://kit.fontawesome.com/384071f692.js" crossorigin="anonymous"></script>
     <script src="../js/sessao.js"></script>
@@ -50,9 +51,14 @@
                 <div class="titulo">
                     Funcionários
                 </div>
+                
 
-                <div class="container-funcionario">
-                    <div id="add_func">
+                <div class="container">
+                    <div class="formulario-cadastro">
+                        <div>
+                            <i class="fa-solid fa-user-plus"></i>
+                        </div>
+
                         <div>
                             <label for="#">Nome</label>
                             <input type="text" id="nome_input">
@@ -81,18 +87,8 @@
                             <label for="#">senha</label>
                             <input type="text" id="senha_input">
                         </div>
-                        <div>
-                            <button onclick="cadastrar()">Cadastrar funcionário</button>
-                        </div>
                     </div>
 
-                    <div id="btn-janela">
-                        <button onclick="abre_janela()">+</button>
-                    </div>
-
-                    <div id="listaFunc">
-
-                    </div>
                 </div>
 
             </div>
@@ -112,18 +108,6 @@
 </html>
 
 <script>
-    var janela = document.getElementById('add_func');
-    var btnJanela = document.getElementById("btn-janela");
-    
-    function abre_janela() {
-        janela.style.display = "flex"
-        btnJanela.innerHTML = `<button onclick="fecha_janela()">X</button>`
-    }
-
-    function fecha_janela() {
-        janela.style.display = "none"
-        btnJanela.innerHTML = `<button onclick="abre_janela()">+</button>`
-    }
 
     function cadastrar() {
         var nome = nome_input.value;

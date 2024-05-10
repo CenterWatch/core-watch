@@ -1,0 +1,11 @@
+.container .formulario-cadastro {
+    background: #fff;
+    border: 1px solid #ccc;
+    padding: 2rem;
+    box-shadow: 1px 1px 15px rgba(0, 0, 0, 0.2);
+    border-radius: 20px;
+    width: 50%;
+    height: 30rem; 
+    max-width: 400px; 
+    margin: 2rem;    
+}
