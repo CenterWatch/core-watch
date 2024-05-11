@@ -74,9 +74,41 @@ function buscarFunc(req, res){
     })
 }
 
+function buscarConfigAtual(req, res){
+    var idEmpresa = req.query.id_empresa;
+    empresaModel.buscarConfigAtual(idEmpresa)
+    .then(function (resBuscar){
+        res.json(resBuscar);
+    })
+    .catch(function (erro){
+        console.log(erro)
+        console.log(`houve um erro ao realizar o select, erro: ${erro}`)
+    })
+}
+
+function atualizarConfigAtualRegistro(req, res){
+    var idEmpresa = req.body.id_empresaServer;
+    var ram = req.body.ramServer;
+    var cpu = req.body.cpuServer;
+    var int = req.body.intServer;
+
+    int *= 1000;
+
+    empresaModel.atualizarConfigAtualRegistro(idEmpresa,ram,cpu,int)
+    .then(function (resUpdate){
+        res.json(resUpdate);
+    })
+    .catch(function (erro){
+        console.log(erro)
+        console.log(`houve um erro ao realizar o select, erro: ${erro}`)
+    })
+}
+
 module.exports = {
     cadastrar,
     buscarMatriz,
     buscarFiliais,
-    buscarFunc
+    buscarFunc,
+    buscarConfigAtual,
+    atualizarConfigAtualRegistro
 }

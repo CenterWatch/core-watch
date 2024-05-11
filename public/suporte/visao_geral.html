@@ -13,7 +13,7 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
-<body onload="listarMaquinas(),buscarDadosRam()">
+<body onload="listarMaquinas()">
 
     <section class="section-body">
         <div class="leftbar">
@@ -101,7 +101,7 @@
                     sessionStorage.VOLUMES = JSON.stringify(json.volumes);
 
                     json.maquinas.forEach(function (item) {
-                        mapMaquinas.set(item.hostname, item);
+                        mapMaquinas.set(item.hostname, item.id_maquina, item);
                     });
 
                     const volumesAgrupadosPorMaquina = Object.groupBy(json.volumes, ({ hostname }) => hostname);
@@ -110,7 +110,7 @@
                     desenharMaquinas(json.maquinas);
 
                     json.maquinas.forEach(function (maquina) {
-                        desenharModal(maquina.hostname);
+                        desenharModal(maquina.hostname,maquina.id_maquina);
                         maquinas.push(maquina)
                     });
                 });
@@ -134,7 +134,7 @@
     function desenharMaquinas(maquinas) {
         maquinas.forEach(function (maquina) {
             cardsElements.innerHTML += `
-        <div onclick="abrirModal('${maquina.hostname}')" class="card-pc selecionar-hover">
+        <div onclick="abrirModal('${maquina.hostname}','${maquina.id_maquina}')" class="card-pc selecionar-hover">
             <span class="card-title">${maquina.hostname}</span>
             <span class="card-circle"><i class="fa-solid fa-check"></i></span>
             <i class="fa-solid fa-desktop"></i>
@@ -169,7 +169,7 @@
         mapVolumes.set(volumes[volumes.length - 1].hostname, volumesAgrupados);
     }
 
-    function abrirModal(hostname) {
+    function abrirModal(hostname,id_maquina) {
         mainDiv.innerHTML += ``;
 
         var modal = document.getElementById(`modalDetalhes${hostname}`)
@@ -195,12 +195,11 @@
         // modelUp.innerHTML = mapMaquinas.get(titulo).up;
 
         document.getElementById(`modalDetalhes${hostname}`).showModal();
-        desenharGraficos(hostname);
+        desenharGraficos(hostname,id_maquina);
     }
     var listaDadosRam = []
     function buscarDadosRam(){
         maquinas.forEach(function (maquina){
-            var dadosRam = []
             fetch(`/maquina/buscarDadosRam?idMaquinaServer=${maquina.id_maquina}`)
             .then(res => {
                 console.log("Entrei no then ram", res)
@@ -209,26 +208,29 @@
             })
             .then(data => {
                 // console.log(data)
-                for (i  = 0; i < 5; i++){
-                    dadosRam.push(data[i].porcentagem_uso)
-                    console.log(data[i].porcentagem_uso)
+                var dadoRam = (data[0].porcentagem_uso)
+                console.log(data[0].porcentagem_uso)
+                if (!Array.isArray(listaDadosRam[maquina.id_maquina])) {
+                    listaDadosRam[maquina.id_maquina] = [];
                 }
-                listaDadosRam[maquina.id_maquina-1].push(dadosRam)
+                if (listaDadosRam[maquina.id_maquina].length >= 6) {
+                    listaDadosRam[maquina.id_maquina].shift()
+                }
+                listaDadosRam[maquina.id_maquina].push(dadoRam)
             })
         })
     }
 
-
-    function desenharGraficos(hostname) {
+    function desenharGraficos(hostname,idMaquina) {
         const ctxRam = document.getElementById(`chartRam${hostname}`);
-        console.log(listaDadosRam[0])
+        console.log(listaDadosRam[idMaquina])
         new Chart(ctxRam, {
             type: 'line',
             data: {
-                labels: ['09:22:37', '09:22:35', '09:22:33', '09:22:31', '09:22:29', '09:22:27'],
+                labels: ['12:30:05','12:30:05','12:30:05','12:30:05','12:30:05','12:30:05'],
                 datasets: [{
                     label: '',
-                    data: listaDadosRam[idMaquina-1],
+                    data: listaDadosRam[idMaquina],
                     fill: true,
                     backgroundColor: '#3D3D3D30',
                     borderColor: '#3D3D3D',
@@ -420,4 +422,5 @@
     txt_nome.innerHTML = `${usuario}`
 
     setInterval(buscarDadosRam,2000);
+    
 </script>

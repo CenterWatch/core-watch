@@ -5,10 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CenterWatch | Dashboard</title>
     <link rel="stylesheet" href="../css/dashboards.css">
+    <link rel="stylesheet" href="../css/gerente/config.css">
     <script src="../js/sessao.js"></script>
     <script src="https://kit.fontawesome.com/384071f692.js" crossorigin="anonymous"></script>
 </head>
-<body>
+<body onload="buscarConfigAtual()">
 
     <section class="section-body">
         <div class="leftbar">
@@ -44,11 +45,93 @@
                     Configurações
                 </div>
                 <div class="cards">
+                    <div class="registros">
+                        <div class="titulo">
+                            Parâmetros de registro
+                        </div>
+                        <div class="container-registros">
+                            <div class="cr ram">
+                                <span>Máximo de Ram em uso (%)</span>
+                                <input type="text" id="cfg_ram">
+                            </div>
+                            <div class="cr cpu">
+                                <span>Máximo de CPU em uso (%)</span>
+                                <input type="text" id="cfg_cpu">
+                            </div>
+                            <div class="cr intervalo">
+                                <span>Intervalo de registros em segundos</span>
+                                <input type="text" id="cfg_int">
+                            </div>
+                            <button onclick="atualizarConfigRegistro()">Salvar</button>
+                        </div>
+                        
+                    </div>
                 </div>
             </div>
         <div>
     </section>
 
+    <script>
+        var inp_ram = document.getElementById('cfg_ram');
+        var inp_cpu = document.getElementById('cfg_cpu');
+        var inp_int = document.getElementById('cfg_int');
+
+        var id_empresa = sessionStorage.ID_EMPRESA_USUARIO;
+
+        function buscarConfigAtual(){
+            fetch (`/empresas/buscarConfig?id_empresa=${id_empresa}`).then(res => {
+            if (!res.ok) {
+                throw new Error(`Erro na solicitação: ${res.statusText}`);
+            }
+            return res.json();
+            })
+            .then(res => {
+                console.log(res)
+                atualizarInput(res);
+            })      
+        }
+
+        function atualizarInput(res){
+            inp_ram.value = (res[0].max_ram)
+            inp_cpu.value = (res[0].max_cpu)
+            inp_int.value = (res[0].intervalo_registro_ms)/1000
+        }
+
+        function atualizarConfigRegistro(){
+            var new_ram = inp_ram.value;
+            var new_cpu = inp_cpu.value;
+            var new_int = inp_int.value;
+
+            if (new_cpu < 0 || new_cpu > 100 || new_ram < 0 || new_ram > 100 || new_int < 1){
+                alert("Valores inválidos")
+                buscarConfigAtual()
+            }else{
+                fetch ("/empresas/atualizarConfigAtualRegistro", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        id_empresaServer: id_empresa,
+                        ramServer: new_ram,
+                        cpuServer: new_cpu,
+                        intServer: new_int
+                    }),
+                })
+                .then(res => {
+                if (!res.ok) {
+                    throw new Error(`Erro na solicitação: ${res.statusText}`);
+                }
+                return res.json();
+                })
+                .then(res => {
+                    console.log(res)
+                    buscarConfigAtual()
+                })
+            }
+        }
+
+    </script>
 
 </body>
 </html>

@@ -49,10 +49,28 @@ function  buscarFunc(id_empresa){
     return database.executar(instrucao)
 }
 
+function buscarConfigAtual(id_empresa){
+    var instrucao = `
+    select * from parametro_alerta where id_parametro = ${id_empresa};
+`
+console.log(`Executando a instrucao sql: ${instrucao}`)
+return database.executar(instrucao)
+}
+
+function atualizarConfigAtualRegistro(id_empresa,ram,cpu,int){
+    var instrucao = `
+    update parametro_alerta set max_ram = ${ram}, max_cpu = ${cpu}, intervalo_registro_ms = ${int} where id_parametro = ${id_empresa};
+`
+console.log(`Executando a instrucao sql: ${instrucao}`)
+return database.executar(instrucao)
+}
+
 module.exports = {
     cadastrarEndereco,
     cadastrar,
     buscarMatriz,
     buscarFiliais,
-    buscarFunc
+    buscarFunc,
+    buscarConfigAtual,
+    atualizarConfigAtualRegistro
 };

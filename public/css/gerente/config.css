@@ -1,0 +1,37 @@
+
+.registros{
+    display: flex;
+    flex-direction: column;
+    height: 30vh;
+    width: 80%;
+    align-items: center;
+
+    .titulo{
+
+    }
+    .container-registros{
+        display: flex;
+        width: 100%;
+        justify-content: space-evenly;
+
+        .cr{
+            display: flex;
+            flex-direction: column;
+            width: 30%;
+            justify-content: center;
+            align-items: center;
+            input{
+                width: 40px;
+                height: 40px;
+                font-size: 18px;
+                outline: none;
+                text-align: center;
+                color: #494949;
+            }
+        }
+    }  
+    
+    button{
+        width: 10%;
+    }
+}

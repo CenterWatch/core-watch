@@ -14,4 +14,10 @@ router.get("/buscarMatriz", function (req,res){
 router.get("/buscarFiliais", function (req, res){
     empresaController.buscarFiliais(req, res);
 })
+router.get("/buscarConfig", function (req, res) {
+    empresaController.buscarConfigAtual(req, res);
+})
+router.post("/atualizarConfigAtualRegistro", function (req, res) {
+    empresaController.atualizarConfigAtualRegistro(req, res);
+})
 module.exports = router;
