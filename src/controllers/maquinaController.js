@@ -56,7 +56,7 @@ function listarMaquinas(req, res) {
         );
 }
 
-function verificarMaquinaOff(res, req) {
+function verificarMaquinaOff(req, res) {
     const idSessao = req.body.idSessao;
     const idMaquina = req.body.idMaquina;
 
@@ -70,8 +70,22 @@ function verificarMaquinaOff(res, req) {
         })
 }
 
+function buscarDadosRam(req, res) {
+    var idMaquina = req.query.idMaquinaServer;
+    console.log(idMaquina)
+    maquinaModel.buscarDadosRam(idMaquina)
+        .then(function (dadosRam){
+            res.json(dadosRam);
+        })
+        .catch(function (erro) {
+            console.log(erro)
+            console.log(`houve um erro ao realizar o select, erro: ${erro}`)
+        })
+}
+
 module.exports = {
     cadastrar,
     listarMaquinas,
-    verificarMaquinaOff
+    verificarMaquinaOff,
+    buscarDadosRam
 }

@@ -33,10 +33,18 @@ function verificarMaquinaOff(idSessao, idMaquina) {
     return database.executar(instrucao);
 }
 
+function buscarDadosRam(idMaquina) {
+    var instrucao = `select (r.uso_ram/m.ram_total)*100 as porcentagem_uso,dt_hora from registro as r join sessao  as s on r.fk_sessao = s.id_sessao join maquina as m on s.fk_maquina = m.id_maquina where fk_maquina = ${idMaquina} order by dt_hora desc limit 6;`
+    return database.executar(instrucao);
+}
+
+
+
 module.exports = {
     cadastrar,
     listarMaquinas,
     buscarVolumesPorMaquina,
     buscarVolumesPorEmpresa,
+    buscarDadosRam,
     verificarMaquinaOff
 };

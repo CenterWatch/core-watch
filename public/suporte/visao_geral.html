@@ -13,7 +13,7 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
-<body onload="listarMaquinas()">
+<body onload="listarMaquinas(),buscarDadosRam()">
 
     <section class="section-body">
         <div class="leftbar">
@@ -77,6 +77,8 @@
     const mapVolumes = new Map();
     var cardsElements = document.getElementsByClassName("cards")[0];
 
+    var maquinas = [];
+
     function listarMaquinas() {
         fetch("/maquina/listarMaquinas", {
             method: "POST",
@@ -109,6 +111,7 @@
 
                     json.maquinas.forEach(function (maquina) {
                         desenharModal(maquina.hostname);
+                        maquinas.push(maquina)
                     });
                 });
 
@@ -194,17 +197,38 @@
         document.getElementById(`modalDetalhes${hostname}`).showModal();
         desenharGraficos(hostname);
     }
+    var listaDadosRam = []
+    function buscarDadosRam(){
+        maquinas.forEach(function (maquina){
+            var dadosRam = []
+            fetch(`/maquina/buscarDadosRam?idMaquinaServer=${maquina.id_maquina}`)
+            .then(res => {
+                console.log("Entrei no then ram", res)
+                return res.json();
+                console.log(res)
+            })
+            .then(data => {
+                // console.log(data)
+                for (i  = 0; i < 5; i++){
+                    dadosRam.push(data[i].porcentagem_uso)
+                    console.log(data[i].porcentagem_uso)
+                }
+                listaDadosRam[maquina.id_maquina-1].push(dadosRam)
+            })
+        })
+    }
+
 
     function desenharGraficos(hostname) {
         const ctxRam = document.getElementById(`chartRam${hostname}`);
-
+        console.log(listaDadosRam[0])
         new Chart(ctxRam, {
             type: 'line',
             data: {
                 labels: ['09:22:37', '09:22:35', '09:22:33', '09:22:31', '09:22:29', '09:22:27'],
                 datasets: [{
                     label: '',
-                    data: [70, 71, 68, 64, 62, 65],
+                    data: listaDadosRam[idMaquina-1],
                     fill: true,
                     backgroundColor: '#3D3D3D30',
                     borderColor: '#3D3D3D',
@@ -395,4 +419,5 @@
     var txt_nome = document.getElementById('nome-usuario');
     txt_nome.innerHTML = `${usuario}`
 
+    setInterval(buscarDadosRam,2000);
 </script>
