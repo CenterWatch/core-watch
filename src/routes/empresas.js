@@ -20,4 +20,7 @@ router.get("/buscarConfig", function (req, res) {
 router.post("/atualizarConfigAtualRegistro", function (req, res) {
     empresaController.atualizarConfigAtualRegistro(req, res);
 })
+router.post("/atualizarConfigAtualVolume", function (req, res) {
+    empresaController.atualizarConfigAtualVolume(req, res);
+})
 module.exports = router;

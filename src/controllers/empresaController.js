@@ -104,11 +104,29 @@ function atualizarConfigAtualRegistro(req, res){
     })
 }
 
+function atualizarConfigAtualVolume(req, res){
+    var idEmpresa = req.body.id_empresaServer;
+    var vol = req.body.volServer;
+    var int = req.body.intVolServer;
+
+    int *= 1000;
+
+    empresaModel.atualizarConfigAtualVolume(idEmpresa,vol,int)
+    .then(function (resUpdate){
+        res.json(resUpdate);
+    })
+    .catch(function (erro){
+        console.log(erro)
+        console.log(`houve um erro ao realizar o select, erro: ${erro}`)
+    })
+}
+
 module.exports = {
     cadastrar,
     buscarMatriz,
     buscarFiliais,
     buscarFunc,
     buscarConfigAtual,
-    atualizarConfigAtualRegistro
+    atualizarConfigAtualRegistro,
+    atualizarConfigAtualVolume
 }

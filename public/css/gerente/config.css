@@ -5,6 +5,9 @@
     height: 30vh;
     width: 80%;
     align-items: center;
+    border: solid 2px black;
+    gap: 30px;
+    padding-right: 30px;
 
     .titulo{
 

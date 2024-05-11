@@ -65,6 +65,14 @@ console.log(`Executando a instrucao sql: ${instrucao}`)
 return database.executar(instrucao)
 }
 
+function atualizarConfigAtualVolume(id_empresa,vol,int){
+    var instrucao = `
+    update parametro_alerta set max_volume = ${vol}, intervalo_volume_ms = ${int} where id_parametro = ${id_empresa};
+`
+console.log(`Executando a instrucao sql: ${instrucao}`)
+return database.executar(instrucao)
+}
+
 module.exports = {
     cadastrarEndereco,
     cadastrar,
@@ -72,5 +80,6 @@ module.exports = {
     buscarFiliais,
     buscarFunc,
     buscarConfigAtual,
-    atualizarConfigAtualRegistro
+    atualizarConfigAtualRegistro,
+    atualizarConfigAtualVolume
 };

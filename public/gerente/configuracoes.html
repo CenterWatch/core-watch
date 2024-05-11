@@ -66,6 +66,25 @@
                         </div>
                         
                     </div>
+
+                    <div class="registros">
+                        <div class="titulo">
+                            Parâmetros de volumes
+                        </div>
+                        <div class="container-registros">
+                            <div class="cr ram">
+                                <span>espaço minimo livre em %</span>
+                                <input type="text" id="cfg_vol">
+                            </div>
+                            <div class="cr cpu">
+                                <span>Intervalo de consultas do volume em segundos</span>
+                                <input type="text" id="cfg_intVol">
+                            </div>
+
+                            <button onclick="atualizarConfigVolume()">Salvar</button>
+                        </div>
+                        
+                    </div>
                 </div>
             </div>
         <div>
@@ -75,6 +94,8 @@
         var inp_ram = document.getElementById('cfg_ram');
         var inp_cpu = document.getElementById('cfg_cpu');
         var inp_int = document.getElementById('cfg_int');
+        var inp_vol = document.getElementById('cfg_vol');
+        var inp_intVol = document.getElementById('cfg_intVol');
 
         var id_empresa = sessionStorage.ID_EMPRESA_USUARIO;
 
@@ -95,6 +116,8 @@
             inp_ram.value = (res[0].max_ram)
             inp_cpu.value = (res[0].max_cpu)
             inp_int.value = (res[0].intervalo_registro_ms)/1000
+            inp_vol.value = (res[0].max_volume)
+            inp_intVol.value = (res[0].intervalo_volume_ms)/1000
         }
 
         function atualizarConfigRegistro(){
@@ -127,6 +150,40 @@
                 .then(res => {
                     console.log(res)
                     buscarConfigAtual()
+                    alert("Valores atualizados!")
+                })
+            }
+        }
+
+        function atualizarConfigVolume(){
+            var new_vol = inp_vol.value;
+            var new_intVol = inp_intVol.value;
+
+            if (new_vol < 0 || new_vol > 100 || new_intVol < 1){
+                alert("Valores inválidos")
+                buscarConfigAtual()
+            }else{
+                fetch ("/empresas/atualizarConfigAtualVolume", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        id_empresaServer: id_empresa,
+                        volServer: new_vol,
+                        intVolServer: new_intVol
+                    }),
+                })
+                .then(res => {
+                if (!res.ok) {
+                    throw new Error(`Erro na solicitação: ${res.statusText}`);
+                }
+                return res.json();
+                })
+                .then(res => {
+                    console.log(res)
+                    buscarConfigAtual()
+                    alert("Valores atualizados!")
                 })
             }
         }
