@@ -17,10 +17,10 @@ function listar(){
     return database.executar(instrucao);
 }
 
-function cadastrarFunc(nome,sobrenome,celular,telefone,email,usuario,senha, gerente, empresa,cpf){
+function cadastrarFunc(nome,sobrenome,celular,telefone,email,usuario,senha, gerente, empresa,cpf,cargo){
     var instrucao = `
-        insert into funcionario (primeiro_nome, sobrenome, celular, telefone, email, fk_gerente, fk_empresa,cpf)
-        values ('${nome}','${sobrenome}','${celular}','${telefone}','${email}',${gerente},${empresa},'${cpf}')
+        insert into funcionario (primeiro_nome, sobrenome, celular, telefone, email, fk_gerente, fk_empresa,cpf,cargo)
+        values ('${nome}','${sobrenome}','${celular}','${telefone}','${email}',${gerente},${empresa},'${cpf}','${cargo}')
     `
 
     return database.executar(instrucao)
@@ -32,7 +32,7 @@ function cadastrarFunc(nome,sobrenome,celular,telefone,email,usuario,senha, gere
 
 function cadastrarUser(usuario, senha, id_funcionario){
     var instrucao  = `
-        insert into usuario (usuario, senha, id_usuario)
+        insert into usuario (username, senha, id_usuario)
         values ('${usuario}', '${senha}', ${id_funcionario});
     `
     return database.executar(instrucao);

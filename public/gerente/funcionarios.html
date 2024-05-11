@@ -78,6 +78,14 @@
                             <input class="input_formulario" type="text" id="email_input">
                         </div>
                         <div class="atributos-formulario">
+                            <label for="#">Cargo</label>
+                            <select name="" id="cargo_input" class="input_formulario">
+                                <option value="Operador"">Operador</option>
+                                <option value="Suporte"">Suporte</option>
+                                <option value="Operador"">Gerente</option>
+                            </select>
+                        </div>
+                        <div class="atributos-formulario">
                             <label for="#">Usuário</label>
                             <input class="input_formulario" type="text" id="usuario_input">
                         </div>
@@ -85,7 +93,7 @@
                             <label for="#">Senha</label>
                             <input class="input_formulario" type="text" id="senha_input">
                         
-                            <button class="botao-cadastrar">Cadastrar</button>
+                            <button onclick="cadastrar()" class="botao-cadastrar">Cadastrar</button>
             
                         </div>
                     </div>
@@ -101,7 +109,7 @@
                         </div>
                         <div class="imagem-adicionar-funcionario">
                             <img id="imagem-add-funcionario" src="imagens/img-adicionar-funcionario.png" alt="">
-                           
+
                         </div>
             
                         LISTA DE FUNCIONARIOS
@@ -137,6 +145,7 @@
         var telefone = telefone_input.value;
         var email = email_input.value;
         var cpf = "123.123.123-12";
+        var cargo = cargo_input.value;
         var usuario = usuario_input.value;
         var senha = senha_input.value;
         var gerente = sessionStorage.ID_USUARIO;
@@ -154,6 +163,7 @@
                 telefoneServer: telefone,
                 emailServer: email,
                 cpfServer: cpf,
+                cargoServer: cargo,
                 usuarioServer: usuario,
                 senhaServer: senha,
                 gerenteServer: gerente,

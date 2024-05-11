@@ -71,11 +71,12 @@ function cadastrar(req, res){
     var gerente = req.body.gerenteServer;
     var empresa = req.body.empresaServer;
     var cpf = req.body.cpfServer;
+    var cargo = req.body.cargoServer;
 
     if(nome.length < 4 || usuario.length < 4 || senha.length < 4){
         res.status(400).send("Dados inválidos para cadastro")
     }else{
-        usuarioModel.cadastrarFunc(nome,sobrenome,celular,telefone,email,usuario,senha, gerente, empresa,cpf)
+        usuarioModel.cadastrarFunc(nome,sobrenome,celular,telefone,email,usuario,senha, gerente, empresa,cpf,cargo)
         .then(function (cadastroResultado) {
             res.json(cadastroResultado);
         })
