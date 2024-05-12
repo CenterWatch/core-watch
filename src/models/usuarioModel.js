@@ -56,11 +56,17 @@ function cadastrarChamado(titulo, descricao, tipo, fk_sessao){
     return database.executar(instrucao);
 }
 
-function listarChamado(){
-    var instrucao = `select ocorrencia.titulo, ocorrencia.descricao, ocorrencia.dtHora, ocorrencia.tipo, ocorrencia.fk_atribuido, funcionario.primeiro_nome, funcionario.sobrenome 
-    from ocorrencia join funcionario on ocorrencia.fk_atribuido = funcionario.id_funcionario; 
+function listarChamados(){
+    var instrucao = `select o.titulo, o.descricao, o.dt_hora, o.tipo, o.fk_atribuido 
+    from ocorrencia as o join sessao as s on o.fk_sessao = s.id_sessao join usuario as u on s.fk_usuario = u.id_usuario join funcionario as f on u.id_usuario = f.id_funcionario; 
     `
     return database.executar(instrucao);
+}
+function buscarChamadosPorFuncionario(idFuncionario){
+    var instrucao=`select * from ocorrencia where idFuncionario = ${idFuncionario}; 
+    `
+    return database.executar(instrucao);
+    
 }
 module.exports = {
     autenticar,
@@ -69,6 +75,7 @@ module.exports = {
     cadastrarUser,
     listarOperadores,
     cadastrarChamado,
-    listarChamado,
-    buscarSessao
+    listarChamados,
+    buscarSessao,
+    buscarChamadosPorFuncionario
 };

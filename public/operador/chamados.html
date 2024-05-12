@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,19 +9,23 @@
     <link rel="stylesheet" href="../css/chamados.css">
     <title>Meus Chamados</title>
 </head>
-<body>
+
+<body onload="listaChamados()">
     <section class="section-body">
         <div class="leftbar">
             <div class="links-nav">
                 <img class="logo text-logo" src="https://i.imgur.com/RjhX0a9.png" alt="">
                 <a class="nav-btn" href="home.html"><i class="fa-solid fa-house"></i></i></i><span></i>Home</span></a>
                 <a class="nav-btn" href="tasks.html"><i class="fa-solid fa-list-check"></i><span></i>Tasks</span></a>
-                <a class="nav-btn btn-ativo" href="#"><i class="fa-solid fa-list"></i></i><span style="font-size: small;"></i>Meus Chamados</span></a>
-                <a class="nav-btn" href="feedback.html"><i class="fa-solid fa-pen-to-square"></i><span></i>Feedback</span></a>
+                <a class="nav-btn btn-ativo" href="#"><i class="fa-solid fa-list"></i></i><span
+                        style="font-size: small;"></i>Meus Chamados</span></a>
+                <a class="nav-btn" href="feedback.html"><i
+                        class="fa-solid fa-pen-to-square"></i><span></i>Feedback</span></a>
             </div>
             <div class="cfg-nav">
                 <a class="nav-btn " href="#"><i class="fa-solid fa-gear"></i><span>Configurações</span></a>
-                <a class="nav-btn" onclick="sair()"><i class="fa-solid fa-arrow-right-from-bracket"></i><span>Sair</span></a>
+                <a class="nav-btn" onclick="sair()"><i
+                        class="fa-solid fa-arrow-right-from-bracket"></i><span>Sair</span></a>
             </div>
         </div>
         <div class="main">
@@ -46,12 +51,12 @@
                         <div>
                             <h2> Portal de Atendimento</h2>
                         </div>
-    
+
                         <div class="inputs">
                             <label for="">Assunto</label>
                             <input type="text" name="" id="input_assunto" required>
                         </div>
-                
+
                         <div class="inputs">
                             <label for="">Tipo do problema</label>
                             <select name="" id="input_problema" required>
@@ -65,30 +70,31 @@
                                 <option value=""></option>
                             </select>
                         </div>
-    
+
                         <div class="inputs">
                             <label for="">Descrição</label> <br>
                             <textarea name="" id="input_descricao" maxlength="200" required></textarea>
                         </div>
-                    
+
                         <div>
                             <button onclick="cadastrarChamado()">Enviar</button>
                         </div>
-                </div>
+                    </div>
 
 
                 </div>
             </div>
-        <div>
+            <div>
     </section>
 </body>
+
 </html>
 <script>
-    
-    function cadastrarChamado(){
+
+    function cadastrarChamado() {
         var id_sessao = sessionStorage.ID_SESSAO;
         var assunto = input_assunto.value;
-        var tipoProblema =input_problema.value
+        var tipoProblema = input_problema.value
         var descricao = input_descricao.value;
 
         fetch("/usuarios/cadastrarChamado", {
@@ -119,35 +125,17 @@
             .catch(function (erro) {
                 console.log("Erro: ", erro)
             })
-
-        // fetch (`/usuarios/cadastrarChamado`, {
-        //     method:"POST",
-        //     headers:{
-        //         "Content_Type": "application/json"
-        //     },
-        //     body: JSON.stringify({
-        //         tituloServer:assunto,
-        //         sessaoServer: id_sessao,
-        //         tipoServer: tipoProblema,
-        //         descricaoServer: descricao
-        //     })
-        // })
-        // .then(function (res) {
-        //         console.log("Resposta: ", res);
-
-        //         if (res.ok) {
-        //             alert("Chamado realizado com sucesso!")
-
-        //             setTimeout(() => {
-        //                 window.location.reload();;
-        //             }, 1500);
-        //         } else {
-        //             alert("Não foi possível cadastrar chamado")
-        //         }
-        //     })
-        //     .catch(function (erro) {
-        //         console.log("Erro: ", erro)
-        //     })
     }
+    function listaChamados(){
+        fetch("/usuarios/listarChamados",{
+            method: "GET",
+            headers: {
+                "Content - Type": "application/json"
+            },
+            body: JSON.stringify({
+                id
+            })
+        })
+}
 
 </script>

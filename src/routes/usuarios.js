@@ -25,4 +25,8 @@ router.get("/buscarSessao",  function (req, res){
 router.post("/cadastrarChamado", function (req, res){
     usuarioController.cadastrarChamado(req, res);
 })
+
+router.get("/listarChamados", function (req, res){
+    usuarioController.listarChamados(req,res);
+})
 module.exports = router;

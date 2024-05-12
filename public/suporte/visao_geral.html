@@ -13,7 +13,7 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
-<body onload="listarMaquinas()">
+<body onload="listarMaquinas()" >
 
     <section class="section-body">
         <div class="leftbar">
@@ -78,7 +78,7 @@
     var cardsElements = document.getElementsByClassName("cards")[0];
 
     var maquinas = [];
-
+    
     function listarMaquinas() {
         fetch("/maquina/listarMaquinas", {
             method: "POST",

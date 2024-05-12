@@ -29,7 +29,7 @@ function autenticar(req, res) {
                             cargo: resultadoAutenticar[0].cargo,
                             sessao: resultadoAutenticar[0].id_sessao
                         });
-                        
+
                     } else if (resultadoAutenticar.length == 0) {
                         res.status(403).send("Email e/ou senha inválido(s)");
                     } else {
@@ -55,12 +55,12 @@ function buscarSessao(req, res) {
             res.status(200).json(result);
         })
         .catch(error => {
-            console.error("Erro ao processar a solicitação: ",error);
-            res.status(500).json({error: "Erro interno do servidor"});
+            console.error("Erro ao processar a solicitação: ", error);
+            res.status(500).json({ error: "Erro interno do servidor" });
         })
 }
 
-function listarOperadores(req, res){
+function listarOperadores(req, res) {
     var idGerente = req.query.idGerenteServer;
 
     usuarioModel.listarOperadores(idGerente)
@@ -68,12 +68,13 @@ function listarOperadores(req, res){
             res.status(200).json(result);
         })
         .catch(error => {
-            console.error("Erro ao processar a solicitação: ",error);
-            res.status(500).json({error: "Erro interno do servidor"});
+            console.error("Erro ao processar a solicitação: ", error);
+            res.status(500).json({ error: "Erro interno do servidor" });
         })
 }
 
-function cadastrar(req, res){
+
+function cadastrar(req, res) {
     var nome = req.body.nomeServer;
     var sobrenome = req.body.sobrenomeServer;
     var celular = req.body.celularServer;
@@ -86,38 +87,62 @@ function cadastrar(req, res){
     var cpf = req.body.cpfServer;
     var cargo = req.body.cargoServer;
 
-    if(nome.length < 4 || usuario.length < 4 || senha.length < 4){
+    if (nome.length < 4 || usuario.length < 4 || senha.length < 4) {
         res.status(400).send("Dados inválidos para cadastro")
-    }else{
-        usuarioModel.cadastrarFunc(nome,sobrenome,celular,telefone,email,usuario,senha, gerente, empresa,cpf,cargo)
+    } else {
+        usuarioModel.cadastrarFunc(nome, sobrenome, celular, telefone, email, usuario, senha, gerente, empresa, cpf, cargo)
+            .then(function (cadastroResultado) {
+                res.json(cadastroResultado);
+            })
+            .catch(function (erro) {
+                console.log(erro);
+                console.log("Houve um erro ao realizar o cadastro! Erro: ", erro.sqlMessage);
+                res.status(500).json(erro.sqlMessage);
+            })
+    }
+}
+function cadastrarChamado(req, res) {
+    var titulo = req.body.assuntoServer;
+    var descricao = req.body.descricaoServer;
+    var tipo = req.body.tipoProblemaServer;
+    var fkSessao = req.body.sessaoServer;
+
+
+    console.log(req.body.tituloServer)
+
+    usuarioModel.cadastrarChamado(titulo, descricao, tipo, fkSessao)
         .then(function (cadastroResultado) {
             res.json(cadastroResultado);
         })
         .catch(function (erro) {
             console.log(erro);
-            console.log("Houve um erro ao realizar o cadastro! Erro: ",erro.sqlMessage);
+            console.log("Houve um erro ao cadastrar o chamado! Erro: ", erro.sqlMessage);
             res.status(500).json(erro.sqlMessage);
         })
-    }
 }
-function cadastrarChamado(req, res){
-    var titulo = req.body.assuntoServer;
-    var descricao= req.body.descricaoServer;
-    var tipo = req.body.tipoProblemaServer;
-    var fkSessao = req.body.sessaoServer;
+function listarChamados(req, res) {
+    var idFuncionario = req.query.idFuncionarioServer;
 
-    
-    console.log(req.body.tituloServer)
+    usuarioModel.listarChamados()
+        .then(function (resultadoListarChamados) {
+            console.log(`\nResultados encontrados: ${resultadoListarChamados.length}`);
+            console.log(`Resultados: ${JSON.stringify(resultadoListarChamados)}`);
+            if (resultadoListarChamados.length != 0) {
+                console.log(resultadoListarChamados);
+                maquinaModel.buscarChamadosPorFuncionario(idFuncionario).then((resFuncionario) => {
+                    res.json({
+                        chamadosFuncionarios: resultadoListarChamados
+                    });
+                }).catch((err) => {
 
-    usuarioModel.cadastrarChamado(titulo, descricao, tipo, fkSessao)
-    .then(function(cadastroResultado){
-        res.json(cadastroResultado);
-    })
-    .catch(function (erro){
-        console.log(erro);
-        console.log("Houve um erro ao cadastrar o chamado! Erro: ", erro.sqlMessage);
-        res.status(500).json(erro.sqlMessage);
-    })
+                });
+            }
+        }
+
+        ).catch(error => {
+            console.error("Erro ao processar a solicitação: ", error);
+            res.status(500).json({ error: "Erro interno do servidor" });
+        })
 }
 
 module.exports = {
@@ -125,5 +150,6 @@ module.exports = {
     listarOperadores,
     cadastrar,
     cadastrarChamado,
-    buscarSessao
+    buscarSessao,
+    listarChamados
 }
