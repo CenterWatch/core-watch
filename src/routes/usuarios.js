@@ -17,4 +17,12 @@ router.post("/cadastrar", function (req, res) {
 router.get("/listarOperadores",  function (req, res){
     usuarioController.listarOperadores(req, res);
 })
+
+router.get("/buscarSessao",  function (req, res){
+    usuarioController.buscarSessao(req, res);
+})
+
+router.post("/cadastrarChamado", function (req, res){
+    usuarioController.cadastrarChamado(req, res);
+})
 module.exports = router;

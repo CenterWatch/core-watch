@@ -16,7 +16,7 @@ function autenticar(req, res) {
                     console.log(`\nResultados encontrados: ${resultadoAutenticar.length}`);
                     console.log(`Resultados: ${JSON.stringify(resultadoAutenticar)}`); // transforma JSON em String
 
-                    if (resultadoAutenticar.length == 1) {
+                    if (resultadoAutenticar.length >= 1) {
                         console.log(resultadoAutenticar);
                         res.json({
                             id: resultadoAutenticar[0].id_funcionario,
@@ -27,7 +27,7 @@ function autenticar(req, res) {
                             empresa: resultadoAutenticar[0].razao_social,
                             id_empresa: resultadoAutenticar[0].id_empresa,
                             cargo: resultadoAutenticar[0].cargo,
-                            sessao: resultadoAutenticar[0].sessao
+                            sessao: resultadoAutenticar[0].id_sessao
                         });
                         
                     } else if (resultadoAutenticar.length == 0) {
@@ -45,6 +45,19 @@ function autenticar(req, res) {
             );
     }
 
+}
+
+function buscarSessao(req, res) {
+    var idFuncionario = req.query.idFuncionarioServer;
+
+    usuarioModel.buscarSessao(idFuncionario)
+        .then(result => {
+            res.status(200).json(result);
+        })
+        .catch(error => {
+            console.error("Erro ao processar a solicitação: ",error);
+            res.status(500).json({error: "Erro interno do servidor"});
+        })
 }
 
 function listarOperadores(req, res){
@@ -87,9 +100,30 @@ function cadastrar(req, res){
         })
     }
 }
+function cadastrarChamado(req, res){
+    var titulo = req.body.assuntoServer;
+    var descricao= req.body.descricaoServer;
+    var tipo = req.body.tipoProblemaServer;
+    var fkSessao = req.body.sessaoServer;
+
+    
+    console.log(req.body.tituloServer)
+
+    usuarioModel.cadastrarChamado(titulo, descricao, tipo, fkSessao)
+    .then(function(cadastroResultado){
+        res.json(cadastroResultado);
+    })
+    .catch(function (erro){
+        console.log(erro);
+        console.log("Houve um erro ao cadastrar o chamado! Erro: ", erro.sqlMessage);
+        res.status(500).json(erro.sqlMessage);
+    })
+}
 
 module.exports = {
     autenticar,
     listarOperadores,
-    cadastrar
+    cadastrar,
+    cadastrarChamado,
+    buscarSessao
 }

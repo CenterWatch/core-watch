@@ -54,6 +54,8 @@
                 if (resposta.ok) {
                     console.log(resposta);
 
+
+
                     resposta.json().then(json => {
                         console.log(json);
                         console.log(JSON.stringify(json));
@@ -65,7 +67,23 @@
                         sessionStorage.EMPRESA_USUARIO = json.empresa;
                         sessionStorage.ID_EMPRESA_USUARIO = json.id_empresa;
                         sessionStorage.CARGO_USUARIO = json.cargo;
-                        sessionStorage.ID_SESSAO = json.id_sessao;
+
+                        fetch (`/usuarios/buscarSessao?idFuncionarioServer=${json.id}`).then(res => {
+                            if (!res.ok) {
+                                throw new Error(`Erro na solicitação: ${res.statusText}`);
+                            }
+                            return res.json();
+                        })
+                            .then(res => {
+                                console.log('resultados AAAAAAAAAAAAAAAAAA');
+                                console.log(res);
+                                sessionStorage.ID_SESSAO = res[0].id_sessao;
+                            })
+                            .catch(erro => {
+                                console.log(erro);
+                                console.log("Não foi  possivel realizar o select: ", erro);
+                            })
+
 
                         switch (json.cargo) {
                             case "Diretor":
