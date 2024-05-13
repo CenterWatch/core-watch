@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="../css/navbar.css">
     <link rel="stylesheet" href="../css/dashboards.css">
     <link rel="stylesheet" href="../css/gerente/operador.css">
+    <link rel="stylesheet" href="../css/tasks.css">
     <script src="../js/sessao.js"></script>
     <script src="https://kit.fontawesome.com/384071f692.js" crossorigin="anonymous"></script>
     <script src="../js/sessao.js"></script>
@@ -20,14 +21,17 @@
         <div class="leftbar">
             <div class="links-nav">
                 <img class="logo text-logo" src="https://i.imgur.com/RjhX0a9.png" alt="">
-                <a class="nav-btn" href="dashboard.html"><i class="fa-solid fa-square-poll-vertical"></i><span></i>Dashboard</span></a>
-                <a class="nav-btn" href="funcionarios.html"><i class="fa-solid fa-users"></i></i><span>Funcionários</span></a>
+                <a class="nav-btn" href="dashboard.html"><i
+                        class="fa-solid fa-square-poll-vertical"></i><span></i>Dashboard</span></a>
+                <a class="nav-btn" href="funcionarios.html"><i
+                        class="fa-solid fa-users"></i></i><span>Funcionários</span></a>
                 <a class="nav-btn btn-ativo" href="#"><i class="fa-solid fa-list-check"></i></i><span>Tasks</span></a>
             </div>
             <div class="cfg-nav">
                 <a class="nav-btn" href="configuracoes.html"><i
                         class="fa-solid fa-gear"></i><span>Configurações</span></a>
-                <a class="nav-btn" onclick="sair()"><i class="fa-solid fa-arrow-right-from-bracket"></i><span>Sair</span></a>
+                <a class="nav-btn" onclick="sair()"><i
+                        class="fa-solid fa-arrow-right-from-bracket"></i><span>Sair</span></a>
             </div>
         </div>
         <div class="main">
@@ -48,8 +52,26 @@
                 <div class="titulo">
                     Tasks
                 </div>
+
+                <div class="container-task">
+                    <div class="task">
+                        <h2>Gerenciamento de Atividades</h2>
+
+                        <div class="card-task">
+                            <label for="">Atendente</label>
+                            <select class="select_funcionario" name="" id=""></select>
+
+                            <label for="">Tarefa</label>
+                            <textarea name="" id=""></textarea>
+                        </div>
+                        <div>
+                            <button onclick="atribuir()">Atribuir</button>
+                        </div>
+                    </div>
+                </div>
+
             </div>
-            </div>
+        </div>
     </section>
 </body>
 
