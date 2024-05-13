@@ -15,42 +15,71 @@
     text-align: center;
 }
 
-#titulo-novo-operador {
+.titulo-novo-operador h1 {
     text-align: center;
 }
 
 
-.container .formulario-cadastro {
+.formulario-cadastro {
     background: #fff;
     border: 1px solid #ccc;
     padding: 2rem;
     box-shadow: 1px 1px 15px rgba(0, 0, 0, 0.2);          /* DIV DO CONTEUDO DO FORMULÁRIO*/
     border-radius: 20px;
-    width: 80%;
-    height: 47rem;
+    width: 40%;
+    height: 21%;
+    margin-bottom: 2rem;
     
 }
 
-#container1 {
+/* #container1 {
     margin-top: 6rem;
     margin-left: 8rem;
-}
+} */
 
 .container {
-    margin-top: 6rem;
+     display: flex;
+     justify-content: start;
+     margin: 2rem;
 }
 
 
+.form {
+    display: flex;
+    flex-wrap: wrap;
+}
+ 
+.input-field {
+    flex: 1 1 50%; 
+    padding: 0 10px;
+    box-sizing: border-box;
+    justify-content: space-between;
+}
 
-.input_formulario {
+
+.input-field input {
     outline: none;
     font-size: 0.9rem;
     color: rgba(0, 0, 0, 0.7);
     width: 100%;
-    padding: 0.3rem; 
+    padding: 0.5rem; 
     border: 1px solid rgba(0, 0, 0, 0.2); 
     border-radius: 5px; 
     box-sizing: border-box; 
+    display: block;
+    margin-bottom: 5px;
+}
+.input-field select {
+    outline: none;
+    font-size: 0.9rem;
+    color: rgba(0, 0, 0, 0.7);
+    width: 100%;
+    padding: 0.5rem; 
+    border: 1px solid rgba(0, 0, 0, 0.2); 
+    border-radius: 5px; 
+    box-sizing: border-box; 
+    display: block;
+    margin-bottom: 5px;
 }
 
 .input-formulario input::placeholder {
@@ -81,7 +110,7 @@
 
 /*button de cadastrar*/
 
-.botao-cadastrar {
+button {
     margin-top: 2rem;
     padding: 0.6rem 1rem;
     background: #52c3e3;
@@ -98,7 +127,7 @@
 }
 
 
-.botao-cadastrar:hover {
+button:hover {
     letter-spacing: 0.5px;
 }
 
