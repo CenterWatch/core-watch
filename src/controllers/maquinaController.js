@@ -32,7 +32,7 @@ function listarMaquinas(req, res) {
                 if (resultadoListarMaquinas.length != 0) {
                     console.log(resultadoListarMaquinas);
 
-                    maquinaModel.buscarVolumesPoEmpresa(idEmpresa).then((resVolumes) => {
+                    maquinaModel.buscarVolumesPorEmpresa(idEmpresa).then((resVolumes) => {
                         res.json({
                             maquinas: resultadoListarMaquinas,
                             volumes: resVolumes

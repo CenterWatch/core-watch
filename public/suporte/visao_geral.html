@@ -72,6 +72,8 @@
 
 </html>
 
+<script src="../js/chart.js"></script>
+
 <script>
     const mapMaquinas = new Map();
     const mapVolumes = new Map();
@@ -101,7 +103,7 @@
                     sessionStorage.VOLUMES = JSON.stringify(json.volumes);
 
                     json.maquinas.forEach(function (item) {
-                        mapMaquinas.set(item.hostname, item.id_maquina, item);
+                        mapMaquinas.set(item.hostname, item);
                     });
 
                     const volumesAgrupadosPorMaquina = Object.groupBy(json.volumes, ({ hostname }) => hostname);
@@ -169,7 +171,7 @@
         mapVolumes.set(volumes[volumes.length - 1].hostname, volumesAgrupados);
     }
 
-    function abrirModal(hostname,id_maquina) {
+    function abrirModal(hostname, id_maquina) {
         mainDiv.innerHTML += ``;
 
         var modal = document.getElementById(`modalDetalhes${hostname}`)
@@ -183,10 +185,13 @@
 
         const maquinaAtual = mapMaquinas.get(hostname);
 
+        console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
+        console.log(maquinaAtual)
+
         modelHn.innerHTML = maquinaAtual.hostname;
         modelSo.innerHTML = maquinaAtual.so;
-        modelCpu.innerHTML = maquinaAtual.cpu;
-        modelRam.innerHTML = maquinaAtual.ram;
+        modelCpu.innerHTML = maquinaAtual.cpu_modelo;
+        modelRam.innerHTML = (maquinaAtual.ram_total * Math.pow(10, -9)).toFixed(2);
 
         document.getElementById(`tituloDetalhes${hostname}`).innerHTML = hostname;
 
@@ -195,170 +200,10 @@
         // modelUp.innerHTML = mapMaquinas.get(titulo).up;
 
         document.getElementById(`modalDetalhes${hostname}`).showModal();
-        desenharGraficos(hostname,id_maquina);
+        // desenharGraficos(hostname, id_maquina);
+        obterDadosGrafico(hostname, id_maquina)
     }
     var listaDadosRam = []
-    function buscarDadosRam(){
-        maquinas.forEach(function (maquina){
-            fetch(`/maquina/buscarDadosRam?idMaquinaServer=${maquina.id_maquina}`)
-            .then(res => {
-                console.log("Entrei no then ram", res)
-                return res.json();
-                console.log(res)
-            })
-            .then(data => {
-                // console.log(data)
-                var dadoRam = (data[0].porcentagem_uso)
-                console.log(data[0].porcentagem_uso)
-                if (!Array.isArray(listaDadosRam[maquina.id_maquina])) {
-                    listaDadosRam[maquina.id_maquina] = [];
-                }
-                if (listaDadosRam[maquina.id_maquina].length >= 6) {
-                    listaDadosRam[maquina.id_maquina].shift()
-                }
-                listaDadosRam[maquina.id_maquina].push(dadoRam)
-            })
-        })
-    }
-
-    function desenharGraficos(hostname,idMaquina) {
-        const ctxRam = document.getElementById(`chartRam${hostname}`);
-        console.log(listaDadosRam[idMaquina])
-        new Chart(ctxRam, {
-            type: 'line',
-            data: {
-                labels: ['12:30:05','12:30:05','12:30:05','12:30:05','12:30:05','12:30:05'],
-                datasets: [{
-                    label: '',
-                    data: listaDadosRam[idMaquina],
-                    fill: true,
-                    backgroundColor: '#3D3D3D30',
-                    borderColor: '#3D3D3D',
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                scales: {
-                    y: {
-                        min: 0,
-                        max: 100,
-                        beginAtZero: true,
-                        ticks: {
-                            stepSize: 100,
-                            callback: function (value, index, values) {
-                                return (value == 0 || value == 100) ? value + '%' : '';
-                            }
-                        }
-                    }
-                },
-                plugins: {
-                    title: {
-                        display: true,
-                        text: 'Uso da Memória RAM',
-                        font: {
-                            size: 18
-                        }
-                    },
-                    legend: {
-                        display: false
-                    }
-                }
-            }
-        });
-
-        const ctxCpu = document.getElementById(`chartCpu${hostname}`);
-
-        new Chart(ctxCpu, {
-            type: 'line',
-            data: {
-                labels: ['09:22:37', '09:22:35', '09:22:33', '09:22:31', '09:22:29', '09:22:27'],
-                datasets: [{
-                    label: '',
-                    data: [65, 66, 68, 64, 59, 55],
-                    fill: true,
-                    backgroundColor: '#52C3E350',
-                    borderColor: '#52C3E3',
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                scales: {
-                    y: {
-                        min: 0,
-                        max: 100,
-                        beginAtZero: true,
-                        ticks: {
-                            stepSize: 100,
-                            callback: (value) => { return (value == 0 || value == 100) ? value + '%' : ''; }
-                        }
-                    }
-                },
-                plugins: {
-                    title: {
-                        display: true,
-                        text: 'Uso da CPU',
-                        font: {
-                            size: 18
-                        }
-                    },
-                    legend: {
-                        display: false
-                    }
-                }
-            }
-        });
-
-        desenharVolumesPorMaquina(hostname);
-    }
-
-    function desenharVolumesPorMaquina(hostname) {
-
-        var volumes = mapVolumes.get(hostname);
-        document.getElementById(`volumesContainer${hostname}`).innerHTML = '';
-
-        for (let i = 0; i < volumes.length; i++) {
-            document.getElementById(`volumesContainer${hostname}`).innerHTML += `
-            <div class="disco-chart chart-disco">
-                <canvas id="chart${hostname}Volume${i}"></canvas>
-            </div>
-            `;
-        }
-
-        for (let i = 0; i < volumes.length; i++) {
-            const ctxDisco = document.getElementById(`chart${hostname}Volume${i}`);
-            console.log(ctxDisco)
-
-            new Chart(ctxDisco, {
-                type: 'pie',
-                data: {
-                    labels: [
-                        'Espaço livre',
-                        'Espaço usado'
-                    ],
-                    datasets: [{
-                        label: '%',
-                        data: [70, 30],
-                        backgroundColor: [
-                            '#52C3E3',
-                            '#3D3D3D'
-                        ],
-                        hoverOffset: 4
-                    }]
-                },
-                options: {
-                    plugins: {
-                        title: {
-                            display: true,
-                            text: volumes[i].nome
-                        },
-                        legend: {
-                            position: "bottom"
-                        }
-                    }
-                }
-            });
-        }
-    }
 
     function desenharModal(hostname) {
         document.getElementById("mainDiv").innerHTML += `
