@@ -1,9 +1,11 @@
 
+
 .visao-geral {
     display: flex;
     align-items: center;
     width: 80%;
     justify-content: space-around;
+    overflow-y: hidden;
 }
 
 
@@ -32,15 +34,12 @@
     
 }
 
-/* #container1 {
-    margin-top: 6rem;
-    margin-left: 8rem;
-} */
 
 .container {
-     display: flex;
+     /* display: flex; */
      justify-content: start;
      margin: 2rem;
+   
 }
 
 
@@ -131,3 +130,13 @@ button:hover {
     letter-spacing: 0.5px;
 }
 
+.lista-funcionarios{
+    background: #fff;
+    border: 1px solid #ccc;
+    padding: 2rem;
+    box-shadow: 1px 1px 15px rgba(0, 0, 0, 0.2);         
+    border-radius: 20px;
+    width: 40%;
+    height: 21%;
+    margin-bottom: 2rem;
+}
