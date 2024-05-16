@@ -1,0 +1,84 @@
+
+
+.visao-geral .frase-principal {
+    text-align: center;
+    padding: 2rem 0;
+}
+
+.visao-geral .div-input-botao {
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+}
+
+.visao-geral .div-input{
+    display: flex;
+    justify-content: space-evenly;
+    
+    
+}
+
+.listaArtigo {
+    display: flex;
+    justify-content: center;
+    margin-top: 10%;
+    
+}
+
+.div-input-botao {
+    padding-top: 3rem;
+}
+
+
+
+.div-input-botao i {
+    margin-right: 10%;
+    font-size: 20px;
+}
+
+.div-input input {
+    width: 30rem;
+    outline: none;
+    font-size: 0.9rem;
+    color: rgba(0, 0, 0, 0.7);
+    padding: 0.5rem; 
+    border: 1px solid rgba(0, 0, 0, 0.2); 
+    border-radius: 5px; 
+    box-sizing: border-box; 
+    display: block;
+    margin-bottom: 5px;
+}
+
+.div-input i {
+    padding: 12px;
+}
+
+.div-botao button {
+   
+    padding: 0.6rem 1rem;
+    background: #52c3e3;
+    cursor: pointer;
+    color: white;
+    font-size: 14px; 
+    font-weight: 500;
+    border: none;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+    margin: 0 auto; 
+    width: 150px;
+    
+ 
+}
+
+button:hover {
+    letter-spacing: 0.5px;
+}
+
+table {
+    
+    text-align: center;
+}
+
+th {
+    padding: 2px 25rem;
+}
