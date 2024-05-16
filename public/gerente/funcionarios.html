@@ -49,7 +49,7 @@
             </div>
             <div class="visao-geral"> 
                 <div class="container" id="container1">
-                    <div class="formulario-cadastro">
+                    <!-- <div class="formulario-cadastro">
                     
                         <div class="titulo-novo-operador">
                             <h1>Cadastrar Funcionário</h1> 
@@ -58,7 +58,6 @@
                         <div class="titulo">
                         </div>
                         <div class="imagem-adicionar-funcionario">
-                            <!-- <img id="imagem-add-funcionario" src="imagens/img-adicionar-funcionario.png" alt=""> -->
                         </div>
 
                         <div class="form">
@@ -92,7 +91,6 @@
                                 <select name="" id="cargo_input" class="input_formulario">
                                     <option value="Operador">Operador</option>
                                     <option value=" Suporte">Suporte</option>
-                                    <!-- <option value="Operador">Gerente</option> -->
                                 </select>
                 
                             </div>
@@ -113,47 +111,93 @@
                         </div>
                       
 
-                <!-------------------------------------------------------------------------------------------------->
+               
+            </div> -->
+            
+        
+            <!-- TABELA FUNCIONÁRIOS -->
+            <div class="tabela-container">
+                <table id="tabela-funcinario">
+                  <thead>
+                    <tr>
+                      <th>Nome</th>
+                      <th>Sobrenome</th>
+                      <th>Celular</th>
+                      <th>Email</th>
+                      <th>Data de Nascimento</th>
+                      <th>CPF</th>
+                      <th>Cargo</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>Maria</td>
+                      <td>Guardião</td>
+                      <td>(99) 99999-9999</td>
+                      <td>exemplo@example.com</td>
+                      <td>01/01/1990</td>
+                      <td>123.456.789-00</td>
+                      <td>Gerente</td>
+                    </tr>
+                    <tr>
+                      <td>Jean</td>
+                      <td>Santos</td>
+                      <td>(99) 99999-9999</td>
+                      <td>exemplo@example.com</td>
+                      <td>01/01/1990</td>
+                      <td>123.456.789-00</td>
+                      <td>Gerente</td>
+                    </tr>
+                    <tr>
+                      <td>Pedro</td>
+                      <td>Scortuzzi</td>
+                      <td>(99) 99999-9999</td>
+                      <td>exemplo@example.com</td>
+                      <td>01/01/1990</td>
+                      <td>123.456.789-00</td>
+                      <td>Gerente</td>
+                    </tr>
+                    <tr>
+                      <td>Samuel</td>
+                      <td>Oliveira</td>
+                      <td>(99) 99999-9999</td>
+                      <td>exemplo@example.com</td>
+                      <td>01/01/1990</td>
+                      <td>123.456.789-00</td>
+                      <td>Gerente</td>
+                    </tr>
+                    <tr>
+                      <td>Lucas</td>
+                      <td>Oristanio</td>
+                      <td>(99) 99999-9999</td>
+                      <td>exemplo@example.com</td>
+                      <td>01/01/1990</td>
+                      <td>123.456.789-00</td>
+                      <td>Gerente</td>
+                    </tr>
+                    <tr>
+                      <td>Vinicius</td>
+                      <td>Zirondi</td>
+                      <td>(99) 99999-9999</td>
+                      <td>exemplo@example.com</td>
+                      <td>01/01/1990</td>
+                      <td>123.456.789-00</td>
+                      <td>Gerente</td>
+                    </tr>
+                  </tbody>
+
+                </table>
             </div>
-            <div class="lista-funcionarios">
-                <div> 
-                    <table>
-                        <tr>Nome</tr>
-                        <td>maria</td>
-
-                        <tr>Sobrenome</tr>
-                        <td>Guardião</td>
-
-                        <tr>Email</tr>
-                        <td>maria.guardiao@sptech.school</td>
-
-                        <tr>Celular</tr>
-                        <td>11951288322</td>
-
-                        <tr>Nome</tr>
-                        <td>maria</td>
-
-                        <tr>Nome</tr>
-                        <td>maria</td>
-
-                    </table>
-                </div>
+            <div>
+                <button onclick="cadastrar()"><i class="fa-solid fa-user-plus"></i></button>
             </div>
-        </div>
+            
+            
 
 
 
     </section>
-    <style>
-        #add_func {
-            display: none;
-            flex-direction: column;
-
-            div {
-                display: flex;
-            }
-        }
-    </style>
+    
 </body>
 
 </html>
