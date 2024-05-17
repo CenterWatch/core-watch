@@ -53,6 +53,27 @@
                     </div>
                 </div>
 
+                <!---------------------------------------------------------------->
+
+                <div class="modal-completo">
+                    <dialog>
+                        <div class="modal">
+                            <select name="" id="">
+                                <option value="">CATEGORIA</option>
+                            </select>
+                            <input type="text" placeholder="Dê um título para o artigo"> 
+                            
+                            <textarea placeholder="Digite seu artigo aqui para contribuir com nosso conhecimento. todo o processo está nas suas mãos..." name="" id=""></textarea>
+                            <div class="div-botoes">
+                                <button>FECHAR</button>
+                                <button>PUBLICAR</button>
+                            </div>
+                        </div>
+                    </dialog>
+                </div>
+
+                <!---------------------------------------------------------------->
+
                 <div class="listaArtigo">
                     <table id="tabela-artigo">
                         <tr>
@@ -76,6 +97,30 @@
 </html>
 
 <script>
+
+
+    // SCRIPT MODAL
+
+    const button = document.querySelector("button")
+    const modal = document.querySelector("dialog")
+    const buttonClose = document.querySelector("dialog button")
+
+    
+
+    button.onclick = function () {
+        modal.showModal()
+    }
+
+    buttonClose.onclick = function () {
+        modal.close()
+    }
+
+
+
+    // FIM SCRIPT MODAL
+
+
+
     function buscarArtigos() {
         var idEmpresa = sessionStorage.ID_EMPRESA_USUARIO;
 
