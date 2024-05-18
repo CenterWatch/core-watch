@@ -147,6 +147,19 @@ function buscarOperadoresComMaisTarefasAtrasadas(req, res){
     })
 }
 
+function buscarSatisfacaoOperadores(req, res){
+    var idEmpresa = req.query.idEmpresa;
+
+    empresaModel.buscarSatisfacaoOperadores(idEmpresa)
+    .then(function (resBuscar){
+        res.json(resBuscar);
+    })
+    .catch(function (erro){
+        console.log(erro)
+        console.log(`houve um erro ao realizar o select, erro: ${erro}`)
+    })
+}
+
 module.exports = {
     cadastrar,
     buscarMatriz,
@@ -156,5 +169,6 @@ module.exports = {
     atualizarConfigAtualRegistro,
     atualizarConfigAtualVolume,
     buscarTarefasAtrasadas,
-    buscarOperadoresComMaisTarefasAtrasadas
+    buscarOperadoresComMaisTarefasAtrasadas,
+    buscarSatisfacaoOperadores
 }

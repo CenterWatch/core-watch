@@ -32,4 +32,7 @@ router.get("/buscarTarefasAtrasadas", function (req, res){
 router.get("/buscarOperadoresComMaisTarefasAtrasadas", function (req, res){
     empresaController.buscarOperadoresComMaisTarefasAtrasadas(req, res);
 })
+router.get("/buscarSatisfacaoOperadores", function (req, res){
+    empresaController.buscarSatisfacaoOperadores(req, res);
+})
 module.exports = router;

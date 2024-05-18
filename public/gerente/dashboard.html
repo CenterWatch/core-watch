@@ -13,7 +13,7 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
-<body onload="buscarTarefasAtrasadas(),buscarOperadoresComMaisTarefasAtrasadas()">
+<body onload="buscarTarefasAtrasadas(),buscarOperadoresComMaisTarefasAtrasadas(),buscarSatisfacaoOperadores()">
 
 
     <section class="section-body">
@@ -66,7 +66,7 @@
                             <h4 class="card-title">Satisfação</h4>
                             <div class="satisfacao">
                                 <i class="fa-solid fa-face-laugh-beam icon-gerente"></i>
-                                <span class="pontuacao">9,3</span>
+                                <span id="view_nota_media" class="pontuacao">9,3</span>
                                 <div class="seta-indicador">
                                     <i class="fa-solid fa-arrow-trend-up"></i>
                                     <span>3,6%</span>
@@ -200,5 +200,22 @@
         listaOperadoresTarefas.forEach(op => {
             document.getElementById('view_operadores_atrasos').innerHTML += `<li><span><i class="fa-solid fa-circle-user" style="color: #313131; "></i>${op.primeiro_nome} ${op.sobrenome} - ${op.tarefasAtrasadas} em atraso</span></li>`
         })
+    }
+
+    function buscarSatisfacaoOperadores(){
+        fetch(`/empresas/buscarSatisfacaoOperadores?idEmpresa=${idEmpresa}`).then(res => {
+            if (!res.ok) {
+                throw new Error(`Erro na solicitação: ${res.statusText}`);
+            }
+            return res.json();
+        })
+            .then(res => {
+                console.log(res);
+                document.getElementById('view_nota_media').innerHTML = `${res[0].media}`
+            })
+            .catch(erro => {
+                console.log(erro);
+                console.log("Não foi  possivel realizar o select: ", erro);
+            })
     }
 </script>

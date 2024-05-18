@@ -89,6 +89,14 @@ function buscarOperadoresComMaisTarefasAtrasadas(id_empresa){
     return database.executar(instrucao)
 }
 
+function buscarSatisfacaoOperadores(id_empresa){
+    var instrucao = `
+    select ROUND((sum(nota)/count(nota)),2) as media from questionario as q join funcionario as f on fk_funcionario = id_funcionario where f.fk_empresa = ${id_empresa};
+    `
+    console.log(`Executando a instrucao sql: ${instrucao}`)
+    return database.executar(instrucao)
+}
+
 module.exports = {
     cadastrarEndereco,
     cadastrar,
@@ -99,5 +107,6 @@ module.exports = {
     atualizarConfigAtualRegistro,
     atualizarConfigAtualVolume,
     buscarTarefasAtrasadas,
-    buscarOperadoresComMaisTarefasAtrasadas
+    buscarOperadoresComMaisTarefasAtrasadas,
+    buscarSatisfacaoOperadores
 };
