@@ -33,4 +33,8 @@ router.get("/listarChamados", function (req, res){
 router.post("/atribuirTarefa", function (req, res){
     usuarioController.atribuirTarefa(req,res);
 })
+
+router.post("/realizarFeedback", function (req, res){
+    usuarioController.realizarFeedback(req,res);
+})
 module.exports = router;

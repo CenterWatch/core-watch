@@ -54,19 +54,19 @@
                         </div>
                         <div class="icones-satifacao">
 
-                            <input type="radio" id="muito_bom" name="satisfacao" value="muito bom">
+                            <input type="radio" id="muito_bom" name="satisfacao" value="1">
                             <label for=""><i class="fa-solid fa-face-laugh-beam" style="color: #45be2d;"></i>Muito Bom</label>
 
-                            <input type="radio" id="bom" name="satisfacao" value="bom">
+                            <input type="radio" id="bom" name="satisfacao" value="2">
                             <label for=""><i class="fa-solid fa-face-smile-beam" style="color: #2c972b;"></i>Bom</label>
     
-                            <input type="radio" id="normal" name="satisfacao" value="normal">
+                            <input type="radio" id="normal" name="satisfacao" value="3">
                             <label for=""><i class="fa-solid fa-face-meh" style="color: #e5bb24;"></i>Normal</label>
     
-                            <input type="radio" id="ruim" name="satisfacao" value="ruim">
+                            <input type="radio" id="ruim" name="satisfacao" value="4">
                             <label for=""><i class="fa-solid fa-face-frown" style="color: #bb2a2a;"></i>Ruim</label>
 
-                            <input type="radio" id="ruim" name="satisfacao" value="ruim">
+                            <input type="radio" id="muito_ruim" name="satisfacao" value="5">
                             <label for=""><i class="fa-solid fa-face-angry" style="color: #850d00;"></i>Muito Ruim</label>
 
                         </div>
@@ -75,7 +75,7 @@
                             <textarea name="" id="input_descricao" maxlength="200"></textarea>
                         </div>
                         <div>
-                            <button onclick="enviar()">Enviar</button>
+                            <button onclick="realizarFeedback()">Enviar</button>
                         </div>
                     </div>
                 </div>
@@ -87,3 +87,39 @@
 </body>
 
 </html>
+
+<script>
+
+
+    function realizarFeedback(){
+        var idUsuario = sessionStorage.ID_USUARIO;
+        var nota = document.querySelector('input[name="satisfacao"]:checked').value;
+        var descricao = document.getElementById('input_descricao').value;
+
+        fetch(`/usuarios/realizarFeedback`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                idOperadorServer: idUsuario,
+                notaServer: nota,
+                descricaoServer: descricao
+            }),
+        })
+            .then(function (res) {
+                console.log("Resposta: ", res);
+
+                if (res.ok) {
+                    alert("Feedback enviado!")
+                    
+                } else {
+                    alert("Não foi possível enviar feedback!")
+                }
+            })
+            .catch(function (erro) {
+                console.log("Erro: ", erro)
+            })
+    }
+
+</script>

@@ -76,6 +76,13 @@ function atribuirTarefa(idOperador, idGerente, tarefa, dtEstimada){
     return database.executar(instrucao);
 }
 
+function realizarFeedback(nota,detalhe,idOperador){
+    var instrucao = `
+                    insert into questionario (nota,detalhe,fk_funcionario)  values (${nota},"${detalhe}",${idOperador});
+                    `
+    return database.executar(instrucao);
+}
+
 module.exports = {
     autenticar,
     listar,
@@ -86,5 +93,6 @@ module.exports = {
     listarChamados,
     buscarSessao,
     buscarChamadosPorFuncionario,
-    atribuirTarefa
+    atribuirTarefa,
+    realizarFeedback
 };

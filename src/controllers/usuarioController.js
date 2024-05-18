@@ -151,7 +151,29 @@ function atribuirTarefa(req, res){
     var dataEstimada = req.body.dataEstimadaServer;
 
     usuarioModel.atribuirTarefa(idFuncionario, idGerente, tarefa, dataEstimada)
+    .then(result => {
+        res.status(200).json(result);
+    })
+    .catch(error => {
+        console.error("Erro ao processar a solicitação: ", error);
+        res.status(500).json({ error: "Erro interno do servidor" });
+    })
 
+}
+
+function realizarFeedback(req, res){
+    var idOperador = req.body.idOperadorServer;
+    var nota = req.body.notaServer;
+    var descricao = req.body.descricaoServer;
+
+    usuarioModel.realizarFeedback(nota, descricao, idOperador)
+    .then(result => {
+        res.status(200).json(result);
+    })
+    .catch(error => {
+        console.error("Erro ao processar a solicitação: ", error);
+        res.status(500).json({ error: "Erro interno do servidor" });
+    })
 }
 
 module.exports = {
@@ -161,5 +183,6 @@ module.exports = {
     cadastrarChamado,
     buscarSessao,
     listarChamados,
-    atribuirTarefa
+    atribuirTarefa,
+    realizarFeedback
 }
