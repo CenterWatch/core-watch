@@ -65,8 +65,8 @@
                                     <th>Cargo</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                <tr>
+                            <tbody id="lista-func">
+                                <!-- <tr>
                                     <td>Maria</td>
                                     <td>Guardião</td>
                                     <td>(99) 99999-9999</td>
@@ -119,7 +119,7 @@
                                     <td>01/01/1990</td>
                                     <td>123.456.789-00</td>
                                     <td>Gerente</td>
-                                </tr>
+                                </tr> -->
                             </tbody>
 
                         </table>
@@ -243,6 +243,7 @@
                     setTimeout(() => {
                         window.location.reload();;
                     }, 1500);
+                    exibirFunc();
                 } else {
                     alert("Dados de funcionário inválido!")
                 }
@@ -266,10 +267,30 @@
             .then(res => {
                 console.log(res);
                 sessionStorage.FUNCIONARIOS = JSON.stringify(res);
+                listaFunc = res;
+                exibirFunc();
             })
             .catch(erro => {
                 console.log(erro);
                 console.log("Não foi  possivel realizar o select: ", erro);
             })
+    }
+
+    var viewFunc = document.getElementById('lista-func');
+
+    function exibirFunc(){
+        listaFunc.forEach(e => {
+            document.getElementById('lista-func').innerHTML += `
+                                <tr>
+                                    <td>${e.primeiro_nome}</td>
+                                    <td>${e.sobrenome}</td>
+                                    <td>${e.celular}</td>
+                                    <td>${e.email}</td>
+                                    <td>${e.dt_nasc}</td>
+                                    <td>${e.cpf}</td>
+                                    <td>${e.cargo}</td>
+                                </tr>
+            `
+        })
     }
 </script>
