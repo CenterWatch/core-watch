@@ -15,7 +15,7 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
-<body onload="buscarFunc()">
+<body onload="buscarOperadores()">
 
     <section class="section-body">
         <div class="leftbar">
@@ -59,13 +59,16 @@
 
                         <div class="card-task">
                             <label for="">Atendente</label>
-                            <select class="select_funcionario" name="" id=""></select>
+                            <select class="select_funcionario" name="" id="select_func"></select>
 
                             <label for="">Tarefa</label>
-                            <textarea name="" id=""></textarea>
+                            <textarea name="" id="valor_tarefa"></textarea>
+
+                            <label for="">Data estimada</label>
+                            <input type="date" id="dataEstimada">
                         </div>
                         <div>
-                            <button onclick="atribuir()">Atribuir</button>
+                            <button onclick="atribuirTarefa()">Atribuir</button>
                         </div>
                     </div>
                 </div>
@@ -76,3 +79,91 @@
 </body>
 
 </html>
+
+<script>
+
+    var listaOperadores = [];
+    const idUsuario = sessionStorage.ID_USUARIO;
+    
+    function buscarOperadores(){
+        
+        fetch(`/usuarios/listarOperadores?idUsuario=${idUsuario}`).then(res => {
+            if (!res.ok) {
+                throw new Error(`Erro na solicitação: ${res.statusText}`);
+            }
+            return res.json();
+        })
+            .then(res => {
+                console.log(res)
+                listaOperadores = res;
+                plotarOperadoresSelect()
+            })
+            .catch(erro => {
+                console.log(erro);
+                console.log("Não foi  possivel realizar o select: ", erro);
+            })
+        
+    }
+
+    function plotarOperadoresSelect(){
+        console.log(listaOperadores)
+
+        var selectFunc= document.getElementById("select_func");
+
+        listaOperadores.forEach(op =>{
+            // Cria um novo elemento option
+            var option = document.createElement("option");
+
+            // Define o valor e o texto do option
+            option.value = op.id_funcionario; 
+            option.text = `${op.primeiro_nome} ${op.sobrenome}`;  
+
+            // Adiciona o option ao select
+            selectFunc.appendChild(option);
+            
+        })
+    }
+
+    function operadorSelecionado(){
+        var selectFunc = document.getElementById("select_func").value;
+
+        return selectFunc;
+    }
+
+    function atribuirTarefa(){
+        var idOperador = operadorSelecionado();
+        var descricao = document.getElementById('valor_tarefa').value;
+        var data_estimada = document.getElementById('dataEstimada').value;
+
+        fetch(`/usuarios/atribuirTarefa`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                idOperadorServer: idOperador,
+                idGerenteServer: idUsuario,
+                tarefaServer: descricao,
+                dataEstimadaServer: data_estimada
+            }),
+        })
+            .then(function (res) {
+                console.log("Resposta: ", res);
+
+                if (res.ok) {
+                    alert("Tarefa atribuida com sucesso!")
+
+                    setTimeout(() => {
+                        window.location.reload();;
+                    }, 1500);
+                    
+                } else {
+                    alert("Não foi possível atribuir tarefa")
+                }
+            })
+            .catch(function (erro) {
+                console.log("Erro: ", erro)
+            })
+    }
+
+</script>

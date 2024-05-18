@@ -68,6 +68,14 @@ function buscarChamadosPorFuncionario(idFuncionario){
     return database.executar(instrucao);
     
 }
+
+function atribuirTarefa(idOperador, idGerente, tarefa, dtEstimada){
+    var instrucao=`insert into tarefa (descricao, dt_fim, dt_inicio,fk_funcionario,fk_gerente)
+                    values ("${tarefa}","${dtEstimada}",now(),${idOperador},${idGerente});
+    `
+    return database.executar(instrucao);
+}
+
 module.exports = {
     autenticar,
     listar,
@@ -77,5 +85,6 @@ module.exports = {
     cadastrarChamado,
     listarChamados,
     buscarSessao,
-    buscarChamadosPorFuncionario
+    buscarChamadosPorFuncionario,
+    atribuirTarefa
 };

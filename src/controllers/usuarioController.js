@@ -132,7 +132,7 @@ function listarChamados(req, res) {
 }
 
 function listarOperadores(req, res) {
-    var idGerente = req.query.idGerenteServer;
+    var idGerente = req.query.idUsuario;
 
     usuarioModel.listarOperadores(idGerente)
         .then(result => {
@@ -144,11 +144,22 @@ function listarOperadores(req, res) {
         })
 }
 
+function atribuirTarefa(req, res){
+    var idFuncionario = req.body.idOperadorServer;
+    var idGerente = req.body.idGerenteServer;
+    var tarefa = req.body.tarefaServer;
+    var dataEstimada = req.body.dataEstimadaServer;
+
+    usuarioModel.atribuirTarefa(idFuncionario, idGerente, tarefa, dataEstimada)
+
+}
+
 module.exports = {
     autenticar,
     listarOperadores,
     cadastrar,
     cadastrarChamado,
     buscarSessao,
-    listarChamados
+    listarChamados,
+    atribuirTarefa
 }

@@ -29,4 +29,8 @@ router.post("/cadastrarChamado", function (req, res){
 router.get("/listarChamados", function (req, res){
     usuarioController.listarChamados(req,res);
 })
+
+router.post("/atribuirTarefa", function (req, res){
+    usuarioController.atribuirTarefa(req,res);
+})
 module.exports = router;
