@@ -13,7 +13,7 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
-<body>
+<body onload="buscarTarefasAtrasadas()">
 
 
     <section class="section-body">
@@ -58,8 +58,8 @@
 
                         <div class="card-kpi" id="card-kpi-center">
                             <span class="card-title">Tarefas em atraso </span>
-                            <span class="card-user"><span class="card-user-valor">9 </span>tarefas de <br>
-                            <span class="card-user-valor">7</span> colaboradores</span>
+                            <span class="card-user"><span id="view_total_tarefas" class="card-user-valor">9 </span>tarefas de <br>
+                            <span id="view_total_operadores" class="card-user-valor">7</span> colaboradores</span>
                         </div>
 
                         <div class="card-kpi">
@@ -103,6 +103,7 @@
 <script>
 
     var usuario = sessionStorage.USERNAME_USUARIO;
+    const idEmpresa = sessionStorage.ID_EMPRESA_USUARIO;
     var txt_nome = document.getElementById('nome-usuario');
     txt_nome.innerHTML = `${usuario}`
 
@@ -145,4 +146,34 @@
         }, 
         
     });
+
+    var listaTarefas = []
+    function buscarTarefasAtrasadas(){
+        fetch(`/empresas/buscarTarefasAtrasadas?idEmpresa=${idEmpresa}`).then(res => {
+            if (!res.ok) {
+                throw new Error(`Erro na solicitação: ${res.statusText}`);
+            }
+            return res.json();
+        })
+            .then(res => {
+                console.log(res);
+                listaTarefas = res;
+                exibirTarefasAtrasadas();
+            })
+            .catch(erro => {
+                console.log(erro);
+                console.log("Não foi  possivel realizar o select: ", erro);
+            })
+    }
+
+    function exibirTarefasAtrasadas(){
+        let totalTarefas = 0
+        let totalOp = 0
+        listaTarefas.forEach(t => {
+            totalTarefas += t.qtdTarefas;
+            totalOp += 1;
+        })
+        document.getElementById('view_total_tarefas').innerHTML = `${totalTarefas}`
+        document.getElementById('view_total_operadores').innerHTML = `${totalOp}`
+    }
 </script>

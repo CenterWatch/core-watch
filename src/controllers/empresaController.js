@@ -121,14 +121,12 @@ function atualizarConfigAtualVolume(req, res){
     })
 }
 
-function listarOperadores(req, res) {
-    var idEmpresa = req.body.id_empresaServer;
+function buscarTarefasAtrasadas(req, res){
+    var idEmpresa = req.query.idEmpresa;
 
-    empresaModel.buscarFunc(idEmpresa)
+    empresaModel.buscarTarefasAtrasadas(idEmpresa)
     .then(function (resBuscar){
-        let listaOperadores = [];
-
-        console.log("")
+        res.json(resBuscar);
     })
     .catch(function (erro){
         console.log(erro)
@@ -143,5 +141,6 @@ module.exports = {
     buscarFunc,
     buscarConfigAtual,
     atualizarConfigAtualRegistro,
-    atualizarConfigAtualVolume
+    atualizarConfigAtualVolume,
+    buscarTarefasAtrasadas
 }

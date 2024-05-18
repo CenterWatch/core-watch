@@ -73,6 +73,14 @@ console.log(`Executando a instrucao sql: ${instrucao}`)
 return database.executar(instrucao)
 }
 
+function buscarTarefasAtrasadas(id_empresa){
+    var instrucao = `
+    select count(id_tarefa) as qtdTarefas from tarefa join funcionario where fk_funcionario = id_funcionario and dt_fim < now() and fk_empresa = ${id_empresa} group by fk_funcionario;
+    `
+    console.log(`Executando a instrucao sql: ${instrucao}`)
+    return database.executar(instrucao)
+}
+
 module.exports = {
     cadastrarEndereco,
     cadastrar,
@@ -81,5 +89,6 @@ module.exports = {
     buscarFunc,
     buscarConfigAtual,
     atualizarConfigAtualRegistro,
-    atualizarConfigAtualVolume
+    atualizarConfigAtualVolume,
+    buscarTarefasAtrasadas
 };

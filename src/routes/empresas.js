@@ -26,4 +26,7 @@ router.post("/atualizarConfigAtualVolume", function (req, res) {
 router.get("/buscarFunc", function (req, res){
     empresaController.buscarFunc(req, res);
 })
+router.get("/buscarTarefasAtrasadas", function (req, res){
+    empresaController.buscarTarefasAtrasadas(req, res);
+})
 module.exports = router;
