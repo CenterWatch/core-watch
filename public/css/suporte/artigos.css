@@ -110,18 +110,21 @@ button:hover {
     width: 55%;
     height: 3rem;
     padding: 1rem;
+    outline: none;
 }
 
 .modal select {
     width: 55%;
     height: 3.1rem;
     padding: 1rem;
+    outline: none;
 }
 
 .modal textarea {
     width: 55%;
     height: 15rem;
     padding: 2rem;
+    outline: none;
 }
 
 .div-botoes button {
@@ -155,5 +158,6 @@ table {
 }
 
 th {
-    padding: 2px 25rem;
+    padding: 2px 8rem;
+    border: solid 1px #222;
 }

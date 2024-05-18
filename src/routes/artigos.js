@@ -7,4 +7,7 @@ router.get("/buscarArtigos", function (req,res){
     artigoController.buscarArtigos(req, res);
 })
 
+router.post("/cadastrarArtigo", function (req, res){
+    artigoController.cadastrarArtigo(req, res);
+})
 module.exports = router;

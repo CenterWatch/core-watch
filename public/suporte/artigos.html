@@ -46,7 +46,7 @@
 
                 <div class="div-input-botao">
                     <div class="div-input">
-                        <input id="" ><i class="fa-solid fa-magnifying-glass"></i>
+                        <input onkeydown="setTimeout(buscarArtigos,2000)" id="pesquisa_input" placeholder="Buscar artigo"><i class="fa-solid fa-magnifying-glass"></i>
                     </div>
                     <div class="div-botao">
                         <button>CRIAR ARTIGO</button>
@@ -58,15 +58,20 @@
                 <div class="modal-completo">
                     <dialog>
                         <div class="modal">
-                            <select name="" id="">
-                                <option value="">CATEGORIA</option>
+                            <select name="" id="artigo_categoria">
+                                <option value="lentidão">Lentidão</option>
+                                <option value="redes">Redes</option>
+                                <option value="componentes de hardware">Componentes de Hardware</option>
+                                <option value="periféricos">Periféricos</option>
+                                <option value="acessos">Acessos</option>
                             </select>
-                            <input type="text" placeholder="Dê um título para o artigo"> 
+                            <input type="text" placeholder="Dê um título para o artigo" id="artigo_titulo"> 
                             
-                            <textarea placeholder="Digite seu artigo aqui para contribuir com nosso conhecimento. todo o processo está nas suas mãos..." name="" id=""></textarea>
+                            <textarea placeholder="Digite seu artigo aqui para contribuir com nosso conhecimento. Todo o processo está nas suas mãos..." name="" id="artigo_descricao"></textarea>
+                            <input type="text" name="" id="palavras_chaves"  placeholder="Palavras-Chaves. (Separe por espaço, sem virgula e pontuações.)">
                             <div class="div-botoes">
                                 <button>FECHAR</button>
-                                <button>PUBLICAR</button>
+                                <button onclick="cadastrarArtigo()">PUBLICAR</button>
                             </div>
                         </div>
                     </dialog>
@@ -77,9 +82,12 @@
                 <div class="listaArtigo">
                     <table id="tabela-artigo">
                         <tr>
-                            <th>Artigos</th>
-                            <th>Atualizações</th>
+                            <th>Titulo</th>
+                            <th>Categoria</th>
+                            <th>Descrição</th>
+                            <th>Palavras-Chaves</th>
                         </tr>
+
                     </table>
                 </div>
 
@@ -105,8 +113,6 @@
     const modal = document.querySelector("dialog")
     const buttonClose = document.querySelector("dialog button")
 
-    
-
     button.onclick = function () {
         modal.showModal()
     }
@@ -115,16 +121,15 @@
         modal.close()
     }
 
-
-
     // FIM SCRIPT MODAL
 
-
+    var listaArtigos = [];
 
     function buscarArtigos() {
         var idEmpresa = sessionStorage.ID_EMPRESA_USUARIO;
+        var pesquisa = document.getElementById('pesquisa_input').value;
 
-        fetch(`/artigos/buscarArtigos?idEmpresaServer=${idEmpresa}`).then(res => {
+        fetch(`/artigos/buscarArtigos?idEmpresaServer=${idEmpresa}&pesquisaServer=${pesquisa}`).then(res => {
             if (!res.ok) {
                 throw new Error(`Erro na solicitação: ${res.statusText}`);
             }
@@ -133,10 +138,71 @@
             .then(res => {
                 console.log(res);
                 sessionStorage.ARTIGOS = JSON.stringify(res);
+                listaArtigos = res;
+                listarArtigo()
             })
             .catch(erro => {
                 console.log(erro);
                 console.log("Não foi  possivel realizar o select: ", erro);
             })
     }
+
+    function listarArtigo(){
+        document.getElementById('tabela-artigo').innerHTML = `                  
+                                                            <tr>
+                                                                <th>Titulo</th>
+                                                                <th>Categoria</th>
+                                                                <th>Descrição</th>
+                                                                <th>Palavras-Chaves</th>
+                                                            </tr>
+                                                            `;
+        listaArtigos.forEach(artigo => {
+            document.getElementById('tabela-artigo').innerHTML += `
+                        <tr>
+                            <th>${artigo.titulo}</th>
+                            <th>${artigo.categoria}</th>
+                            <th>${artigo.descricao}</th>
+                            <th>${artigo.palavra_chave}</th>
+                        </tr>
+            `
+        })
+    }
+
+    function cadastrarArtigo(){
+        var idSuporte = sessionStorage.ID_USUARIO;
+        var titulo = document.getElementById('artigo_titulo').value;
+        var descricao = document.getElementById('artigo_descricao').value;
+        var categoria = document.getElementById('artigo_categoria').value;
+        var palavras = document.getElementById('palavras_chaves').value;
+
+        fetch(`/artigos/cadastrarArtigo`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                idSuporteServer: idSuporte,
+                tituloServer: titulo,
+                descricaoServer: descricao,
+                categoriaServer: categoria,
+                palavrasChaveServer: palavras
+            }),
+        })
+            .then(function (res) {
+                console.log("Resposta: ", res);
+
+                if (res.ok) {
+                    alert("Artigo cadastrado com sucesso!")
+                    setTimeout(() => {
+                        window.location.reload();;
+                    }, 1500);
+                } else {
+                    alert("Não foi possível cadastrar artigo!")
+                }
+            })
+            .catch(function (erro) {
+                console.log("Erro: ", erro)
+            })
+    }
+
 </script>
