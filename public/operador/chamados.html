@@ -113,13 +113,13 @@
                 console.log("Resposta: ", res);
 
                 if (res.ok) {
-                    alert("Funcionário cadastrado com sucesso!")
+                    alert("Chamado aberto com sucesso!")
 
                     setTimeout(() => {
                         window.location.reload();;
                     }, 1500);
                 } else {
-                    alert("Dados de funcionário inválido!")
+                    alert("Não foi possível enviar chamado!")
                 }
             })
             .catch(function (erro) {
