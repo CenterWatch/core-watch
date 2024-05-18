@@ -29,4 +29,7 @@ router.get("/buscarFunc", function (req, res){
 router.get("/buscarTarefasAtrasadas", function (req, res){
     empresaController.buscarTarefasAtrasadas(req, res);
 })
+router.get("/buscarOperadoresComMaisTarefasAtrasadas", function (req, res){
+    empresaController.buscarOperadoresComMaisTarefasAtrasadas(req, res);
+})
 module.exports = router;

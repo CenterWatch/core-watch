@@ -13,7 +13,7 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
-<body onload="buscarTarefasAtrasadas()">
+<body onload="buscarTarefasAtrasadas(),buscarOperadoresComMaisTarefasAtrasadas()">
 
 
     <section class="section-body">
@@ -81,10 +81,10 @@
                         </div>
                         <div class="card-op">
                             <span class="card-title-op">Operadores com tarefas atrasadas recorrentes</span>
-                            <ul>
+                            <ul id="view_operadores_atrasos">
+                                <!-- <li><span><i class="fa-solid fa-circle-user" style="color: #313131; "></i>Jorge operador</span></li>
                                 <li><span><i class="fa-solid fa-circle-user" style="color: #313131; "></i>Jorge operador</span></li>
-                                <li><span><i class="fa-solid fa-circle-user" style="color: #313131; "></i>Jorge operador</span></li>
-                                <li><span><i class="fa-solid fa-circle-user" style="color: #313131; "></i>Jorge operador</span></li>
+                                <li><span><i class="fa-solid fa-circle-user" style="color: #313131; "></i>Jorge operador</span></li> -->
                             </ul>
                         </div>
                     </div>
@@ -175,5 +175,30 @@
         })
         document.getElementById('view_total_tarefas').innerHTML = `${totalTarefas}`
         document.getElementById('view_total_operadores').innerHTML = `${totalOp}`
+    }
+
+    var listaOperadoresTarefas = []
+    function buscarOperadoresComMaisTarefasAtrasadas(){
+        fetch(`/empresas/buscarOperadoresComMaisTarefasAtrasadas?idEmpresa=${idEmpresa}`).then(res => {
+            if (!res.ok) {
+                throw new Error(`Erro na solicitação: ${res.statusText}`);
+            }
+            return res.json();
+        })
+            .then(res => {
+                console.log(res);
+                listaOperadoresTarefas = res;
+                exibirOperadoresComMaisTarefasAtrasadas();
+            })
+            .catch(erro => {
+                console.log(erro);
+                console.log("Não foi  possivel realizar o select: ", erro);
+            })
+    }
+
+    function exibirOperadoresComMaisTarefasAtrasadas(){
+        listaOperadoresTarefas.forEach(op => {
+            document.getElementById('view_operadores_atrasos').innerHTML += `<li><span><i class="fa-solid fa-circle-user" style="color: #313131; "></i>${op.primeiro_nome} ${op.sobrenome} - ${op.tarefasAtrasadas} em atraso</span></li>`
+        })
     }
 </script>

@@ -81,6 +81,14 @@ function buscarTarefasAtrasadas(id_empresa){
     return database.executar(instrucao)
 }
 
+function buscarOperadoresComMaisTarefasAtrasadas(id_empresa){
+    var instrucao = `
+    select primeiro_nome,sobrenome,count(id_tarefa) as tarefasAtrasadas from tarefa join funcionario where fk_funcionario = id_funcionario and fk_empresa = ${id_empresa} group by fk_funcionario ORDER BY tarefasAtrasadas DESC limit 3;
+    `
+    console.log(`Executando a instrucao sql: ${instrucao}`)
+    return database.executar(instrucao)
+}
+
 module.exports = {
     cadastrarEndereco,
     cadastrar,
@@ -90,5 +98,6 @@ module.exports = {
     buscarConfigAtual,
     atualizarConfigAtualRegistro,
     atualizarConfigAtualVolume,
-    buscarTarefasAtrasadas
+    buscarTarefasAtrasadas,
+    buscarOperadoresComMaisTarefasAtrasadas
 };
