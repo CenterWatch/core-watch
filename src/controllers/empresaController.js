@@ -121,6 +121,21 @@ function atualizarConfigAtualVolume(req, res){
     })
 }
 
+function listarOperadores(req, res) {
+    var idEmpresa = req.body.id_empresaServer;
+
+    empresaModel.buscarFunc(idEmpresa)
+    .then(function (resBuscar){
+        let listaOperadores = [];
+
+        console.log("")
+    })
+    .catch(function (erro){
+        console.log(erro)
+        console.log(`houve um erro ao realizar o select, erro: ${erro}`)
+    })
+}
+
 module.exports = {
     cadastrar,
     buscarMatriz,

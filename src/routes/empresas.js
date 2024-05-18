@@ -23,4 +23,7 @@ router.post("/atualizarConfigAtualRegistro", function (req, res) {
 router.post("/atualizarConfigAtualVolume", function (req, res) {
     empresaController.atualizarConfigAtualVolume(req, res);
 })
+router.get("/buscarFunc", function (req, res){
+    empresaController.buscarFunc(req, res);
+})
 module.exports = router;

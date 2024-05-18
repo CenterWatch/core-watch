@@ -60,20 +60,6 @@ function buscarSessao(req, res) {
         })
 }
 
-function listarOperadores(req, res) {
-    var idGerente = req.query.idGerenteServer;
-
-    usuarioModel.listarOperadores(idGerente)
-        .then(result => {
-            res.status(200).json(result);
-        })
-        .catch(error => {
-            console.error("Erro ao processar a solicitação: ", error);
-            res.status(500).json({ error: "Erro interno do servidor" });
-        })
-}
-
-
 function cadastrar(req, res) {
     var nome = req.body.nomeServer;
     var sobrenome = req.body.sobrenomeServer;
@@ -140,6 +126,19 @@ function listarChamados(req, res) {
         }
 
         ).catch(error => {
+            console.error("Erro ao processar a solicitação: ", error);
+            res.status(500).json({ error: "Erro interno do servidor" });
+        })
+}
+
+function listarOperadores(req, res) {
+    var idGerente = req.query.idGerenteServer;
+
+    usuarioModel.listarOperadores(idGerente)
+        .then(result => {
+            res.status(200).json(result);
+        })
+        .catch(error => {
             console.error("Erro ao processar a solicitação: ", error);
             res.status(500).json({ error: "Erro interno do servidor" });
         })

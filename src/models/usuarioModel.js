@@ -45,7 +45,7 @@ function cadastrarUser(usuario, senha, id_funcionario){
 }
 
 function listarOperadores(idGerente){
-    var instrucao = `select f.* from funcionario f join funcionario g on g.id_funcionario = f.fk_gerente where g.id_funcionario = ${idGerente};`
+    var instrucao = `select f.* from funcionario f join funcionario g on g.id_funcionario = f.fk_gerente where g.id_funcionario = ${idGerente} and f.cargo = 'Operador';`
     return database.executar(instrucao);
 }
 

@@ -258,7 +258,7 @@
         const idUsuario = sessionStorage.ID_USUARIO;
 
         var divLista = document.getElementById('listaFunc');
-        fetch(`/usuarios/listarOperadores?idGerenteServer=${idUsuario}`).then(res => {
+        fetch(`/empresas/buscarFunc?idEmpresa=${idEmpresa}`).then(res => {
             if (!res.ok) {
                 throw new Error(`Erro na solicitação: ${res.statusText}`);
             }
