@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CenterWatch | Funcionários</title>
     <link rel="stylesheet" href="../css/navbar.css">
-    <link rel="stylesheet" href="../css/dashboards.css">
+    <link rel="stylesheet" href="../css/dashboards.css"> 
     <link rel="stylesheet" href="../css/gerente/operador.css">
     <link rel="stylesheet" href="../css/gerente/funcionarios.css">
     <script src="../js/sessao.js"></script>
@@ -92,8 +92,12 @@
                         <input type="text" id="celular_input" class="input_formulario">
                     </div>
                     <div class="input-field">
-                        <label for="telefone_input">Telefone</label>
-                        <input class="input_formulario" type="text" id="telefone_input">
+                        <label for="dtNasc_input">Data de Nascimento</label>
+                        <input class="input_formulario" type="date" id="dtNasc_input">
+                    </div>
+                    <div class="input-field">
+                        <label for="cpf_input">CPF</label>
+                        <input class="input_formulario" type="number" id="cpf_input" placeholder="000.000.000-00">
                     </div>
                     <div class="input-field">
                         <label for="email_input">E-mail</label>
@@ -102,6 +106,7 @@
                     <div class="input-field">
                         <label for="cargo_input">Cargo</label>
                         <select id="cargo_input" class="input_formulario">
+                            <option value=""></option>
                             <option value="Operador">Operador</option>
                             <option value="Suporte">Suporte</option>
                         </select>
