@@ -1,4 +1,5 @@
-
+let proximaAtualizacao;
+const ATUALIZACAO_MS = 1000;
 
 function desenharGraficos(hostname, resposta, idMaquina) {
 
@@ -100,12 +101,29 @@ function desenharGraficos(hostname, resposta, idMaquina) {
         configCpu
     );
 
-    desenharVolumesPorMaquina(hostname);
-    setTimeout(() => atualizarGraficoRam(idMaquina, dadosRam, chartRam), 2000);
-    setTimeout(() => atualizarGraficoCpu(idMaquina, dadosCpu, chartCpu), 2000);
+    obterDadosVolumes(hostname);
+    setTimeout(() => atualizarGraficos(idMaquina, dadosRam, dadosCpu, chartRam, chartCpu), ATUALIZACAO_MS);
 }
 
-function desenharVolumesPorMaquina(hostname) {
+function obterDadosVolumes(hostname) {
+    fetch(`/registros/ultimosVolume/${hostname}`, { cache: 'no-store' }).then(function (response) {
+        if (response.ok) {
+            response.json().then(function (resposta) {
+                console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+                resposta.reverse();
+                
+                desenharVolumesPorMaquina(hostname, resposta);
+            });
+        } else {
+            console.error('Nenhum dado encontrado ou erro na API');
+        }
+    })
+        .catch(function (error) {
+            console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+        });
+}
+
+function desenharVolumesPorMaquina(hostname, dados) {
 
     var volumes = mapVolumes.get(hostname);
 
@@ -121,7 +139,9 @@ function desenharVolumesPorMaquina(hostname) {
 
     for (let i = 0; i < volumes.length; i++) {
         const ctxDisco = document.getElementById(`chart${hostname}Volume${i}`);
-        console.log(ctxDisco)
+
+        var per = calcularPorcentagem(dados[i].volume_total, dados[i].volume_disponivel);
+        
 
         new Chart(ctxDisco, {
             type: 'pie',
@@ -132,7 +152,7 @@ function desenharVolumesPorMaquina(hostname) {
                 ],
                 datasets: [{
                     label: '%',
-                    data: [70, 30],
+                    data: [per.disp, per.emUso],
                     backgroundColor: [
                         '#52C3E3',
                         '#3D3D3D'
@@ -155,7 +175,19 @@ function desenharVolumesPorMaquina(hostname) {
     }
 }
 
+function calcularPorcentagem(total, disponivel) {
+    console.log(total, disponivel)
+    perDisp = (disponivel/total*100);
+    return {
+        "emUso": 100-perDisp,
+        "disp": perDisp
+    }
+}
+
 function obterDadosGrafico(hostname, idMaquina) {
+    if (proximaAtualizacao != undefined) {
+        clearTimeout(proximaAtualizacao);
+    }
 
     fetch(`/registros/ultimos/${idMaquina}`, { cache: 'no-store' }).then(function (response) {
         if (response.ok) {
@@ -208,8 +240,7 @@ function converterHorario(dtHora) {
     return hora + ":" + min + ":" + seg;
 }
 
-function atualizarGraficoRam(idMaquina, dados, myChart) {
-
+function atualizarGraficos(idMaquina, dadosRam, dadosCpu, chartRam, chartCpu) {
     fetch(`/registros/tempo-real/${idMaquina}`, { cache: 'no-store' }).then(function (response) {
         if (response.ok) {
             response.json().then(function (novoRegistro) {
@@ -218,64 +249,31 @@ function atualizarGraficoRam(idMaquina, dados, myChart) {
                 // alertar(novoRegistro, idMaquina);
                 console.log(`Dados recebidos: ${JSON.stringify(novoRegistro)}`);
                 console.log(`Dados atuais do gráfico:`);
-                console.log(dados);
-                if (novoRegistro[0].momento_grafico == dados.labels[dados.labels.length - 1]) {
-                    console.log("---------------------------------------------------------------")
-                    console.log(dados.labels[dados.labels.length - 1])
-                    console.log("---------------------------------------------------------------")
-                } else {
-                    const novoDado = formatarDados(novoRegistro);
 
-                    dados.labels.shift();
-                    dados.labels.push(novoDado.dtHora[0]);
+                const novoDado = formatarDados(novoRegistro);
 
-                    dados.datasets[0].data.shift();
-                    dados.datasets[0].data.push(novoDado.ram[0]);
-                    myChart.update();
+                var horario = novoDado.dtHora[0];
+                var ultimaLabel = dadosCpu.labels[dadosCpu.labels.length - 1];
+
+                if (ultimaLabel != horario) {
+                    dadosRam.labels.shift()
+                    dadosRam.labels.push(horario)
+
+                    dadosCpu.datasets[0].data.shift();
+                    dadosCpu.datasets[0].data.push(novoDado.cpu[0]);
+
+                    dadosRam.datasets[0].data.shift();
+                    dadosRam.datasets[0].data.push(novoDado.ram[0]);
+
+                    chartRam.update()
+                    chartCpu.update()
                 }
 
-                proximaAtualizacao = setTimeout(() => atualizarGraficoRam(idMaquina, dados, myChart), 2000);
+                proximaAtualizacao = setTimeout(() => atualizarGraficos(idMaquina, dadosRam, dadosCpu, chartRam, chartCpu), ATUALIZACAO_MS);
             });
         } else {
             console.error('Nenhum dado encontrado ou erro na API');
-            proximaAtualizacao = setTimeout(() => atualizarGraficoRam(idMaquina, dados, myChart), 2000);
-        }
-    })
-        .catch(function (error) {
-            console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
-        });
-}
-
-function atualizarGraficoCpu(idMaquina, dados, myChart) {
-    fetch(`/registros/tempo-real/${idMaquina}`, { cache: 'no-store' }).then(function (response) {
-        if (response.ok) {
-            response.json().then(function (novoRegistro) {
-
-                // obterdados(idMaquina);
-                // alertar(novoRegistro, idMaquina);
-                console.log(`Dados recebidos: ${JSON.stringify(novoRegistro)}`);
-                console.log(`Dados atuais do gráfico:`);
-                console.log(dados);
-                if (novoRegistro[0].dt_hora == dados.labels[dados.labels.length - 1]) {
-                    // console.log("---------------------------------------------------------------")
-                    // console.log(dados.labels[dados.labels.length - 1])
-                    // console.log("---------------------------------------------------------------")
-                } else {
-                    const novoDado = formatarDados(novoRegistro);
-
-                    dados.labels.shift();
-                    dados.labels.push(novoDado.dtHora[0]);
-
-                    dados.datasets[0].data.shift();
-                    dados.datasets[0].data.push(novoDado.cpu[0]);
-                    myChart.update();
-                }
-
-                proximaAtualizacao = setTimeout(() => atualizarGraficoCpu(idMaquina, dados, myChart), 2000);
-            });
-        } else {
-            console.error('Nenhum dado encontrado ou erro na API');
-            proximaAtualizacao = setTimeout(() => atualizarGraficoCpu(idMaquina, dados, myChart), 2000);
+            proximaAtualizacao = setTimeout(() => atualizarGraficos(idMaquina, dadosRam, dadosCpu, chartRam, chartCpu), ATUALIZACAO_MS);
         }
     })
         .catch(function (error) {
