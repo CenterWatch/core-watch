@@ -83,7 +83,7 @@ function buscarTarefasAtrasadas(id_empresa){
 
 function buscarOperadoresComMaisTarefasAtrasadas(id_empresa){
     var instrucao = `
-    select primeiro_nome,sobrenome,count(id_tarefa) as tarefasAtrasadas from tarefa join funcionario where fk_funcionario = id_funcionario and fk_empresa = ${id_empresa} group by fk_funcionario ORDER BY tarefasAtrasadas DESC limit 3;
+    select top 3 primeiro_nome,sobrenome,count(id_tarefa) as tarefasAtrasadas from tarefa join funcionario where fk_funcionario = id_funcionario and fk_empresa = ${id_empresa} group by fk_funcionario ORDER BY tarefasAtrasadas DESC;
     `
     console.log(`Executando a instrucao sql: ${instrucao}`)
     return database.executar(instrucao)

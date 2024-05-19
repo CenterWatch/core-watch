@@ -29,12 +29,12 @@ function buscarVolumesPorEmpresa(idEmpresa) {
 }
 
 function verificarMaquinaOff(idSessao, idMaquina) {
-    var instrucao = `select time_to_sec(timediff(now(), (select dt_hora from registro join sessao on fk_sessao = ${idSessao} where fk_maquina = ${idMaquina} order by dt_hora desc limit 1))) diferenca;`
+    var instrucao = `select time_to_sec(timediff(now(), (select top 1 dt_hora from registro join sessao on fk_sessao = ${idSessao} where fk_maquina = ${idMaquina} order by dt_hora desc))) diferenca;`
     return database.executar(instrucao);
 }
 
 function buscarDadosRam(idMaquina) {
-    var instrucao = `select ROUND((r.uso_ram/m.ram_total)*100,0) as porcentagem_uso,DATE_FORMAT(dt_hora,'%H:%i:%s') as hora from registro as r join sessao  as s on r.fk_sessao = s.id_sessao join maquina as m on s.fk_maquina = m.id_maquina where fk_maquina = ${idMaquina} order by dt_hora desc limit 1;`
+    var instrucao = `select top 1 ROUND((r.uso_ram/m.ram_total)*100,0) as porcentagem_uso,DATE_FORMAT(dt_hora,'%H:%i:%s') as hora from registro as r join sessao  as s on r.fk_sessao = s.id_sessao join maquina as m on s.fk_maquina = m.id_maquina where fk_maquina = ${idMaquina} order by dt_hora desc;`
     return database.executar(instrucao);
 }
 
