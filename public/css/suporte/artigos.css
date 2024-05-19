@@ -155,13 +155,14 @@ button:hover {
 
 table {
     
-    text-align: center;
+    text-align: start;
 }
 
 th {
-    padding: 2px 7rem;
+    padding: 2px 7rem; 
     border: 1px solid #ccc;
     background-color: #f4f4f4;
+    
 }
 
 .container-lista{

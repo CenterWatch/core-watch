@@ -1,0 +1,24 @@
+table {
+    text-align: center;
+}
+
+th {
+    padding: 2px 7rem; 
+    border: 1px solid #ccc;
+    background-color: #f4f4f4;
+    /* white-space: nowrap; */
+}
+
+.container-task{
+    display: flex;
+    justify-content: center;
+    padding: 0 2rem;
+}
+
+.lista-task {
+    
+    background: #fff;
+    border: 1px solid #ccc;
+    padding: 2px;
+    border-radius: 2px;   
+}

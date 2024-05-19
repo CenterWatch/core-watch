@@ -1,6 +1,8 @@
 .container-task {
     display: flex;
     justify-content: center;
+    margin-top: -3rem;
+   
 }
 
 .task {
@@ -10,7 +12,6 @@
     box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
     border-radius: 20px;
     width: 55%; 
-    /* margin: 2rem;  */
 }
 
 .task h2 {
@@ -25,7 +26,7 @@
 }
 
 .card-task select, textarea  {
-    outline: none;
+    outline: none; 
     font-size: 0.9rem;
     color: rgba(0, 0, 0, 0.7);
     width: 100%;
