@@ -130,7 +130,11 @@ th {
     margin-bottom: 20rem;
 }
 
-button {
+
+
+
+/* Botão para abrir o modal */
+#btn-abrir-modal {
     margin-top: 2rem;
     padding: 0.6rem 1rem;
     background: #52c3e3;
@@ -139,16 +143,12 @@ button {
     font-size: 15px; 
     border: none;
     border-radius: 4px;
-    /* margin: 30px auto;  */
     position: fixed;
     bottom: 10px;
     right: 13%;
-  
 }
 
-
-/* modal */
-
+/* Modal */
 dialog {
     border: none;
     border-radius: 8px;
@@ -156,6 +156,30 @@ dialog {
     padding: 1.5rem;
     width: 90%;
     max-width: 70%;
+    position: fixed;
+    top: 50%;
+    left: 55%;
+    transform: translate(-50%, -50%);
+    display: none;
+}
+
+
+
+#close-modal {
+    padding: 0.6rem 1.2rem;
+    background: red;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.modal-body {
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+    
+    
 }
 
 .modal-header {
@@ -165,8 +189,25 @@ dialog {
     border-bottom: 1px solid #ccc;
     margin-bottom: 1rem;
     padding-bottom: 1rem;
+    
 }
 
-.btn-cadastrar {
-    text-align: center;
-} 
+.form {
+    width: 100%;
+}
+
+.input-field {
+    width: 100%; 
+    margin-bottom: 1rem;
+}
+
+
+.btn-cadastrar button {
+    padding: 0.6rem 1.2rem;
+    background: #52c3e3;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin: 1rem 0;
+}

@@ -11,7 +11,6 @@
     <link rel="stylesheet" href="../css/gerente/funcionarios.css">
     <script src="../js/sessao.js"></script>
     <script src="https://kit.fontawesome.com/384071f692.js" crossorigin="anonymous"></script>
-    <script src="../js/sessao.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
@@ -21,16 +20,13 @@
         <div class="leftbar">
             <div class="links-nav">
                 <img class="logo text-logo" src="https://i.imgur.com/RjhX0a9.png" alt="">
-                <a class="nav-btn" href="dashboard.html"><i
-                        class="fa-solid fa-square-poll-vertical"></i><span></i>Dashboard</span></a>
-                <a class="nav-btn btn-ativo" href="#"><i class="fa-solid fa-users"></i></i><span>Funcionários</span></a>
-                <a class="nav-btn" href="tasks.html"><i class="fa-solid fa-list-check"></i></i><span>Tasks</span></a>
+                <a class="nav-btn" href="dashboard.html"><i class="fa-solid fa-square-poll-vertical"></i><span>Dashboard</span></a>
+                <a class="nav-btn btn-ativo" href="#"><i class="fa-solid fa-users"></i><span>Funcionários</span></a>
+                <a class="nav-btn" href="tasks.html"><i class="fa-solid fa-list-check"></i><span>Tasks</span></a>
             </div>
             <div class="cfg-nav">
-                <a class="nav-btn" href="configuracoes.html"><i
-                        class="fa-solid fa-gear"></i><span>Configurações</span></a>
-                <a class="nav-btn" onclick="sair()"><i
-                        class="fa-solid fa-arrow-right-from-bracket"></i><span>Sair</span></a>
+                <a class="nav-btn" href="configuracoes.html"><i class="fa-solid fa-gear"></i><span>Configurações</span></a>
+                <a class="nav-btn" onclick="sair()"><i class="fa-solid fa-arrow-right-from-bracket"></i><span>Sair</span></a>
             </div>
         </div>
         <div class="main">
@@ -52,7 +48,7 @@
 
                     <!-- TABELA FUNCIONÁRIOS -->
                     <div class="tabela-container">
-                        <table id="tabela-funcinario">
+                        <table id="tabela-funcionario">
                             <thead>
                                 <tr>
                                     <th>Nome</th>
@@ -65,232 +61,173 @@
                                 </tr>
                             </thead>
                             <tbody id="lista-func">
-                                <!-- <tr>
-                                    <td>Maria</td>
-                                    <td>Guardião</td>
-                                    <td>(99) 99999-9999</td>
-                                    <td>exemplo@example.com</td>
-                                    <td>01/01/1990</td>
-                                    <td>123.456.789-00</td>
-                                    <td>Gerente</td>
-                                </tr>
-                                <tr>
-                                    <td>Jean</td>
-                                    <td>Santos</td>
-                                    <td>(99) 99999-9999</td>
-                                    <td>exemplo@example.com</td>
-                                    <td>01/01/1990</td>
-                                    <td>123.456.789-00</td>
-                                    <td>Gerente</td>
-                                </tr>
-                                <tr>
-                                    <td>Pedro</td>
-                                    <td>Scortuzzi</td>
-                                    <td>(99) 99999-9999</td>
-                                    <td>exemplo@example.com</td>
-                                    <td>01/01/1990</td>
-                                    <td>123.456.789-00</td>
-                                    <td>Gerente</td>
-                                </tr>
-                                <tr>
-                                    <td>Samuel</td>
-                                    <td>Oliveira</td>
-                                    <td>(99) 99999-9999</td>
-                                    <td>exemplo@example.com</td>
-                                    <td>01/01/1990</td>
-                                    <td>123.456.789-00</td>
-                                    <td>Gerente</td>
-                                </tr>
-                                <tr>
-                                    <td>Lucas</td>
-                                    <td>Oristanio</td>
-                                    <td>(99) 99999-9999</td>
-                                    <td>exemplo@example.com</td>
-                                    <td>01/01/1990</td>
-                                    <td>123.456.789-00</td>
-                                    <td>Gerente</td>
-                                </tr>
-                                <tr>
-                                    <td>Vinicius</td>
-                                    <td>Zirondi</td>
-                                    <td>(99) 99999-9999</td>
-                                    <td>exemplo@example.com</td>
-                                    <td>01/01/1990</td>
-                                    <td>123.456.789-00</td>
-                                    <td>Gerente</td>
-                                </tr> -->
+                                <!-- Placeholder for dynamically generated rows -->
                             </tbody>
-
                         </table>
-                        
                     </div>
 
                     <div>
                         <button id="btn-abrir-modal"><i class="fa-solid fa-user-plus"></i></button>
                     </div>
 
-
-                    <!-- modal -->
-                    <dialog id="cadastro-dialog">
-                        <form method="dialog">
-                            <div class="modal-header">
-                                <h2>Cadastrar Funcionário</h2>
-                                <button type="button" id="close-modal">Fechar</button>
-                            </div>
-                            <div class="modal-body">
-                                <div class="formulario-cadastro">
-                                    <div class="form">
-                                        <div class="input-field">
-                                            <label for="nome_input">Nome</label>
-                                            <input id="nome_input" class="input_formulario" type="text">
-                                        </div>
-                                        <div class="input-field">
-                                            <label for="sobrenome_input">Sobrenome</label>
-                                            <input type="text" id="sobrenome_input" class="input_formulario">
-                                        </div>
-                                        <div class="input-field">
-                                            <label for="celular_input">Celular</label>
-                                            <input type="text" id="celular_input" class="input_formulario">
-                                        </div>
-                                        <div class="input-field">
-                                            <label for="telefone_input">Telefone</label>
-                                            <input class="input_formulario" type="text" id="telefone_input">
-                                        </div>
-                                        <div class="input-field">
-                                            <label for="email_input">E-mail</label>
-                                            <input class="input_formulario" type="text" id="email_input">
-                                        </div>
-                                        <div class="input-field">
-                                            <label for="cargo_input">Cargo</label>
-                                            <select id="cargo_input" class="input_formulario">
-                                                <option value="Operador">Operador</option>
-                                                <option value="Suporte">Suporte</option>
-                                            </select>
-                                        </div>
-                                        <div class="input-field">
-                                            <label for="usuario_input">Usuário</label>
-                                            <input class="input_formulario" type="text" id="usuario_input">
-                                        </div>
-                                        <div class="input-field">
-                                            <label for="senha_input">Senha</label>
-                                            <input class="input_formulario" type="password" id="senha_input">
-                                        </div>
-                                    </div>
-                                    <div class="div-adicionar-funcionario">
-                                        <button type="submit">Cadastrar</button>
-                                    </div> 
-                                </div>
-                            </div>
-                        </form>
-                    </dialog>
+                    <!-- Modal -->
+<dialog id="cadastro-dialog">
+        <div class="modal-header">
+            <h2>Cadastrar Funcionário</h2>
+            <button type="button" id="close-modal">Fechar</button>
+        </div>
+        <div class="modal-body">
+            <div class="formulario-cadastro">
+                <div class="form">
+                    <div class="input-field">
+                        <label for="nome_input">Nome</label>
+                        <input id="nome_input" class="input_formulario" type="text">
+                    </div>
+                    <div class="input-field">
+                        <label for="sobrenome_input">Sobrenome</label>
+                        <input type="text" id="sobrenome_input" class="input_formulario">
+                    </div>
+                    <div class="input-field">
+                        <label for="celular_input">Celular</label>
+                        <input type="text" id="celular_input" class="input_formulario">
+                    </div>
+                    <div class="input-field">
+                        <label for="telefone_input">Telefone</label>
+                        <input class="input_formulario" type="text" id="telefone_input">
+                    </div>
+                    <div class="input-field">
+                        <label for="email_input">E-mail</label>
+                        <input class="input_formulario" type="text" id="email_input">
+                    </div>
+                    <div class="input-field">
+                        <label for="cargo_input">Cargo</label>
+                        <select id="cargo_input" class="input_formulario">
+                            <option value="Operador">Operador</option>
+                            <option value="Suporte">Suporte</option>
+                        </select>
+                    </div>
+                    <div class="input-field">
+                        <label for="usuario_input">Usuário</label>
+                        <input class="input_formulario" type="text" id="usuario_input">
+                    </div>
+                    <div class="input-field">
+                        <label for="senha_input">Senha</label>
+                        <input class="input_formulario" type="password" id="senha_input">
+                    </div>
                 </div>
+            </div>
+            <div class="btn-cadastrar">
+                <button type="submit" onclick="cadastrar()">Cadastrar</button>
+            </div>
+        </div>
+   
+</dialog>
+
+                </div>
+            </div>
+        </div>
     </section>
 
-</body>
- 
-</html>
+    <script>
+        function cadastrar() {
+            var nome = document.getElementById('nome_input').value;
+            var sobrenome = document.getElementById('sobrenome_input').value;
+            var celular = document.getElementById('celular_input').value;
+            var telefone = document.getElementById('telefone_input').value;
+            var email = document.getElementById('email_input').value;
+            var cpf = "123.123.123-12";
+            var cargo = document.getElementById('cargo_input').value;
+            var usuario = document.getElementById('usuario_input').value;
+            var senha = document.getElementById('senha_input').value;
+            var gerente = sessionStorage.ID_USUARIO;
+            var empresa = sessionStorage.ID_EMPRESA_USUARIO;
 
-<script>
-
-    // modal
-    document.getElementById('btn-abrir-modal').addEventListener('click', function () {
-        document.getElementById('cadastro-dialog').showModal();
-    });
-
-    document.getElementById('fechar-modal').addEventListener('click', function () {
-        document.getElementById('cadastro-dialog').close();
-    });
-
-
-    function cadastrar() {
-        var nome = nome_input.value;
-        var sobrenome = sobrenome_input.value;
-        var celular = celular_input.value;
-        var telefone = telefone_input.value;
-        var email = email_input.value;
-        var cpf = "123.123.123-12";
-        var cargo = cargo_input.value;
-        var usuario = usuario_input.value;
-        var senha = senha_input.value;
-        var gerente = sessionStorage.ID_USUARIO;
-        var empresa = sessionStorage.ID_EMPRESA_USUARIO;
-
-        fetch("/usuarios/cadastrar", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                nomeServer: nome,
-                sobrenomeServer: sobrenome,
-                celularServer: celular,
-                telefoneServer: telefone,
-                emailServer: email,
-                cpfServer: cpf,
-                cargoServer: cargo,
-                usuarioServer: usuario,
-                senhaServer: senha,
-                gerenteServer: gerente,
-                empresaServer: empresa
-            }),
-        })
+            fetch("/usuarios/cadastrar", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    nomeServer: nome,
+                    sobrenomeServer: sobrenome,
+                    celularServer: celular,
+                    telefoneServer: telefone,
+                    emailServer: email,
+                    cpfServer: cpf,
+                    cargoServer: cargo,
+                    usuarioServer: usuario,
+                    senhaServer: senha,
+                    gerenteServer: gerente,
+                    empresaServer: empresa
+                }),
+            })
             .then(function (res) {
                 console.log("Resposta: ", res);
 
                 if (res.ok) {
-                    alert("Funcionário cadastrado com sucesso!")
+                    alert("Funcionário cadastrado com sucesso!");
 
                     setTimeout(() => {
-                        window.location.reload();;
+                        window.location.reload();
                     }, 1500);
                     exibirFunc();
                 } else {
-                    alert("Dados de funcionário inválido!")
+                    alert("Dados de funcionário inválido!");
                 }
             })
             .catch(function (erro) {
-                console.log("Erro: ", erro)
-            })
-    }
-    var listaFunc = [];
-    function buscarFunc() {
-        var idEmpresa = sessionStorage.ID_EMPRESA_USUARIO;
-        const idUsuario = sessionStorage.ID_USUARIO;
+                console.log("Erro: ", erro);
+            });
+        }
 
-        var divLista = document.getElementById('listaFunc');
-        fetch(`/empresas/buscarFunc?idEmpresa=${idEmpresa}`).then(res => {
-            if (!res.ok) {
-                throw new Error(`Erro na solicitação: ${res.statusText}`);
-            }
-            return res.json();
-        })
+        var listaFunc = [];
+
+        function buscarFunc() {
+            var idEmpresa = sessionStorage.ID_EMPRESA_USUARIO;
+            fetch(`/empresas/buscarFunc?idEmpresa=${idEmpresa}`)
             .then(res => {
-                console.log(res);
-                sessionStorage.FUNCIONARIOS = JSON.stringify(res);
-                listaFunc = res;
+                if (!res.ok) {
+                    throw new Error(`Erro na solicitação: ${res.statusText}`);
+                }
+                return res.json();
+            })
+            .then(data => {
+                listaFunc = data;
                 exibirFunc();
             })
-            .catch(erro => {
-                console.log(erro);
-                console.log("Não foi  possivel realizar o select: ", erro);
-            })
-    }
+            .catch(error => {
+                console.error("Erro ao buscar funcionários:", error);
+            });
+        }
 
-    var viewFunc = document.getElementById('lista-func');
+        function exibirFunc() {
+            var tbody = document.getElementById('lista-func');
+            tbody.innerHTML = '';
 
-    function exibirFunc(){
-        listaFunc.forEach(e => {
-            document.getElementById('lista-func').innerHTML += `
-                                <tr>
-                                    <td>${e.primeiro_nome}</td>
-                                    <td>${e.sobrenome}</td>
-                                    <td>${e.celular}</td>
-                                    <td>${e.email}</td>
-                                    <td>${e.dt_nasc}</td>
-                                    <td>${e.cpf}</td>
-                                    <td>${e.cargo}</td>
-                                </tr>
-            `
-        })
-    }
-</script>
+            listaFunc.forEach(func => {
+                var tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${func.nome}</td>
+                    <td>${func.sobrenome}</td>
+                    <td>${func.celular}</td>
+                    <td>${func.email}</td>
+                    <td>${func.dataNascimento}</td>
+                    <td>${func.cpf}</td>
+                    <td>${func.cargo}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        document.getElementById('btn-abrir-modal').addEventListener('click', function() {
+            document.getElementById('cadastro-dialog').style.display = 'block';
+        });
+
+        document.getElementById('close-modal').addEventListener('click', function() {
+            document.getElementById('cadastro-dialog').style.display = 'none';
+        });
+    </script>
+
+</body>
+
+</html>
