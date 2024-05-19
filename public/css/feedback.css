@@ -48,6 +48,16 @@
     
 }
 
+.inputs {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#comentario{
+    margin-left: 3rem;
+}
+
 
 input[type=radio] {
   width: 40px;
