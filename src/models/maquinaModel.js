@@ -34,11 +34,9 @@ function verificarMaquinaOff(idSessao, idMaquina) {
 }
 
 function buscarDadosRam(idMaquina) {
-    var instrucao = `select ROUND((r.uso_ram/m.ram_total)*100,0) as porcentagem_uso,DATE_FORMAT(dt_hora,'%H:%i:%s') as hora from registro as r join sessao  as s on r.fk_sessao = s.id_sessao join maquina as m on s.fk_maquina = m.id_maquina where fk_maquina = ${idMaquina} order by dt_hora desc limit 1;`
+    var instrucao = `select ROUND((r.uso_ram/m.ram_total)*100,0) as porcentagem_uso,DATE_FORMAT(dt_hora,'%H:%i:%s') as hora from registro as r join sessao as s on r.fk_sessao = s.id_sessao join maquina as m on s.fk_maquina = m.id_maquina where fk_maquina = ${idMaquina} order by dt_hora desc limit 1;`
     return database.executar(instrucao);
 }
-
-
 
 module.exports = {
     cadastrar,

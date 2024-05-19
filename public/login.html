@@ -75,8 +75,12 @@
                             return res.json();
                         })
                             .then(res => {
-                                console.log('resultados AAAAAAAAAAAAAAAAAA');
-                                console.log(res);
+                                // Caso não haja uma sessão, não será feito o login
+                                // if (res.length == 0) {
+                                //     sessionStorage.clear();
+                                //     window.location = "";
+                                // }
+
                                 sessionStorage.ID_SESSAO = res[0].id_sessao;
                             })
                             .catch(erro => {
@@ -85,7 +89,7 @@
                             })
 
 
-                        switch (json.cargo) {
+                        switch (sessionStorage.CARGO_USUARIO) {
                             case "Diretor":
                                 var enderecaPara = "./empresa/selecionaFilial.html"
                                 break;

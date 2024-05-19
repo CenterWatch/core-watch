@@ -51,7 +51,7 @@ function  buscarFunc(id_empresa){
 
 function buscarConfigAtual(id_empresa){
     var instrucao = `
-    select * from parametro_alerta where id_parametro = ${id_empresa};
+    select * from config where id_config = ${id_empresa};
 `
 console.log(`Executando a instrucao sql: ${instrucao}`)
 return database.executar(instrucao)
@@ -59,7 +59,7 @@ return database.executar(instrucao)
 
 function atualizarConfigAtualRegistro(id_empresa,ram,cpu,int){
     var instrucao = `
-    update parametro_alerta set max_ram = ${ram}, max_cpu = ${cpu}, intervalo_registro_ms = ${int} where id_parametro = ${id_empresa};
+    update config set max_ram = ${ram}, max_cpu = ${cpu}, intervalo_registro_ms = ${int} where id_config = ${id_empresa};
 `
 console.log(`Executando a instrucao sql: ${instrucao}`)
 return database.executar(instrucao)
@@ -67,7 +67,7 @@ return database.executar(instrucao)
 
 function atualizarConfigAtualVolume(id_empresa,vol,int){
     var instrucao = `
-    update parametro_alerta set max_volume = ${vol}, intervalo_volume_ms = ${int} where id_parametro = ${id_empresa};
+    update config set max_volume = ${vol}, intervalo_volume_ms = ${int} where id_config = ${id_empresa};
 `
 console.log(`Executando a instrucao sql: ${instrucao}`)
 return database.executar(instrucao)

@@ -110,7 +110,7 @@
 
         var selectFunc= document.getElementById("select_func");
 
-        listaOperadores.forEach(op =>{
+        JSON.parse(sessionStorage.FUNCIONARIOS).forEach(op =>{
             // Cria um novo elemento option
             var option = document.createElement("option");
 

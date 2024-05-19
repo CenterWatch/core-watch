@@ -3,7 +3,7 @@ var database = require("../database/config")
 function autenticar(usuario, senha) {
     console.log("ACESSEI O USUARIO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function entrar(): ", usuario, senha)
     var instrucao = `
-    SELECT * FROM usuario join funcionario join empresa WHERE fk_empresa = id_empresa and username = '${usuario}' AND senha = '${senha}' and id_usuario = id_funcionario;
+    SELECT * FROM usuario join funcionario ON id_funcionario = id_usuario join empresa ON fk_empresa = id_empresa WHERE username = '${usuario}' AND senha = '${senha}';
     `;
     console.log("Executando a instrução SQL: \n" + instrucao);
     return database.executar(instrucao)
@@ -57,7 +57,7 @@ function cadastrarChamado(titulo, descricao, tipo, fk_sessao){
 }
 
 function listarChamados(){
-    var instrucao = `select o.titulo, o.descricao, o.dt_hora, o.tipo, o.fk_atribuido 
+    var instrucao = `select o.titulo, o.descricao, o.criado_em, o.tipo, o.fk_atribuido 
     from ocorrencia as o join sessao as s on o.fk_sessao = s.id_sessao join usuario as u on s.fk_usuario = u.id_usuario join funcionario as f on u.id_usuario = f.id_funcionario; 
     `
     return database.executar(instrucao);
@@ -66,7 +66,6 @@ function buscarChamadosPorFuncionario(idFuncionario){
     var instrucao=`select * from ocorrencia where idFuncionario = ${idFuncionario}; 
     `
     return database.executar(instrucao);
-    
 }
 
 function atribuirTarefa(idOperador, idGerente, tarefa, dtEstimada){
