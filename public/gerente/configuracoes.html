@@ -41,12 +41,9 @@
                 </div>
             </div>
             <div class="visao-geral">
-                <div class="titulo">
-                    Configurações
-                </div>
                 <div class="cards">
                     <div class="registros">
-                        <div class="titulo">
+                        <div class="titulo-div">
                             Parâmetros de registro
                         </div>
                         <div class="container-registros">
@@ -62,18 +59,20 @@
                                 <span>Intervalo de registros em segundos</span>
                                 <input type="text" id="cfg_int">
                             </div>
-                            <button onclick="atualizarConfigRegistro()">Salvar</button>
+                            <div class="div-botao">
+                                <button onclick="atualizarConfigRegistro()">Salvar</button>
+                            </div>
                         </div>
                         
                     </div>
 
                     <div class="registros">
-                        <div class="titulo">
+                        <div class="titulo-div">
                             Parâmetros de volumes
                         </div>
                         <div class="container-registros">
                             <div class="cr ram">
-                                <span>espaço minimo livre em %</span>
+                                <span>Espaço minÍmo livre em %</span>
                                 <input type="text" id="cfg_vol">
                             </div>
                             <div class="cr cpu">
@@ -81,7 +80,9 @@
                                 <input type="text" id="cfg_intVol">
                             </div>
 
-                            <button onclick="atualizarConfigVolume()">Salvar</button>
+                            <div class="div-botao2">
+                                <button onclick="atualizarConfigVolume()">Salvar</button>
+                            </div>
                         </div>
                         
                     </div>
