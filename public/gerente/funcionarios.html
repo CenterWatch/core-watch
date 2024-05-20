@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CenterWatch | Funcionários</title>
     <link rel="stylesheet" href="../css/navbar.css">
-    <link rel="stylesheet" href="../css/dashboards.css"> 
+    <link rel="stylesheet" href="../css/dashboards.css">
     <link rel="stylesheet" href="../css/gerente/operador.css">
     <link rel="stylesheet" href="../css/gerente/funcionarios.css">
     <script src="../js/sessao.js"></script>
@@ -14,19 +14,22 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
-<body onload="buscarFunc()">
+<body onload="exibirFunc()">
 
     <section class="section-body">
         <div class="leftbar">
             <div class="links-nav">
                 <img class="logo text-logo" src="https://i.imgur.com/RjhX0a9.png" alt="">
-                <a class="nav-btn" href="dashboard.html"><i class="fa-solid fa-square-poll-vertical"></i><span>Dashboard</span></a>
+                <a class="nav-btn" href="dashboard.html"><i
+                        class="fa-solid fa-square-poll-vertical"></i><span>Dashboard</span></a>
                 <a class="nav-btn btn-ativo" href="#"><i class="fa-solid fa-users"></i><span>Funcionários</span></a>
                 <a class="nav-btn" href="tasks.html"><i class="fa-solid fa-list-check"></i><span>Tasks</span></a>
             </div>
             <div class="cfg-nav">
-                <a class="nav-btn" href="configuracoes.html"><i class="fa-solid fa-gear"></i><span>Configurações</span></a>
-                <a class="nav-btn" onclick="sair()"><i class="fa-solid fa-arrow-right-from-bracket"></i><span>Sair</span></a>
+                <a class="nav-btn" href="configuracoes.html"><i
+                        class="fa-solid fa-gear"></i><span>Configurações</span></a>
+                <a class="nav-btn" onclick="sair()"><i
+                        class="fa-solid fa-arrow-right-from-bracket"></i><span>Sair</span></a>
             </div>
         </div>
         <div class="main">
@@ -71,62 +74,63 @@
                     </div>
 
                     <!-- Modal -->
-<dialog id="cadastro-dialog">
-        <div class="modal-header">
-            <h2>Cadastrar Funcionário</h2>
-            <button type="button" id="close-modal">Fechar</button>
-        </div>
-        <div class="modal-body">
-            <div class="formulario-cadastro">
-                <div class="form">
-                    <div class="input-field">
-                        <label for="nome_input">Nome</label>
-                        <input id="nome_input" class="input_formulario" type="text">
-                    </div>
-                    <div class="input-field">
-                        <label for="sobrenome_input">Sobrenome</label>
-                        <input type="text" id="sobrenome_input" class="input_formulario">
-                    </div>
-                    <div class="input-field">
-                        <label for="celular_input">Celular</label>
-                        <input type="text" id="celular_input" class="input_formulario">
-                    </div>
-                    <div class="input-field">
-                        <label for="dtNasc_input">Data de Nascimento</label>
-                        <input class="input_formulario" type="date" id="dtNasc_input">
-                    </div>
-                    <div class="input-field">
-                        <label for="cpf_input">CPF</label>
-                        <input class="input_formulario" type="number" id="cpf_input" placeholder="000.000.000-00">
-                    </div>
-                    <div class="input-field">
-                        <label for="email_input">E-mail</label>
-                        <input class="input_formulario" type="text" id="email_input">
-                    </div>
-                    <div class="input-field">
-                        <label for="cargo_input">Cargo</label>
-                        <select id="cargo_input" class="input_formulario">
-                            <option value=""></option>
-                            <option value="Operador">Operador</option>
-                            <option value="Suporte">Suporte</option>
-                        </select>
-                    </div>
-                    <div class="input-field">
-                        <label for="usuario_input">Usuário</label>
-                        <input class="input_formulario" type="text" id="usuario_input">
-                    </div>
-                    <div class="input-field">
-                        <label for="senha_input">Senha</label>
-                        <input class="input_formulario" type="password" id="senha_input">
-                    </div>
-                </div>
-            </div>
-            <div class="btn-cadastrar">
-                <button type="submit" onclick="cadastrar()">Cadastrar</button>
-            </div>
-        </div>
-   
-</dialog>
+                    <dialog id="cadastro-dialog">
+                        <div class="modal-header">
+                            <h2>Cadastrar Funcionário</h2>
+                            <button type="button" id="close-modal">Fechar</button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="formulario-cadastro">
+                                <div class="form">
+                                    <div class="input-field">
+                                        <label for="nome_input">Nome</label>
+                                        <input id="nome_input" class="input_formulario" type="text">
+                                    </div>
+                                    <div class="input-field">
+                                        <label for="sobrenome_input">Sobrenome</label>
+                                        <input type="text" id="sobrenome_input" class="input_formulario">
+                                    </div>
+                                    <div class="input-field">
+                                        <label for="celular_input">Celular</label>
+                                        <input type="text" id="celular_input" class="input_formulario">
+                                    </div>
+                                    <div class="input-field">
+                                        <label for="dtNasc_input">Data de Nascimento</label>
+                                        <input class="input_formulario" type="date" id="dtNasc_input">
+                                    </div>
+                                    <div class="input-field">
+                                        <label for="cpf_input">CPF</label>
+                                        <input class="input_formulario" type="number" id="cpf_input"
+                                            placeholder="000.000.000-00">
+                                    </div>
+                                    <div class="input-field">
+                                        <label for="email_input">E-mail</label>
+                                        <input class="input_formulario" type="text" id="email_input">
+                                    </div>
+                                    <div class="input-field">
+                                        <label for="cargo_input">Cargo</label>
+                                        <select id="cargo_input" class="input_formulario">
+                                            <option value=""></option>
+                                            <option value="Operador">Operador</option>
+                                            <option value="Suporte">Suporte</option>
+                                        </select>
+                                    </div>
+                                    <div class="input-field">
+                                        <label for="usuario_input">Usuário</label>
+                                        <input class="input_formulario" type="text" id="usuario_input">
+                                    </div>
+                                    <div class="input-field">
+                                        <label for="senha_input">Senha</label>
+                                        <input class="input_formulario" type="password" id="senha_input">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="btn-cadastrar">
+                                <button type="submit" onclick="cadastrar()">Cadastrar</button>
+                            </div>
+                        </div>
+
+                    </dialog>
 
                 </div>
             </div>
@@ -166,57 +170,37 @@
                     empresaServer: empresa
                 }),
             })
-            .then(function (res) {
-                console.log("Resposta: ", res);
+                .then(function (res) {
+                    console.log("Resposta: ", res);
 
-                if (res.ok) {
-                    alert("Funcionário cadastrado com sucesso!");
+                    if (res.ok) {
+                        alert("Funcionário cadastrado com sucesso!");
 
-                    setTimeout(() => {
-                        window.location.reload();
-                    }, 1500);
-                    exibirFunc();
-                } else {
-                    alert("Dados de funcionário inválido!");
-                }
-            })
-            .catch(function (erro) {
-                console.log("Erro: ", erro);
-            });
-        }
-
-        var listaFunc = [];
-
-        function buscarFunc() {
-            var idEmpresa = sessionStorage.ID_EMPRESA_USUARIO;
-            fetch(`/empresas/buscarFunc?idEmpresa=${idEmpresa}`)
-            .then(res => {
-                if (!res.ok) {
-                    throw new Error(`Erro na solicitação: ${res.statusText}`);
-                }
-                return res.json();
-            })
-            .then(data => {
-                listaFunc = data;
-                exibirFunc();
-            })
-            .catch(error => {
-                console.error("Erro ao buscar funcionários:", error);
-            });
+                        setTimeout(() => {
+                            window.location.reload();
+                        }, 1500);
+                        exibirFunc();
+                    } else {
+                        alert("Dados de funcionário inválido!");
+                    }
+                })
+                .catch(function (erro) {
+                    console.log("Erro: ", erro);
+                });
         }
 
         function exibirFunc() {
             var tbody = document.getElementById('lista-func');
             tbody.innerHTML = '';
 
-            listaFunc.forEach(func => {
+            JSON.parse(sessionStorage.FUNCIONARIOS).forEach(func => {
                 var tr = document.createElement('tr');
                 tr.innerHTML = `
-                    <td>${func.nome}</td>
+                    <td>${func.primeiro_nome}</td>
                     <td>${func.sobrenome}</td>
                     <td>${func.celular}</td>
                     <td>${func.email}</td>
-                    <td>${func.dataNascimento}</td>
+                    <td>${converterData(func.dt_nasc)}</td>
                     <td>${func.cpf}</td>
                     <td>${func.cargo}</td>
                 `;
@@ -224,13 +208,23 @@
             });
         }
 
-        document.getElementById('btn-abrir-modal').addEventListener('click', function() {
+        document.getElementById('btn-abrir-modal').addEventListener('click', function () {
             document.getElementById('cadastro-dialog').style.display = 'block';
         });
 
-        document.getElementById('close-modal').addEventListener('click', function() {
+        document.getElementById('close-modal').addEventListener('click', function () {
             document.getElementById('cadastro-dialog').style.display = 'none';
         });
+
+        function converterData(dtHora) {
+            var dt = new Date(dtHora);
+
+            var ano = dt.getFullYear();
+            var mes = dt.getMonth();
+            var dia = dt.getDay();
+
+            return dia + "/" + mes + "/" + ano;
+        }
     </script>
 
 </body>
