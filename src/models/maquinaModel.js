@@ -23,7 +23,7 @@ function buscarVolumesPorMaquina(idMaquina) {
 }
 
 function buscarVolumesPorEmpresa(idEmpresa) {
-    var instrucao = `select v.*, hostname from volume v join maquina on fk_maquina = id_maquina where fk_empresa = ${idEmpresa}`;
+    var instrucao = `select v.*, hostname from volume v join maquina on fk_maquina = id_maquina where fk_empresa = ${idEmpresa} order by hostname`;
 
     return database.executar(instrucao);
 }

@@ -98,7 +98,7 @@
 
                 resposta.json().then(json => {
                     console.log(json);
-                    console.log(JSON.stringify(json));
+                    // console.log(JSON.stringify(json));
                     sessionStorage.MAQUINAS = JSON.stringify(json.maquinas);
                     sessionStorage.VOLUMES = JSON.stringify(json.volumes);
 
@@ -107,6 +107,7 @@
                     });
 
                     const volumesAgrupadosPorMaquina = Object.groupBy(json.volumes, ({ hostname }) => hostname);
+                    console.log(json.volumes)
                     mapearVolumePorMaquina(json.volumes)
 
                     desenharMaquinas(json.maquinas);
@@ -153,9 +154,8 @@
         volumesAgrupados.push(volumes[0])
 
         for (let i = 1; i < volumes.length; i++) {
-
             const volumeAtual = volumes[i];
-            const volumeAnterior = volumes[i - 1];
+            const volumeAnterior = volumes[i-1]
 
             if (volumeAtual.hostname === volumeAnterior.hostname) {
                 volumesAgrupados.push(volumeAtual);
@@ -166,6 +166,7 @@
                 volumesAgrupados = [];
                 volumesAgrupados.push(volumeAtual);
             }
+        
         }
 
         mapVolumes.set(volumes[volumes.length - 1].hostname, volumesAgrupados);

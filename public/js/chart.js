@@ -126,7 +126,7 @@ function obterDadosVolumes(hostname) {
 function desenharVolumesPorMaquina(hostname, dados) {
 
     var volumes = mapVolumes.get(hostname);
-
+    
     document.getElementById(`volumesContainer${hostname}`).innerHTML = '';
 
     for (let i = 0; i < volumes.length; i++) {
@@ -247,8 +247,8 @@ function atualizarGraficos(idMaquina, dadosRam, dadosCpu, chartRam, chartCpu) {
 
                 // obterdados(idMaquina);
                 // alertar(novoRegistro, idMaquina);
-                console.log(`Dados recebidos: ${JSON.stringify(novoRegistro)}`);
-                console.log(`Dados atuais do gráfico:`);
+                // console.log(`Dados recebidos: ${JSON.stringify(novoRegistro)}`);
+                // console.log(`Dados atuais do gráfico:`);
 
                 const novoDado = formatarDados(novoRegistro);
 
