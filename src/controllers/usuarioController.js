@@ -87,6 +87,7 @@ function cadastrar(req, res) {
             })
     }
 }
+
 function cadastrarChamado(req, res) {
     var titulo = req.body.assuntoServer;
     var descricao = req.body.descricaoServer;
@@ -106,6 +107,7 @@ function cadastrarChamado(req, res) {
             res.status(500).json(erro.sqlMessage);
         })
 }
+
 function listarChamados(req, res) {
     var idFuncionario = req.query.idFuncionarioServer;
 

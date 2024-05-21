@@ -13,7 +13,7 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
-<body onload="buscarTarefasAtrasadas(),buscarOperadoresComMaisTarefasAtrasadas(),buscarSatisfacaoOperadores(),buscarFunc()">
+<body onload="buscarTarefasAtrasadas(),buscarOperadoresComMaisTarefasAtrasadas(),buscarSatisfacaoOperadores(),buscarOperadores()">
 
 
     <section class="section-body">
@@ -202,22 +202,22 @@
         })
     }
 
-    function buscarFunc() {
-            var idEmpresa = sessionStorage.ID_EMPRESA_USUARIO;
-            fetch(`/empresas/buscarFunc?idEmpresa=${idEmpresa}`)
-                .then(res => {
-                    if (!res.ok) {
-                        throw new Error(`Erro na solicitação: ${res.statusText}`);
-                    }
-                    return res.json();
-                })
-                .then(data => {
-                    sessionStorage.FUNCIONARIOS = JSON.stringify(data);
-                })
-                .catch(error => {
-                    console.error("Erro ao buscar funcionários:", error);
-                });
-        }
+    function buscarOperadores(){
+        fetch(`/usuarios/listarOperadores?idUsuario=${sessionStorage.ID_USUARIO}`).then(res => {
+            if (!res.ok) {
+                throw new Error(`Erro na solicitação: ${res.statusText}`);
+            }
+            return res.json();
+        })
+            .then(data => {
+                sessionStorage.FUNCIONARIOS = JSON.stringify(data);
+            })
+            .catch(erro => {
+                console.log(erro);
+                console.log("Não foi  possivel realizar o select: ", erro);
+            })
+        
+    }
 
     function buscarSatisfacaoOperadores(){
         fetch(`/empresas/buscarSatisfacaoOperadores?idEmpresa=${idEmpresa}`).then(res => {

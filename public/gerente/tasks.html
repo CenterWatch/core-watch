@@ -15,7 +15,7 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
-<body onload="buscarOperadores()">
+<body onload="plotarOperadoresSelect()">
 
     <section class="section-body">
         <div class="leftbar">
@@ -92,26 +92,6 @@
 
     var listaOperadores = [];
     const idUsuario = sessionStorage.ID_USUARIO;
-    
-    function buscarOperadores(){
-        
-        fetch(`/usuarios/listarOperadores?idUsuario=${idUsuario}`).then(res => {
-            if (!res.ok) {
-                throw new Error(`Erro na solicitação: ${res.statusText}`);
-            }
-            return res.json();
-        })
-            .then(res => {
-                console.log(res)
-                listaOperadores = res;
-                plotarOperadoresSelect()
-            })
-            .catch(erro => {
-                console.log(erro);
-                console.log("Não foi  possivel realizar o select: ", erro);
-            })
-        
-    }
 
     function plotarOperadoresSelect(){
         console.log(listaOperadores)
