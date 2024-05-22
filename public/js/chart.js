@@ -102,7 +102,7 @@ function desenharGraficos(hostname, resposta, idMaquina) {
     );
 
     obterDadosVolumes(hostname);
-    setTimeout(() => atualizarGraficos(idMaquina, dadosRam, dadosCpu, chartRam, chartCpu), ATUALIZACAO_MS);
+    setTimeout(() => atualizarGraficos(idMaquina, dadosRam, dadosCpu, chartRam, chartCpu, hostname), ATUALIZACAO_MS);
 }
 
 function obterDadosVolumes(hostname) {
@@ -196,6 +196,7 @@ function obterDadosGrafico(hostname, idMaquina) {
                 resposta.reverse();
 
                 console.log(resposta)
+                atualizarUptime(hostname, resposta[0].uptime)
                 desenharGraficos(hostname, formatarDados(resposta), idMaquina)
 
             });
@@ -240,7 +241,7 @@ function converterHorario(dtHora) {
     return hora + ":" + min + ":" + seg;
 }
 
-function atualizarGraficos(idMaquina, dadosRam, dadosCpu, chartRam, chartCpu) {
+function atualizarGraficos(idMaquina, dadosRam, dadosCpu, chartRam, chartCpu, hostname) {
     fetch(`/registros/tempo-real/${idMaquina}`, { cache: 'no-store' }).then(function (response) {
         if (response.ok) {
             response.json().then(function (novoRegistro) {
@@ -249,6 +250,7 @@ function atualizarGraficos(idMaquina, dadosRam, dadosCpu, chartRam, chartCpu) {
                 // alertar(novoRegistro, idMaquina);
                 // console.log(`Dados recebidos: ${JSON.stringify(novoRegistro)}`);
                 // console.log(`Dados atuais do gráfico:`);
+                atualizarUptime(hostname, novoRegistro[0].uptime);
 
                 const novoDado = formatarDados(novoRegistro);
 
@@ -269,14 +271,30 @@ function atualizarGraficos(idMaquina, dadosRam, dadosCpu, chartRam, chartCpu) {
                     chartCpu.update()
                 }
 
-                proximaAtualizacao = setTimeout(() => atualizarGraficos(idMaquina, dadosRam, dadosCpu, chartRam, chartCpu), ATUALIZACAO_MS);
+                proximaAtualizacao = setTimeout(() => atualizarGraficos(idMaquina, dadosRam, dadosCpu, chartRam, chartCpu, hostname), ATUALIZACAO_MS);
             });
         } else {
             console.error('Nenhum dado encontrado ou erro na API');
-            proximaAtualizacao = setTimeout(() => atualizarGraficos(idMaquina, dadosRam, dadosCpu, chartRam, chartCpu), ATUALIZACAO_MS);
+            proximaAtualizacao = setTimeout(() => atualizarGraficos(idMaquina, dadosRam, dadosCpu, chartRam, chartCpu, hostname), ATUALIZACAO_MS);
         }
     })
         .catch(function (error) {
             console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
         });
+}
+
+function atualizarUptime(hostname, uptime) {
+    var spanUptime = document.getElementById('uptime' + hostname);
+
+    var msg = "";
+
+    if (uptime < 60) {
+        msg = uptime + " seg";
+    } else if (uptime < 3600) {
+        msg = Math.trunc((uptime/60)*10)/10 + " min";
+    } else {
+        msg = Math.trunc((uptime/3600)*10)/10 + " h";
+    }
+
+    spanUptime.innerHTML = msg.replace('.', ',');
 }
