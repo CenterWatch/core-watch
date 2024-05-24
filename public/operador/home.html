@@ -9,7 +9,7 @@
     <script src="../js/sessao.js"></script>
     <script src="https://kit.fontawesome.com/384071f692.js" crossorigin="anonymous"></script>
 </head>
-<body>
+<body onload="buscarTarefas()">
 
     <section class="section-body">
         <div class="leftbar">
@@ -39,12 +39,12 @@
             </div>
             <div class="visao-geral">
                 <div class="titulo">
-                   Minhas Tasks
+                    Minhas Tasks
                 </div>
                 <div class="cards">
                 </div>
 
-               
+                
                     <div class="lista-task">
                         <table id="tabela-task">
                             <tr>
@@ -63,6 +63,44 @@
         <div>
     </section>
 
+    <script>
+        id_usuario = sessionStorage.ID_USUARIO;
+        let listaTarefas =  []
+
+        function buscarTarefas(){
+            fetch(`/usuarios/buscarTarefas?id_usuario=${id_usuario}`)
+            .then(res => {
+                if (!res.ok) {
+                    throw new Error(`Erro na solicitação: ${res.statusText}`);
+                }
+                return res.json(); 
+            })
+            .then(data => {
+                listaTarefas = data;
+                listarTarefas()
+            })
+            .catch(error => {
+                console.error('Erro ao buscar tarefas:', error);
+            });
+        }
+
+
+        listaTarefas =  []
+
+        function listarTarefas(){
+            listaTarefas.forEach(element => {
+                document.getElementById('tabela-task').innerHTML += `
+                                                                    <tr>
+                                                                        <th>${element.dt_inicio}</th>
+                                                                        <th>${element.descricao}</th>
+                                                                        <th>${element.prioridade}</th>
+                                                                        <th>${element.dt_fim}</th>
+                                                                    </tr> 
+                                                                    `
+            });
+        }
+
+    </script>
 
 </body>
 </html>

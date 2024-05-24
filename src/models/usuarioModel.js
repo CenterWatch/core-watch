@@ -23,10 +23,10 @@ function listar(){
     return database.executar(instrucao);
 }
 
-function cadastrarFunc(nome, sobrenome, celular, telefone, email, usuario, senha, gerente, empresa, cpf, cargo){
+function cadastrarFunc(nome, sobrenome, celular, email, usuario, senha, gerente, empresa, cpf, cargo){
     var instrucao = `
-        insert into funcionario (primeiro_nome, sobrenome, celular, telefone, email, fk_gerente, fk_empresa,cpf,cargo)
-        values ('${nome}','${sobrenome}','${celular}','${telefone}','${email}',${gerente},${empresa},'${cpf}','${cargo}')
+        insert into funcionario (primeiro_nome, sobrenome, celular, email, fk_gerente, fk_empresa,cpf,cargo)
+        values ('${nome}','${sobrenome}','${celular}','${email}',${gerente},${empresa},'${cpf}','${cargo}')
     `
 
     return database.executar(instrucao)
@@ -68,9 +68,9 @@ function buscarChamadosPorFuncionario(idFuncionario){
     return database.executar(instrucao);
 }
 
-function atribuirTarefa(idOperador, idGerente, tarefa, dtEstimada){
-    var instrucao=`insert into tarefa (descricao, dt_fim, dt_inicio,fk_funcionario,fk_gerente)
-                    values ("${tarefa}","${dtEstimada}",now(),${idOperador},${idGerente});
+function atribuirTarefa(idOperador, idGerente, tarefa, dtEstimada, prioridade){
+    var instrucao=`insert into tarefa (descricao, dt_fim, dt_inicio,fk_funcionario,fk_gerente,prioridade)
+                    values ("${tarefa}","${dtEstimada}",now(),${idOperador},${idGerente},${prioridade});
     `
     return database.executar(instrucao);
 }
@@ -78,6 +78,13 @@ function atribuirTarefa(idOperador, idGerente, tarefa, dtEstimada){
 function realizarFeedback(nota,detalhe,idOperador){
     var instrucao = `
                     insert into questionario (nota,detalhe,fk_funcionario)  values (${nota},"${detalhe}",${idOperador});
+                    `
+    return database.executar(instrucao);
+}
+
+function buscarTarefas(idOperador){
+    var instrucao = `
+                    select DATE_FORMAT(dt_inicio, '%d/%m/%Y') as dt_inicio,DATE_FORMAT(dt_fim, '%d/%m/%Y') as dt_fim, descricao,prioridade from tarefa where fk_funcionario = ${idOperador};
                     `
     return database.executar(instrucao);
 }
@@ -93,5 +100,6 @@ module.exports = {
     buscarSessao,
     buscarChamadosPorFuncionario,
     atribuirTarefa,
-    realizarFeedback
+    realizarFeedback,
+    buscarTarefas
 };

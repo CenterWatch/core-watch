@@ -122,6 +122,7 @@
         var idOperador = operadorSelecionado();
         var descricao = document.getElementById('valor_tarefa').value;
         var data_estimada = document.getElementById('dataEstimada').value;
+        var prioridade = document.getElementById('select_prioridade').value;
 
         fetch(`/usuarios/atribuirTarefa`, {
             method: "POST",
@@ -132,7 +133,8 @@
                 idOperadorServer: idOperador,
                 idGerenteServer: idUsuario,
                 tarefaServer: descricao,
-                dataEstimadaServer: data_estimada
+                dataEstimadaServer: data_estimada,
+                prioridadeServer: prioridade
             }),
         })
             .then(function (res) {

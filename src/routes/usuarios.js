@@ -37,4 +37,8 @@ router.post("/atribuirTarefa", function (req, res){
 router.post("/realizarFeedback", function (req, res){
     usuarioController.realizarFeedback(req,res);
 })
+
+router.get("/buscarTarefas", function (req, res){
+    usuarioController.buscarTarefas(req, res);
+})
 module.exports = router;

@@ -64,7 +64,6 @@ function cadastrar(req, res) {
     var nome = req.body.nomeServer;
     var sobrenome = req.body.sobrenomeServer;
     var celular = req.body.celularServer;
-    var telefone = req.body.telefoneServer;
     var email = req.body.emailServer;
     var usuario = req.body.usuarioServer;
     var senha = req.body.senhaServer;
@@ -76,7 +75,7 @@ function cadastrar(req, res) {
     if (nome.length < 4 || usuario.length < 4 || senha.length < 4) {
         res.status(400).send("Dados inválidos para cadastro")
     } else {
-        usuarioModel.cadastrarFunc(nome, sobrenome, celular, telefone, email, usuario, senha, gerente, empresa, cpf, cargo)
+        usuarioModel.cadastrarFunc(nome, sobrenome, celular, email, usuario, senha, gerente, empresa, cpf, cargo)
             .then(function (cadastroResultado) {
                 res.json(cadastroResultado);
             })
@@ -151,8 +150,9 @@ function atribuirTarefa(req, res){
     var idGerente = req.body.idGerenteServer;
     var tarefa = req.body.tarefaServer;
     var dataEstimada = req.body.dataEstimadaServer;
+    var prioridade = req.body.prioridade;
 
-    usuarioModel.atribuirTarefa(idFuncionario, idGerente, tarefa, dataEstimada)
+    usuarioModel.atribuirTarefa(idFuncionario, idGerente, tarefa, dataEstimada,prioridade)
     .then(result => {
         res.status(200).json(result);
     })
@@ -178,6 +178,19 @@ function realizarFeedback(req, res){
     })
 }
 
+function  buscarTarefas(req, res){
+    var idOperador = req.query.id_usuario;
+
+    usuarioModel.buscarTarefas(idOperador)
+    .then(result => {
+        res.status(200).json(result);
+    })
+    .catch(error => {
+        console.error("Erro ao processar a solicitação: ", error);
+        res.status(500).json({ error: "Erro interno do servidor" });
+    })
+}
+
 module.exports = {
     autenticar,
     listarOperadores,
@@ -186,5 +199,6 @@ module.exports = {
     buscarSessao,
     listarChamados,
     atribuirTarefa,
-    realizarFeedback
+    realizarFeedback,
+    buscarTarefas
 }

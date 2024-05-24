@@ -12,9 +12,10 @@
     <script src="../js/sessao.js"></script>
     <script src="https://kit.fontawesome.com/384071f692.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="../js/usuario.js"></script>
 </head>
 
-<body onload="exibirFunc()">
+<body onload="buscarOperadores(),exibirFunc()">
 
     <section class="section-body">
         <div class="leftbar">
@@ -126,7 +127,7 @@
                                 </div>
                             </div>
                             <div class="btn-cadastrar">
-                                <button type="submit" onclick="cadastrar()">Cadastrar</button>
+                                <button onclick="cadastrar()">Cadastrar</button>
                             </div>
                         </div>
 
@@ -142,7 +143,6 @@
             var nome = document.getElementById('nome_input').value;
             var sobrenome = document.getElementById('sobrenome_input').value;
             var celular = document.getElementById('celular_input').value;
-            var telefone = document.getElementById('telefone_input').value;
             var email = document.getElementById('email_input').value;
             var cpf = "123.123.123-12";
             var cargo = document.getElementById('cargo_input').value;
@@ -160,7 +160,6 @@
                     nomeServer: nome,
                     sobrenomeServer: sobrenome,
                     celularServer: celular,
-                    telefoneServer: telefone,
                     emailServer: email,
                     cpfServer: cpf,
                     cargoServer: cargo,
