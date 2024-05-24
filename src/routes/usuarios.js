@@ -41,4 +41,8 @@ router.post("/realizarFeedback", function (req, res){
 router.get("/buscarTarefas", function (req, res){
     usuarioController.buscarTarefas(req, res);
 })
+
+router.get("/buscarChamadosOperador", function (req, res){
+    usuarioController.buscarChamadosOperador(req, res);
+})
 module.exports = router;

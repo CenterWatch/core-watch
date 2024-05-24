@@ -89,6 +89,13 @@ function buscarTarefas(idOperador){
     return database.executar(instrucao);
 }
 
+function buscarChamadosOperador(idOperador){
+    var instrucao = `
+    select * from ocorrencia join sessao on fk_sessao = id_sessao join usuario on id_sessao = fk_sessao join funcionario on id_usuario = id_funcionario  where id_funcionario = ${idOperador} and tipo not like '%SISTEMA%';
+    `
+    return database.executar(instrucao);
+}
+
 module.exports = {
     autenticar,
     listar,
@@ -101,5 +108,6 @@ module.exports = {
     buscarChamadosPorFuncionario,
     atribuirTarefa,
     realizarFeedback,
-    buscarTarefas
+    buscarTarefas,
+    buscarChamadosOperador
 };

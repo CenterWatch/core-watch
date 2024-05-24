@@ -191,6 +191,19 @@ function  buscarTarefas(req, res){
     })
 }
 
+function buscarChamadosOperador(req, res){
+    var idOperador = req.query.id_usuario;
+
+    usuarioModel.buscarChamadosOperador(idOperador)
+    .then(result => {
+        res.status(200).json(result);
+    })
+    .catch(error => {
+        console.error("Erro ao processar a solicitação: ", error);
+        res.status(500).json({ error: "Erro interno do servidor" });
+    })
+}
+
 module.exports = {
     autenticar,
     listarOperadores,
@@ -200,5 +213,6 @@ module.exports = {
     listarChamados,
     atribuirTarefa,
     realizarFeedback,
-    buscarTarefas
+    buscarTarefas,
+    buscarChamadosOperador
 }

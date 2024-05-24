@@ -88,7 +88,7 @@
 
 </html>
 <script>
-
+    
     function cadastrarChamado() {
         var id_sessao = sessionStorage.ID_SESSAO;
         var assunto = input_assunto.value;
@@ -124,16 +124,31 @@
                 console.log("Erro: ", erro)
             })
     }
-    function listaChamados(){
-        fetch("/usuarios/listarChamados",{
-            method: "GET",
-            headers: {
-                "Content - Type": "application/json"
-            },
-            body: JSON.stringify({
-                id
+    const id_usuario = sessionStorage.ID_USUARIO;
+    listaChamados = []
+    function buscarChamados(){
+        fetch(`/usuarios/buscarChamadosOperador?idOperador=${id_usuario}`)
+        .then(res => {
+                if (!res.ok) {
+                    throw new Error(`Erro na solicitação: ${res.statusText}`);
+                }
+                return res.json(); 
             })
-        })
+            .then(data => {
+                listaChamados = data;
+                listarChamados()
+            })
+            .catch(error => {
+                console.error('Erro ao buscar tarefas:', error);
+            });
+}
+
+function listarChamados(){
+    // listaChamados.forEach(element => {
+    //             document.getElementById('').innerHTML += `
+                                                                    
+    //                                                      `
+    //         });
 }
 
 </script>
