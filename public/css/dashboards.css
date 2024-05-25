@@ -158,7 +158,14 @@ section {
     align-items: center;
 }
 
-.visao-geral .titulo {
+.visao-geral-task {
+    margin-left: 240px;
+    width: calc(100vw - 240px);
+    height: calc(100vh - 64px);
+    overflow-x: hidden;
+}
+
+.visao-geral .titulo, .visao-geral-task .titulo {
     display: flex;
     align-items: center;
     height: 100px;

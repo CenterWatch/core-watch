@@ -211,3 +211,9 @@ dialog {
     cursor: pointer;
     margin: 1rem 0;
 }
+
+
+td{
+    padding: 5px;
+    font-size: 14px;
+}
