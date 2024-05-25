@@ -49,9 +49,11 @@ section {
 
 .nav-btn:hover {
     background-color: #3f4a4e;
+
     span {
         color: #fff;
     }
+
     .fa-solid {
         color: #52C3E3;
     }
@@ -59,9 +61,11 @@ section {
 
 .btn-ativo {
     background-color: #3f4a4e;
+
     span {
         color: #fff;
     }
+
     .fa-solid {
         color: #52C3E3;
     }
@@ -73,15 +77,20 @@ section {
     flex-direction: column;
     gap: 7px;
 }
+
 .cfg-nav {
     margin-bottom: 15px;
 }
-.links-nav, .cfg-nav {
+
+.links-nav,
+.cfg-nav {
     width: 80%;
 }
-.links-nav .nav-btn:nth-child(2){
+
+.links-nav .nav-btn:nth-child(2) {
     margin-top: 35px;
 }
+
 .leftbar span {
     margin-left: 8px;
 }
@@ -122,6 +131,7 @@ section {
     align-items: center;
     justify-content: space-between;
 }
+
 .profile-container div {
     display: flex;
     align-items: center;
@@ -144,7 +154,7 @@ section {
     display: flex;
     gap: 15px;
 }
- 
+
 
 /* Visao geral */
 
@@ -165,7 +175,8 @@ section {
     overflow-x: hidden;
 }
 
-.visao-geral .titulo, .visao-geral-task .titulo {
+.visao-geral .titulo,
+.visao-geral-task .titulo {
     display: flex;
     align-items: center;
     height: 100px;
@@ -282,7 +293,7 @@ section {
     box-shadow: 6px 2px 20px 2px #222;
 }
 
-.card-pc selecionar-hover{
+.card-pc selecionar-hover {
     box-shadow: 6px 2px 20px 2px #222;
 }
 
@@ -385,4 +396,66 @@ section {
 .fechar-btn:hover {
     background-color: #52C3E3;
     cursor: pointer;
+}
+
+/* tabela dos computadores a ter armazenamento cheio */
+
+table {
+
+    text-align: start;
+}
+
+th {
+    padding: 2px 3rem;
+    border: 1px solid #ccc;
+    background-color: #bcb8b1;
+    text-align: center;
+    font-weight: bold;
+}
+
+.container-computadores {
+    display: flex;
+    justify-content: center;
+    padding: 0 1rem;
+
+}
+
+.lista-comp {
+    background: #fff;
+    border: 1px solid #ccc;
+    padding: 2px;
+    border-radius: 2px;
+    margin-top: 3rem;
+
+}
+
+
+/* maquinas em alerta */
+.maquinasEmAlerta {
+    background: #fff;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 20px;
+    /* min-width: 200px; */
+    max-width: 50%;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    
+}
+
+.maquinasEmAlerta h3 {
+    font-weight: 400;
+    
+}
+
+.maquinasEmAlerta {
+    margin-top: 40px;
+    margin-left: 1%;
+}
+
+
+.card-maquina {
+    display: flex;
+    overflow-x: auto;
+    gap: 20px;
+    padding: 20px 0;
 }
