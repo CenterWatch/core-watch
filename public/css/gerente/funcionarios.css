@@ -213,7 +213,10 @@ dialog {
 }
 
 
-td{
-    padding: 5px;
-    font-size: 14px;
-}
+/*VALIDAÇÕES INPUTS*/
+
+    .error-message {
+        color: red;
+        font-size: 14px;
+        font-weight: bold;
+    }

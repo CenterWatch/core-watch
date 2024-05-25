@@ -15,22 +15,19 @@
     <script src="../js/usuario.js"></script>
 </head>
 
-<body onload="buscarOperadores(),exibirFunc(),exibirNomeUsuario()">
+<body onload="buscarOperadores(),exibirFunc()">
 
     <section class="section-body">
         <div class="leftbar">
             <div class="links-nav">
                 <img class="logo text-logo" src="https://i.imgur.com/RjhX0a9.png" alt="">
-                <a class="nav-btn" href="dashboard.html"><i
-                        class="fa-solid fa-square-poll-vertical"></i><span>Dashboard</span></a>
+                <a class="nav-btn" href="dashboard.html"><i class="fa-solid fa-square-poll-vertical"></i><span>Dashboard</span></a>
                 <a class="nav-btn btn-ativo" href="#"><i class="fa-solid fa-users"></i><span>Funcionários</span></a>
                 <a class="nav-btn" href="tasks.html"><i class="fa-solid fa-list-check"></i><span>Tasks</span></a>
             </div>
             <div class="cfg-nav">
-                <a class="nav-btn" href="configuracoes.html"><i
-                        class="fa-solid fa-gear"></i><span>Configurações</span></a>
-                <a class="nav-btn" onclick="sair()"><i
-                        class="fa-solid fa-arrow-right-from-bracket"></i><span>Sair</span></a>
+                <a class="nav-btn" href="configuracoes.html"><i class="fa-solid fa-gear"></i><span>Configurações</span></a>
+                <a class="nav-btn" onclick="sair()"><i class="fa-solid fa-arrow-right-from-bracket"></i><span>Sair</span></a>
             </div>
         </div>
         <div class="main">
@@ -86,27 +83,33 @@
                                     <div class="input-field">
                                         <label for="nome_input">Nome</label>
                                         <input id="nome_input" class="input_formulario" type="text">
+                                        <span id="span_nome"></span>
                                     </div>
                                     <div class="input-field">
                                         <label for="sobrenome_input">Sobrenome</label>
                                         <input type="text" id="sobrenome_input" class="input_formulario">
+                                        <span id="span_sobrenome"></span>
                                     </div>
                                     <div class="input-field">
                                         <label for="celular_input">Celular</label>
                                         <input type="text" id="celular_input" class="input_formulario">
+                                        <span id="span_celular"></span>
                                     </div>
                                     <div class="input-field">
                                         <label for="dtNasc_input">Data de Nascimento</label>
                                         <input class="input_formulario" type="date" id="dtNasc_input">
+                                        <span id="span_dtNascimento"></span>
                                     </div>
                                     <div class="input-field">
                                         <label for="cpf_input">CPF</label>
-                                        <input class="input_formulario" type="number" id="cpf_input"
+                                        <input class="input_formulario" type="text" id="cpf_input"
                                             placeholder="000.000.000-00">
+                                        <span id="span_cpf"></span>
                                     </div>
                                     <div class="input-field">
                                         <label for="email_input">E-mail</label>
                                         <input class="input_formulario" type="text" id="email_input">
+                                        <span id="span_email"></span>
                                     </div>
                                     <div class="input-field">
                                         <label for="cargo_input">Cargo</label>
@@ -115,14 +118,17 @@
                                             <option value="Operador">Operador</option>
                                             <option value="Suporte">Suporte</option>
                                         </select>
+                                        <span id="span_cargo"></span>
                                     </div>
                                     <div class="input-field">
                                         <label for="usuario_input">Usuário</label>
                                         <input class="input_formulario" type="text" id="usuario_input">
+                                        <span id="span_usuario"></span>
                                     </div>
                                     <div class="input-field">
                                         <label for="senha_input">Senha</label>
                                         <input class="input_formulario" type="password" id="senha_input">
+                                        <span id="span_senha"></span>
                                     </div>
                                 </div>
                             </div>
@@ -130,9 +136,7 @@
                                 <button onclick="cadastrar()">Cadastrar</button>
                             </div>
                         </div>
-
                     </dialog>
-
                 </div>
             </div>
         </div>
@@ -144,49 +148,100 @@
             var sobrenome = document.getElementById('sobrenome_input').value;
             var celular = document.getElementById('celular_input').value;
             var email = document.getElementById('email_input').value;
-            var cpf = "123.123.123-12";
+            var cpf = document.getElementById('cpf_input').value;
             var cargo = document.getElementById('cargo_input').value;
             var usuario = document.getElementById('usuario_input').value;
             var senha = document.getElementById('senha_input').value;
             var gerente = sessionStorage.ID_USUARIO;
             var empresa = sessionStorage.ID_EMPRESA_USUARIO;
+            var dtNascimento = document.getElementById('dtNasc_input').value;
 
-            fetch("/usuarios/cadastrar", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    nomeServer: nome,
-                    sobrenomeServer: sobrenome,
-                    celularServer: celular,
-                    emailServer: email,
-                    cpfServer: cpf,
-                    cargoServer: cargo,
-                    usuarioServer: usuario,
-                    senhaServer: senha,
-                    gerenteServer: gerente,
-                    empresaServer: empresa
-                }),
-            })
-                .then(function (res) {
-                    console.log("Resposta: ", res);
+            // Reset all error messages
+            var spans = document.querySelectorAll('span[id^="span_"]');
+            spans.forEach(function(span) {
+                span.innerHTML = "";
+            });
 
-                    if (res.ok) {
-                        alert("Funcionário cadastrado com sucesso!");
+            // Validate input fields
+            var valid = true;
 
-                        setTimeout(() => {
-                            window.location.reload();
-                        }, 1500);
-                        exibirFunc();
-                    } else {
-                        alert("Dados de funcionário inválido!");
-                    }
-                })
-                .catch(function (erro) {
-                    console.log("Erro: ", erro);
-                });
-        }
+            if (nome.trim() === "") {
+                document.getElementById('span_nome').innerHTML = `<p class="error-message">Informe o nome!</p>`;
+                valid = false;
+            }
+            if (sobrenome.trim() === "") {
+                document.getElementById('span_sobrenome').innerHTML = `<p class="error-message">Informe o sobrenome!</p>`;
+                valid = false;
+            }
+            if (celular.trim() === "") {
+                document.getElementById('span_celular').innerHTML = `<p class="error-message">*Informe o número do celular</p>`;
+                valid = false;
+            }
+            if (dtNascimento.trim() === "") {
+                document.getElementById('span_dtNascimento').innerHTML = `<p class="error-message">*Informe a data de nascimento</p>`;
+                valid = false;
+            }
+            if (cpf.trim() === "") {
+                document.getElementById('span_cpf').innerHTML = `<p class="error-message">*Informe o CPF</p>`;
+                valid = false;
+            }
+            if (email.trim() === "") {
+                document.getElementById('span_email').innerHTML = `<p class="error-message">*Informe o e-mail</p>`;
+                valid = false;
+            }
+            if (cargo.trim() === "") {
+                document.getElementById('span_cargo').innerHTML = `<p class="error-message">*Informe o cargo</p>`;
+                valid = false;
+            }
+            if (usuario.trim() === "") {
+                document.getElementById('span_usuario').innerHTML = `<p class="error-message">*Informe o nome de usuário</p>`;
+                valid = false;
+            }
+            
+            if (senha.trim() === "") {
+                document.getElementById('span_senha').innerHTML = `<p class="error-message">*Informe a senha</p>`;
+                valid = false;
+            } 
+            
+            else {
+        fetch("/usuarios/cadastrar", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                nomeServer: nome,
+                sobrenomeServer: sobrenome,
+                celularServer: celular,
+                emailServer: email,
+                cpfServer: cpf,
+                cargoServer: cargo,
+                usuarioServer: usuario,
+                senhaServer: senha,
+                gerenteServer: gerente,
+                empresaServer: empresa
+            }),
+        })
+        .then(function (res) {
+            console.log("Resposta: ", res);
+
+            if (res.ok) {
+                alert("Funcionário cadastrado com sucesso!");
+
+                setTimeout(() => {
+                    window.location.reload();
+                }, 1500);
+                exibirFunc();
+            } else {
+                alert("Dados de funcionário inválido!");
+            }
+        })
+        .catch(function (erro) {
+            console.log("Erro: ", erro);
+        });
+    }
+}
+
 
         function exibirFunc() {
             var tbody = document.getElementById('lista-func');
