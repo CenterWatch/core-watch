@@ -8,10 +8,11 @@
     <link rel="stylesheet" href="../css/dashboards.css">
     <link rel="stylesheet" href="../css/feedback.css">
     <script src="../js/sessao.js"></script>
+    <script src="../js/usuario.js"></script>
     <script src="https://kit.fontawesome.com/384071f692.js" crossorigin="anonymous"></script>
 </head>
 
-<body>
+<body onload="exibirNomeUsuario()">
 
     <section class="section-body">
         <div class="leftbar">
@@ -32,7 +33,7 @@
                 <div class="profile-container">
                     <div class="user-wrap">
                         <img src="../img/user_placeholder.png" class="img-user">
-                        <span>Usuário</span>
+                        <span id="nome-usuario">Usuário</span>
                         <i class="fa-solid fa-angle-down"></i>
                     </div>
                     <div>
@@ -40,7 +41,7 @@
                     </div>
                 </div>
             </div>
-            <div class="visao-geral">
+            <div class="visao-geral-task">
                 <div class="titulo">
                     Questionário de Satisfação
                 </div>

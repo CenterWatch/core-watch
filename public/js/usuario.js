@@ -14,3 +14,7 @@ function buscarOperadores(){
         })
     
 }
+
+function exibirNomeUsuario(){
+    document.getElementById('nome-usuario').innerHTML = `${sessionStorage.USERNAME_USUARIO}`
+}

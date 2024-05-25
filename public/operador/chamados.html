@@ -5,12 +5,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://kit.fontawesome.com/384071f692.js" crossorigin="anonymous"></script>
+    <script src="../js/usuario.js"></script>
     <link rel="stylesheet" href="../css/dashboards.css">
     <link rel="stylesheet" href="../css/chamados.css">
     <title>Meus Chamados</title>
 </head>
 
-<body onload="listaChamados()">
+<body onload="listarChamados(),exibirNomeUsuario()">
     <section class="section-body">
         <div class="leftbar">
             <div class="links-nav">
@@ -32,7 +33,7 @@
                 <div class="profile-container">
                     <div class="user-wrap">
                         <img src="../img/user_placeholder.png" class="img-user">
-                        <span>Usuário</span>
+                        <span id="nome-usuario">Usuário</span>
                         <i class="fa-solid fa-angle-down"></i>
                     </div>
                     <div>
@@ -40,7 +41,7 @@
                     </div>
                 </div>
             </div>
-            <div class="visao-geral">
+            <div class="visao-geral-task">
                 <div class="titulo">
                     Meus Chamados
                 </div>
@@ -136,7 +137,7 @@
             })
             .then(data => {
                 listaChamados = data;
-                listarChamados()
+                // listarChamados()
             })
             .catch(error => {
                 console.error('Erro ao buscar tarefas:', error);
