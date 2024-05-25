@@ -1,5 +1,3 @@
-
-
 .visao-geral .frase-principal {
     text-align: center;
     padding: 2rem 0;
@@ -11,25 +9,25 @@
     width: 100%;
 }
 
-.visao-geral .div-input{
+.visao-geral .div-input {
     display: flex;
     justify-content: space-evenly;
-    
-    
+
+
 }
 
 .listaArtigo {
     display: flex;
     justify-content: center;
     margin-top: 10%;
-    
+
 }
 
 .div-input-botao {
     padding-top: 3rem;
 }
 
- 
+
 
 .div-input-botao i {
     margin-right: 10%;
@@ -41,10 +39,10 @@
     outline: none;
     font-size: 0.9rem;
     color: rgba(0, 0, 0, 0.7);
-    padding: 0.5rem; 
-    border: 1px solid rgba(0, 0, 0, 0.2); 
-    border-radius: 5px; 
-    box-sizing: border-box; 
+    padding: 0.5rem;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+    box-sizing: border-box;
     display: block;
     margin-bottom: 5px;
 }
@@ -54,20 +52,20 @@
 }
 
 .div-botao button {
-   
+
     padding: 0.6rem 1rem;
     background: #52c3e3;
     cursor: pointer;
     color: white;
-    font-size: 14px; 
+    font-size: 14px;
     font-weight: 500;
     border: none;
     border-radius: 4px;
     transition: all 0.3s ease;
-    margin: 0 auto; 
+    margin: 0 auto;
     width: 150px;
-    
- 
+
+
 }
 
 button:hover {
@@ -87,23 +85,28 @@ button:hover {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5); 
-    z-index: 1000; 
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
 }
 
 .modal-content {
-    background-color: #fff; /* cor de fundo do modal */
+    background-color: #fff;
+    /* cor de fundo do modal */
     padding: 20px;
     border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); /* sombra para efeito visual */
-    width: 80%; /* largura do modal */
-    max-width: 600px; /* largura máxima do modal */
-    
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    /* sombra para efeito visual */
+    width: 80%;
+    /* largura do modal */
+    max-width: 600px;
+    /* largura máxima do modal */
+
 }
 
 .div-botoes {
     display: flex;
-    justify-content: flex-end; /* alinha os botões à direita */
+    justify-content: flex-end;
+    /* alinha os botões à direita */
     margin-top: 10px;
 }
 
@@ -133,12 +136,12 @@ button:hover {
     background: #52c3e3;
     cursor: pointer;
     color: white;
-    font-size: 14px; 
+    font-size: 14px;
     font-weight: 500;
     border: none;
     border-radius: 4px;
     transition: all 0.3s ease;
-    margin: 0 auto; 
+    margin: 0 auto;
     width: 100px;
     margin: 1rem;
 }
@@ -154,29 +157,50 @@ button:hover {
 
 
 table {
-    
+
     text-align: start;
 }
 
 th {
-    padding: 2px 7rem; 
+    padding: 2px 3rem;
     border: 1px solid #ccc;
-    background-color: #f4f4f4;
-    
+    background-color: #bcb8b1;
+    text-align: center;
+    font-weight: bold;
 }
 
-.container-lista{
+.container-lista {
     display: flex;
     justify-content: center;
     padding: 0 1rem;
 }
 
 .listaArtigo {
-    
+
     background: #fff;
     border: 1px solid #ccc;
     padding: 2px;
     border-radius: 2px;
     margin-top: 3rem;
-   
+
+}
+
+#descricao {
+    max-width: 400px;
+    overflow-wrap: break-word;
+    white-space: normal;
+
+}
+
+#artigo_categoria td {
+    text-align: center;
+}
+
+
+#tabela-artigo td {
+    padding: 2px 3rem;
+    border: 1px solid #ccc;
+    background-color: #f4f4f4;
+    text-align: left;
+    font-weight: normal;
 }

@@ -67,7 +67,9 @@
                             </select>
                             <input type="text" placeholder="Dê um título para o artigo" id="artigo_titulo"> 
                             
-                            <textarea placeholder="Digite seu artigo aqui para contribuir com nosso conhecimento. Todo o processo está nas suas mãos..." name="" id="artigo_descricao"></textarea>
+                            <textarea placeholder="Digite seu artigo aqui para contribuir com nosso conhecimento. Todo o processo está nas suas mãos..." name="" id="artigo_descricao">
+                            </textarea>
+
                             <input type="text" name="" id="palavras_chaves"  placeholder="Palavras-Chaves. (Separe por espaço, sem virgula e pontuações.)">
                             <div class="div-botoes">
                                 <button style="background-color: red;">FECHAR</button> <!--INVERTER OS BOTÕES NÃO FUNCIONA-->
@@ -83,22 +85,18 @@
                         <table id="tabela-artigo">
                             <tr>
                                 <th>Título</th>
-                                <th>Categoria</th>
-                                <th>Descrição</th>
+                                <th>Categoria</th> 
+                                <th id="descricao">Descrição</th>
                                 <th>Palavras-Chaves</th>
                             </tr>
-    
+
                         </table>
                     </div>
                 </div>
 
 
-
-        
-                <div class="cards">
-
-
-                </div>
+               
+                
             </div>
         <div>
     </section>
@@ -160,10 +158,10 @@
         listaArtigos.forEach(artigo => {
             document.getElementById('tabela-artigo').innerHTML += `
                         <tr>
-                            <th>${artigo.titulo}</th>
-                            <th>${artigo.categoria}</th>
-                            <th>${artigo.descricao}</th>
-                            <th>${artigo.palavra_chave}</th>
+                            <td>${artigo.titulo}</td>
+                            <td>${artigo.categoria}</td>
+                            <td>${artigo.descricao}</td>
+                            <td>${artigo.palavra_chave}</td>
                         </tr>
             `
         })
