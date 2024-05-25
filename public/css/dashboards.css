@@ -153,6 +153,9 @@ section {
     width: calc(100vw - 240px);
     height: calc(100vh - 64px);
     overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .visao-geral .titulo {
