@@ -226,6 +226,38 @@ function concluirTarefa(req, res) {
     })
 }
 
+function editarFunc(req, res) {
+    var func = req.body;
+
+    var idFunc = func.idFunc;
+    var idEnd = func.idEnd;
+    var nome = func.nome;
+    var sobrenome = func.sobrenome;
+    var celular = func.celular;
+    var telefone = func.telefone;
+    var email = func.email;
+    var cpf = func.cpf;
+    var cargo = func.cargo;
+    var usuario = func.usuario;
+    var dtNascimento = func.dtNascimento;
+    var logradouro = func.logradouro;
+    var cep = func.cep;
+    var num = func.num;
+    var bairro = func.bairro;
+    var compl = func.compl;
+    var cidade = func.cidade;
+    var uf = func.uf;
+
+    usuarioModel.editarFunc(idFunc, idEnd, nome, sobrenome, celular, telefone, email, cpf, cargo, usuario, dtNascimento, logradouro, cep, num, bairro, compl, cidade, uf)
+    .then(result => {
+        res.status(200).json(result);
+    })
+    .catch(error => {
+        console.error("Erro ao processar a solicitação: ", error);
+        res.status(500).json({ error: "Erro interno do servidor" });
+    })
+}
+
 module.exports = {
     autenticar,
     listarOperadores,
@@ -237,5 +269,6 @@ module.exports = {
     realizarFeedback,
     buscarTarefas,
     buscarChamadosOperador,
-    concluirTarefa
+    concluirTarefa,
+    editarFunc
 }

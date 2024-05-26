@@ -50,4 +50,8 @@ router.post("/concluirTarefa", function (req, res){
     usuarioController.concluirTarefa(req, res);
 })
 
+router.put("/editarFunc", function (req, res){
+    usuarioController.editarFunc(req, res);
+})
+
 module.exports = router;
