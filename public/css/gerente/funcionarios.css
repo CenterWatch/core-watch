@@ -1,11 +1,6 @@
-
-
 .visao-geral {
     display: flex;
-    align-items: center;
-    width: 80%;
     justify-content: space-around;
-    overflow-y: hidden;
 }
 
 
@@ -107,7 +102,7 @@
 }
 
 /*  tabela funcionários */
-table  #tabela-funcionario {
+/* table  #tabela-funcionario {
     width: 100%;
     
 }
@@ -118,17 +113,17 @@ th {
     padding: 1px 2rem;
 }
 
-
+*/
 .tabela-container{
-    display: flex;
+    /* display: flex;
     justify-content: center;
     padding: 0 1rem;
     background: #fff;
     border: 1px solid #ccc;
     padding: 2px;
-    border-radius: 2px;
-    margin-bottom: 20rem;
-}
+    border-radius: 2px; */
+    margin-bottom: 10rem;
+} 
 
 
 
@@ -217,6 +212,5 @@ dialog {
 
     .error-message {
         color: red;
-        font-size: 14px;
-        font-weight: bold;
+        font-size: 11px;
     }

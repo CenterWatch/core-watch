@@ -161,7 +161,7 @@ section {
 .visao-geral {
     margin-left: 240px;
     width: calc(100vw - 240px);
-    height: calc(100vh - 64px);
+    margin-top: 64px;
     overflow-x: hidden;
     display: flex;
     flex-direction: column;
@@ -400,20 +400,7 @@ section {
 
 /* tabela dos computadores a ter armazenamento cheio */
 
-table {
-
-    text-align: start;
-}
-
-th {
-    padding: 2px 3rem;
-    border: 1px solid #ccc;
-    background-color: #bcb8b1;
-    text-align: center;
-    font-weight: bold;
-}
-
-.container-computadores {
+/* .container-computadores {
     display: flex;
     justify-content: center;
     padding: 0 1rem;
@@ -427,7 +414,7 @@ th {
     border-radius: 2px;
     margin-top: 3rem;
 
-}
+} */
 
 
 /* maquinas em alerta */

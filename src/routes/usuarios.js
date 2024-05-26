@@ -45,4 +45,9 @@ router.get("/buscarTarefas", function (req, res){
 router.get("/buscarChamadosOperador", function (req, res){
     usuarioController.buscarChamadosOperador(req, res);
 })
+
+router.post("/concluirTarefa", function (req, res){
+    usuarioController.concluirTarefa(req, res);
+})
+
 module.exports = router;

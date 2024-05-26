@@ -64,18 +64,26 @@ function cadastrar(req, res) {
     var nome = req.body.nomeServer;
     var sobrenome = req.body.sobrenomeServer;
     var celular = req.body.celularServer;
+    var telefone = req.body.telefoneServer;
     var email = req.body.emailServer;
+    var dtNascimento = req.body.dtNascimentoServer;
     var usuario = req.body.usuarioServer;
-    var senha = req.body.senhaServer;
     var gerente = req.body.gerenteServer;
     var empresa = req.body.empresaServer;
     var cpf = req.body.cpfServer;
     var cargo = req.body.cargoServer;
+    var logradouro = req.body.logradouroServer;
+    var cep = req.body.cepServer;
+    var num = req.body.numServer;
+    var bairro = req.body.bairroServer;
+    var compl = req.body.complServer;
+    var cidade = req.body.cidadeServer;
+    var uf = req.body.ufServer;
 
-    if (nome.length < 4 || usuario.length < 4 || senha.length < 4) {
+    if (nome.length < 4 || usuario.length < 4) {
         res.status(400).send("Dados inválidos para cadastro")
     } else {
-        usuarioModel.cadastrarFunc(nome, sobrenome, celular, email, usuario, senha, gerente, empresa, cpf, cargo)
+        usuarioModel.cadastrarEndereco(nome, sobrenome, celular, telefone, email, dtNascimento, usuario, gerente, empresa, cpf, cargo, logradouro, cep, num, bairro, compl, cidade, uf)
             .then(function (cadastroResultado) {
                 res.json(cadastroResultado);
             })
@@ -150,9 +158,10 @@ function atribuirTarefa(req, res){
     var idGerente = req.body.idGerenteServer;
     var tarefa = req.body.tarefaServer;
     var dataEstimada = req.body.dataEstimadaServer;
-    var prioridade = req.body.prioridade;
+    var prioridade = req.body.prioridadeServer;
+    console.log(prioridade)
 
-    usuarioModel.atribuirTarefa(idFuncionario, idGerente, tarefa, dataEstimada,prioridade)
+    usuarioModel.atribuirTarefa(idFuncionario, idGerente, tarefa, dataEstimada, prioridade)
     .then(result => {
         res.status(200).json(result);
     })
@@ -204,6 +213,19 @@ function buscarChamadosOperador(req, res){
     })
 }
 
+function concluirTarefa(req, res) {
+    var idTarefa = req.body.idTarefa;
+
+    usuarioModel.concluirTarefa(idTarefa)
+    .then(result => {
+        res.status(200).json(result);
+    })
+    .catch(error => {
+        console.error("Erro ao processar a solicitação: ", error);
+        res.status(500).json({ error: "Erro interno do servidor" });
+    })
+}
+
 module.exports = {
     autenticar,
     listarOperadores,
@@ -214,5 +236,6 @@ module.exports = {
     atribuirTarefa,
     realizarFeedback,
     buscarTarefas,
-    buscarChamadosOperador
+    buscarChamadosOperador,
+    concluirTarefa
 }

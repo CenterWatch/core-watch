@@ -1,5 +1,5 @@
-function buscarOperadores(){
-    fetch(`/usuarios/listarOperadores?idUsuario=${sessionStorage.ID_USUARIO}`).then(res => {
+async function buscarOperadores(){
+    await fetch(`/usuarios/listarOperadores?idUsuario=${sessionStorage.ID_USUARIO}`).then(res => {
         if (!res.ok) {
             throw new Error(`Erro na solicitação: ${res.statusText}`);
         }

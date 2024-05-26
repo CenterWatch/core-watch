@@ -31,7 +31,21 @@ function cadastrarArtigo(req, res){
     })
 }
 
+function excluirArtigo(req, res){
+    var idArtigo = req.query.idArtigo;
+
+    artigoModel.excluirArtigo(idArtigo)
+        .then(result => {
+            res.status(200).json(result);
+        })
+        .catch(error => {
+            console.error("Erro ao processar a solicitação: ",error);
+            res.status(500).json({error: "Erro interno do servidor"});
+        })
+}
+
 module.exports = {
     buscarArtigos,
-    cadastrarArtigo
+    cadastrarArtigo,
+    excluirArtigo
 }

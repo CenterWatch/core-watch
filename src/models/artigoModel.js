@@ -15,7 +15,16 @@ function cadastrarArtigo(idSuporte, titulo, descricao, categoria, palavras){
     return database.executar(instrucao);
 }
 
+function excluirArtigo(idArtigo) {
+    var instrucao = `
+    delete from artigo where id_artigo=${idArtigo};
+    `
+    console.log("Executando a instrução: "+instrucao);
+    return database.executar(instrucao);
+}
+
 module.exports = {
     buscarArtigos,
-    cadastrarArtigo
+    cadastrarArtigo,
+    excluirArtigo
 };

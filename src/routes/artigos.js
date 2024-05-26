@@ -10,4 +10,8 @@ router.get("/buscarArtigos", function (req,res){
 router.post("/cadastrarArtigo", function (req, res){
     artigoController.cadastrarArtigo(req, res);
 })
+
+router.delete("/excluirArtigo", function (req, res){
+    artigoController.excluirArtigo(req, res);
+})
 module.exports = router;

@@ -1,15 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CenterWatch | Tasks Operador</title>
-    <link rel="stylesheet" href="../css/dashboards.css"> 
-    <link rel="stylesheet" href="task-operador.css">
+    <link rel="stylesheet" href="../css/dashboards.css">
+    <link rel="stylesheet" href="../css/tabela.css">
     <script src="../js/sessao.js"></script>
     <script src="../js/usuario.js"></script>
     <script src="https://kit.fontawesome.com/384071f692.js" crossorigin="anonymous"></script>
 </head>
+
 <body onload="buscarTarefas(),exibirNomeUsuario()">
 
     <section class="section-body">
@@ -17,11 +19,14 @@
             <div class="links-nav">
                 <img class="logo text-logo" src="https://i.imgur.com/RjhX0a9.png" alt="">
                 <a class="nav-btn" href="home.html"><i class="fa-solid fa-house"></i></i></i><span></i>Home</span></a>
-                <a class="nav-btn" href="chamados.html"><i class="fa-solid fa-list"></i></i><span style="font-size: small;"></i>Meus Chamados</span></a>
-                <a class="nav-btn" href="feedback.html"><i class="fa-solid fa-pen-to-square"></i><span></i>Feedback</span></a>
+                <a class="nav-btn" href="chamados.html"><i class="fa-solid fa-list"></i></i><span
+                        style="font-size: small;"></i>Meus Chamados</span></a>
+                <a class="nav-btn" href="feedback.html"><i
+                        class="fa-solid fa-pen-to-square"></i><span></i>Feedback</span></a>
             </div>
             <div class="cfg-nav">
-                <a class="nav-btn" onclick="sair()"><i class="fa-solid fa-arrow-right-from-bracket"></i><span>Sair</span></a>
+                <a class="nav-btn" onclick="sair()"><i
+                        class="fa-solid fa-arrow-right-from-bracket"></i><span>Sair</span></a>
             </div>
         </div>
         <div class="main">
@@ -45,63 +50,91 @@
                 <div class="cards">
                 </div>
 
-                
-                    <div class="lista-task">
-                        <table id="tabela-task">
-                            <tr>
-                                <th>Data de tribuição</th>
-                                <th>Descrição</th>
-                                <th>Prioridade</th>
-                                <th>Data de entrega</th>
-                                
-                            </tr> 
-                        </table>
-                        
-                    </div>
-                
+
+                <div class="lista-task">
+                    <table id="tabelaTask">
+                        <tr>
+                            <th>Data de tribuição</th>
+                            <th>Descrição</th>
+                            <th>Prioridade</th>
+                            <th>Data de entrega</th>
+                            <th>Concluído</th>
+                        </tr>
+                        <tbodY id="tbody-task">
+
+                        </tbodY>
+                    </table>
+
+                </div>
+
 
             </div>
-        <div>
+            <div>
     </section>
 
     <script>
         id_usuario = sessionStorage.ID_USUARIO;
-        let listaTarefas =  []
+        let listaTarefas = []
 
-        function buscarTarefas(){
+        function buscarTarefas() {
             fetch(`/usuarios/buscarTarefas?id_usuario=${id_usuario}`)
-            .then(res => {
-                if (!res.ok) {
-                    throw new Error(`Erro na solicitação: ${res.statusText}`);
-                }
-                return res.json(); 
-            })
-            .then(data => {
-                listaTarefas = data;
-                listarTarefas()
-            })
-            .catch(error => {
-                console.error('Erro ao buscar tarefas:', error);
-            });
+                .then(res => {
+                    if (!res.ok) {
+                        throw new Error(`Erro na solicitação: ${res.statusText}`);
+                    }
+                    return res.json();
+                })
+                .then(data => {
+                    sessionStorage.TAREFAS = JSON.stringify(data);
+                    listarTarefas()
+                })
+                .catch(error => {
+                    console.error('Erro ao buscar tarefas:', error);
+                });
         }
 
 
-        listaTarefas =  []
+        listaTarefas = []
 
-        function listarTarefas(){
-            listaTarefas.forEach(element => {
-                document.getElementById('tabela-task').innerHTML += `
-                                                                    <tr>
-                                                                        <th>${element.dt_inicio}</th>
-                                                                        <th>${element.descricao}</th>
-                                                                        <th>${element.prioridade}</th>
-                                                                        <th>${element.dt_fim}</th>
-                                                                    </tr> 
-                                                                    `
+        function listarTarefas() {
+            JSON.parse(sessionStorage.TAREFAS).forEach(item => {
+                if (!item.concluida)
+                    document.getElementById('tbody-task').innerHTML += `
+                        <tr>
+                            <td>${item.dt_inicio}</td>
+                            <td>${item.descricao}</td>
+                            <td>${item.prioridade}</td>
+                            <td>${item.dt_fim}</td>
+                            <td><input type="checkbox" onchange="concluirTarefa(${item.id_tarefa})" id="concluido${item.id_tarefa}" name="concluido${item.id_tarefa}"></td>
+                        </tr> 
+                        `
             });
+        }
+
+        function concluirTarefa(id) {
+            fetch("/usuarios/concluirTarefa", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    idTarefa: id
+                }),
+            })
+                .then(res => {
+                    if (!res.ok) {
+                        throw new Error(`Erro na solicitação: ${res.statusText}`);
+                    }
+                    return res.json();
+                })
+                .then(res => {
+                    console.log(res)
+                    window.location.reload();
+                })
         }
 
     </script>
 
 </body>
+
 </html>

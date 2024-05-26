@@ -23,23 +23,36 @@ function listar(){
     return database.executar(instrucao);
 }
 
-function cadastrarFunc(nome, sobrenome, celular, email, usuario, senha, gerente, empresa, cpf, cargo){
+function cadastrarEndereco(nome, sobrenome, celular, telefone, email, nasc, usuario, gerente, empresa, cpf, cargo, logradouro, cep, num, bairro, compl, cidade, uf) {
     var instrucao = `
-        insert into funcionario (primeiro_nome, sobrenome, celular, email, fk_gerente, fk_empresa,cpf,cargo)
-        values ('${nome}','${sobrenome}','${celular}','${email}',${gerente},${empresa},'${cpf}','${cargo}')
+        insert into endereco (logradouro, cep, numero, bairro, complemento, cidade, uf)
+        values ('${logradouro}','${cep}','${num}','${bairro}','${compl}','${cidade}','${uf}')
+    `
+
+    return database.executar(instrucao)
+    .then(function (funcResultado) {
+        var id_endereco = funcResultado.insertId;
+        cadastrarFunc(nome, sobrenome, celular, telefone, email, nasc, usuario, gerente, empresa, cpf, cargo, id_endereco);
+    })
+}
+
+function cadastrarFunc(nome, sobrenome, celular, telefone, email, nasc, usuario, gerente, empresa, cpf, cargo, id_endereco){
+    var instrucao = `
+        insert into funcionario (primeiro_nome, sobrenome, celular, telefone, email, dt_nasc, cpf, cargo, fk_gerente, fk_endereco, fk_empresa)
+        values ('${nome}', '${sobrenome}', '${celular}', '${telefone}', '${email}', '${nasc}', '${cpf}', '${cargo}', ${gerente}, ${id_endereco}, ${empresa})
     `
 
     return database.executar(instrucao)
     .then(function (funcResultado) {
         var id_funcionario = funcResultado.insertId;
-        cadastrarUser(usuario, senha, id_funcionario);
+        cadastrarUser(usuario, id_funcionario);
     })
 }
 
-function cadastrarUser(usuario, senha, id_funcionario){
+function cadastrarUser(usuario, id_funcionario){
     var instrucao  = `
-        insert into usuario (username, senha, id_usuario)
-        values ('${usuario}', '${senha}', ${id_funcionario});
+        insert into usuario (username, id_usuario)
+        values ('${usuario}', ${id_funcionario});
     `
     return database.executar(instrucao);
 }
@@ -70,7 +83,7 @@ function buscarChamadosPorFuncionario(idFuncionario){
 
 function atribuirTarefa(idOperador, idGerente, tarefa, dtEstimada, prioridade){
     var instrucao=`insert into tarefa (descricao, dt_fim, dt_inicio,fk_funcionario,fk_gerente,prioridade)
-                    values ("${tarefa}","${dtEstimada}",now(),${idOperador},${idGerente},${prioridade});
+                    values ("${tarefa}","${dtEstimada}",now(),${idOperador},${idGerente},'${prioridade}');
     `
     return database.executar(instrucao);
 }
@@ -84,7 +97,7 @@ function realizarFeedback(nota,detalhe,idOperador){
 
 function buscarTarefas(idOperador){
     var instrucao = `
-                    select DATE_FORMAT(dt_inicio, '%d/%m/%Y') as dt_inicio,DATE_FORMAT(dt_fim, '%d/%m/%Y') as dt_fim, descricao,prioridade from tarefa where fk_funcionario = ${idOperador};
+                    select id_tarefa, DATE_FORMAT(dt_inicio, '%d/%m/%Y') as dt_inicio,DATE_FORMAT(dt_fim, '%d/%m/%Y') as dt_fim, descricao,prioridade, concluida from tarefa where fk_funcionario = ${idOperador};
                     `
     return database.executar(instrucao);
 }
@@ -96,9 +109,17 @@ function buscarChamadosOperador(idOperador){
     return database.executar(instrucao);
 }
 
+function concluirTarefa(idTarefa) {
+    var instrucao = `
+    update tarefa set concluida=true, dt_hora_concluida=now() where id_tarefa=${idTarefa};
+    `
+    return database.executar(instrucao);
+}
+
 module.exports = {
     autenticar,
     listar,
+    cadastrarEndereco,
     cadastrarFunc,
     cadastrarUser,
     listarOperadores,
@@ -109,5 +130,6 @@ module.exports = {
     atribuirTarefa,
     realizarFeedback,
     buscarTarefas,
-    buscarChamadosOperador
+    buscarChamadosOperador,
+    concluirTarefa
 };

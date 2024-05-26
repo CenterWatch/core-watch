@@ -156,7 +156,17 @@ button:hover {
 
 
 
-table {
+.container-lista {
+    width: 100%;
+}
+
+.fa-trash-can:hover {
+    color: #52c3e3;
+    cursor: pointer;
+}
+
+
+/* table {
 
     text-align: start;
 }
@@ -168,13 +178,6 @@ th {
     text-align: center;
     font-weight: bold;
 }
-
-.container-lista {
-    display: flex;
-    justify-content: center;
-    padding: 0 1rem;
-}
-
 .listaArtigo {
 
     background: #fff;
@@ -203,4 +206,4 @@ th {
     background-color: #f4f4f4;
     text-align: left;
     font-weight: normal;
-}
+} */

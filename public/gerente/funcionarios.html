@@ -9,25 +9,30 @@
     <link rel="stylesheet" href="../css/dashboards.css">
     <link rel="stylesheet" href="../css/gerente/operador.css">
     <link rel="stylesheet" href="../css/gerente/funcionarios.css">
+    <link rel="stylesheet" href="../css/tabela.css">
     <script src="../js/sessao.js"></script>
     <script src="https://kit.fontawesome.com/384071f692.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="../js/usuario.js"></script>
+    <script src="../js/mascara.js"></script>
 </head>
 
-<body onload="buscarOperadores(),exibirFunc()">
+<body onload="(async () => { await buscarOperadores(); exibirFunc(); })()">
 
     <section class="section-body">
         <div class="leftbar">
             <div class="links-nav">
                 <img class="logo text-logo" src="https://i.imgur.com/RjhX0a9.png" alt="">
-                <a class="nav-btn" href="dashboard.html"><i class="fa-solid fa-square-poll-vertical"></i><span>Dashboard</span></a>
+                <a class="nav-btn" href="dashboard.html"><i
+                        class="fa-solid fa-square-poll-vertical"></i><span>Dashboard</span></a>
                 <a class="nav-btn btn-ativo" href="#"><i class="fa-solid fa-users"></i><span>Funcionários</span></a>
                 <a class="nav-btn" href="tasks.html"><i class="fa-solid fa-list-check"></i><span>Tasks</span></a>
             </div>
             <div class="cfg-nav">
-                <a class="nav-btn" href="configuracoes.html"><i class="fa-solid fa-gear"></i><span>Configurações</span></a>
-                <a class="nav-btn" onclick="sair()"><i class="fa-solid fa-arrow-right-from-bracket"></i><span>Sair</span></a>
+                <a class="nav-btn" href="configuracoes.html"><i
+                        class="fa-solid fa-gear"></i><span>Configurações</span></a>
+                <a class="nav-btn" onclick="sair()"><i
+                        class="fa-solid fa-arrow-right-from-bracket"></i><span>Sair</span></a>
             </div>
         </div>
         <div class="main">
@@ -45,130 +50,289 @@
                 </div>
             </div>
             <div class="visao-geral">
-                <div class="container" id="container1">
 
-                    <!-- TABELA FUNCIONÁRIOS -->
-                    <div class="tabela-container">
-                        <table id="tabela-funcionario">
-                            <thead>
-                                <tr>
-                                    <th>Nome</th>
-                                    <th>Sobrenome</th>
-                                    <th>Celular</th>
-                                    <th>Email</th>
-                                    <th>Data de Nascimento</th>
-                                    <th>CPF</th>
-                                    <th>Cargo</th>
-                                </tr>
-                            </thead>
-                            <tbody id="lista-func">
-                                <!-- Placeholder for dynamically generated rows -->
-                            </tbody>
-                        </table>
+
+                <!-- TABELA FUNCIONÁRIOS -->
+                <div class="tabela-container">
+                    <table id="tabela-funcionario">
+                        <thead>
+                            <tr>
+                                <th>Nome</th>
+                                <th>Sobrenome</th>
+                                <th>Celular</th>
+                                <th>Email</th>
+                                <th>Data de Nascimento</th>
+                                <th>CPF</th>
+                                <th>Cargo</th>
+                            </tr>
+                        </thead>
+                        <tbody id="lista-func">
+                            <!-- Placeholder for dynamically generated rows -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <div>
+                    <button id="btn-abrir-modal"><i class="fa-solid fa-user-plus"></i></button>
+                </div>
+
+                <!-- Modal -->
+                <dialog id="cadastro-dialog">
+                    <div class="modal-header">
+                        <h2>Cadastrar Funcionário</h2>
+                        <button type="button" id="close-modal">Fechar</button>
                     </div>
-
-                    <div>
-                        <button id="btn-abrir-modal"><i class="fa-solid fa-user-plus"></i></button>
-                    </div>
-
-                    <!-- Modal -->
-                    <dialog id="cadastro-dialog">
-                        <div class="modal-header">
-                            <h2>Cadastrar Funcionário</h2>
-                            <button type="button" id="close-modal">Fechar</button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="formulario-cadastro">
-                                <div class="form">
-                                    <div class="input-field">
-                                        <label for="nome_input">Nome</label>
-                                        <input id="nome_input" class="input_formulario" type="text">
-                                        <span id="span_nome"></span>
-                                    </div>
-                                    <div class="input-field">
-                                        <label for="sobrenome_input">Sobrenome</label>
-                                        <input type="text" id="sobrenome_input" class="input_formulario">
-                                        <span id="span_sobrenome"></span>
-                                    </div>
-                                    <div class="input-field">
-                                        <label for="celular_input">Celular</label>
-                                        <input type="text" id="celular_input" class="input_formulario">
-                                        <span id="span_celular"></span>
-                                    </div>
-                                    <div class="input-field">
-                                        <label for="dtNasc_input">Data de Nascimento</label>
-                                        <input class="input_formulario" type="date" id="dtNasc_input">
-                                        <span id="span_dtNascimento"></span>
-                                    </div>
-                                    <div class="input-field">
-                                        <label for="cpf_input">CPF</label>
-                                        <input class="input_formulario" type="text" id="cpf_input"
-                                            placeholder="000.000.000-00">
-                                        <span id="span_cpf"></span>
-                                    </div>
-                                    <div class="input-field">
-                                        <label for="email_input">E-mail</label>
-                                        <input class="input_formulario" type="text" id="email_input">
-                                        <span id="span_email"></span>
-                                    </div>
-                                    <div class="input-field">
-                                        <label for="cargo_input">Cargo</label>
-                                        <select id="cargo_input" class="input_formulario">
-                                            <option value=""></option>
-                                            <option value="Operador">Operador</option>
-                                            <option value="Suporte">Suporte</option>
-                                        </select>
-                                        <span id="span_cargo"></span>
-                                    </div>
-                                    <div class="input-field">
-                                        <label for="usuario_input">Usuário</label>
-                                        <input class="input_formulario" type="text" id="usuario_input">
-                                        <span id="span_usuario"></span>
-                                    </div>
-                                    <div class="input-field">
-                                        <label for="senha_input">Senha</label>
-                                        <input class="input_formulario" type="password" id="senha_input">
-                                        <span id="span_senha"></span>
-                                    </div>
+                    <div class="modal-body">
+                        <div class="formulario-cadastro">
+                            <div id="formFunc" class="form">
+                                <div class="input-field">
+                                    <label for="nome_input">Nome</label>
+                                    <input id="nome_input" class="input_formulario" type="text">
+                                    <span id="span_nome"></span>
+                                </div>
+                                <div class="input-field">
+                                    <label for="celular_input">Celular</label>
+                                    <input onkeyup="mascararTel(celular_input)" type="text" id="celular_input" class="input_formulario" maxlength="15">
+                                    <span id="span_celular"></span>
+                                </div>
+                                <div class="input-field">
+                                    <label for="sobrenome_input">Sobrenome</label>
+                                    <input type="text" id="sobrenome_input" class="input_formulario">
+                                    <span id="span_sobrenome"></span>
+                                </div>
+                                <div class="input-field">
+                                    <label for="telefone_input">Telefone</label>
+                                    <input onkeyup="mascararTel(telefone_input)" type="text" id="telefone_input" class="input_formulario" maxlength="14">
+                                    <span id="span_telefone"></span>
+                                </div>
+                                <div class="input-field">
+                                    <label for="dtNasc_input">Data de Nascimento</label>
+                                    <input class="input_formulario" type="date" id="dtNasc_input">
+                                    <span id="span_dtNascimento"></span>
+                                </div>
+                                <div class="input-field">
+                                    <label for="cpf_input">CPF</label>
+                                    <input onkeyup="mascararCpf(cpf_input)" class="input_formulario" type="text" id="cpf_input"
+                                        placeholder="000.000.000-00" maxlength="14">
+                                    <span id="span_cpf"></span>
+                                </div>
+                                <div class="input-field">
+                                    <label for="email_input">E-mail</label>
+                                    <input onkeyup="validarrEmail(email_input.value)" class="input_formulario" type="text" id="email_input">
+                                    <span id="span_email"></span>
+                                </div>
+                                <div class="input-field">
+                                    <label for="cargo_input">Cargo</label>
+                                    <select id="cargo_input" class="input_formulario">
+                                        <option value=""></option>
+                                        <option value="Operador">Operador</option>
+                                        <option value="Suporte">Suporte</option>
+                                    </select>
+                                    <span id="span_cargo"></span>
+                                </div>
+                                <div class="input-field">
+                                    <label for="usuario_input">Usuário</label>
+                                    <input class="input_formulario" type="text" id="usuario_input">
+                                    <span id="span_usuario"></span>
                                 </div>
                             </div>
-                            <div class="btn-cadastrar">
+
+                            <div id="formEndFunc" style="display: none;" class="form">
+                                <div class="input-field">
+                                    <label for="logradouro_input">Logradouro</label>
+                                    <input id="logradouro_input" class="input_formulario" type="text">
+                                    <span id="span_logradouro"></span>
+                                </div>
+                                <div class="input-field">
+                                    <label for="cep_input">CEP</label>
+                                    <input onkeyup="preencherCamposCEP(cep_input.value)" type="text" id="cep_input"
+                                        class="input_formulario">
+                                    <span id="span_cep"></span>
+                                </div>
+                                <div class="input-field">
+                                    <label for="num_input">Número</label>
+                                    <input type="text" id="num_input" class="input_formulario">
+                                    <span id="span_num"></span>
+                                </div>
+                                <div class="input-field">
+                                    <label for="bairro_input">Bairro</label>
+                                    <input type="text" id="bairro_input" class="input_formulario">
+                                    <span id="span_bairro"></span>
+                                </div>
+                                <div class="input-field">
+                                    <label for="compl_input">Complemento</label>
+                                    <input class="input_formulario" id="compl_input">
+                                    <span id="span_complimento"></span>
+                                </div>
+                                <div class="input-field">
+                                    <label for="cidade_input">Cidade</label>
+                                    <input class="input_formulario" type="text" id="cidade_input"
+                                        placeholder="000.000.000-00">
+                                    <span id="span_cidade"></span>
+                                </div>
+                                <div class="input-field">
+                                    <label for="uf_input">Estado</label>
+                                    <input class="input_formulario" type="text" id="uf_input"
+                                        placeholder="000.000.000-00">
+                                    <span id="span_uf"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="proxEndBtn" class="btn-cadastrar">
+                            <button onclick="navCadastro('avancar')">Próximo</button>
+                        </div>
+                        <div style="display: flex; gap: 15px;">
+                            <div id="voltarBtn" style="display: none;" class="btn-cadastrar">
+                                <button onclick="navCadastro('voltar')">Voltar</button>
+                            </div>
+                            <div id="cadFuncBtn" style="display: none" class="btn-cadastrar">
                                 <button onclick="cadastrar()">Cadastrar</button>
                             </div>
                         </div>
-                    </dialog>
-                </div>
+                    </div>
             </div>
+        </div>
+        </dialog>
+
+        </div>
         </div>
     </section>
 
     <script>
+        var nomeElement = document.getElementById('nome_input')
+        var sobrenomeElement = document.getElementById('sobrenome_input')
+        var celularElement = document.getElementById('celular_input')
+        var telefoneElement = document.getElementById('telefone_input')
+        var emailElement = document.getElementById('email_input')
+        var cpfElement = document.getElementById('cpf_input')
+        var cargoElement = document.getElementById('cargo_input')
+        var usuarioElement = document.getElementById('usuario_input')
+        var dtNascimentoElement = document.getElementById('dtNasc_input')
+        var logradouroElement = document.getElementById('logradouro_input')
+        var cepElement = document.getElementById('cep_input')
+        var numElement = document.getElementById('num_input')
+        var bairroElement = document.getElementById('bairro_input')
+        var complElement = document.getElementById('compl_input')
+        var cidadeElement = document.getElementById('cidade_input')
+        var ufElement = document.getElementById('uf_input')
+
         function cadastrar() {
-            var nome = document.getElementById('nome_input').value;
-            var sobrenome = document.getElementById('sobrenome_input').value;
-            var celular = document.getElementById('celular_input').value;
-            var email = document.getElementById('email_input').value;
-            var cpf = document.getElementById('cpf_input').value;
-            var cargo = document.getElementById('cargo_input').value;
-            var usuario = document.getElementById('usuario_input').value;
-            var senha = document.getElementById('senha_input').value;
+
+            if (!validarInfoEnd() || !validarInfoFunc()) return;
+
+            var nome = nomeElement.value;
+            var sobrenome = sobrenomeElement.value;
+            var celular = celularElement.value;
+            var telefone = telefoneElement.value;
+            var email = emailElement.value;
+            var cpf = cpfElement.value;
+            var cargo = cargoElement.value;
+            var usuario = usuarioElement.value;
             var gerente = sessionStorage.ID_USUARIO;
             var empresa = sessionStorage.ID_EMPRESA_USUARIO;
-            var dtNascimento = document.getElementById('dtNasc_input').value;
+            var dtNascimento = dtNascimentoElement.value;
+            var logradouro = logradouroElement.value;
+            var cep = cepElement.value;
+            var num = numElement.value;
+            var bairro = bairroElement.value;
+            var compl = complElement.value;
+            var cidade = cidadeElement.value;
+            var uf = ufElement.value;
 
-            // Reset all error messages
+            fetch("/usuarios/cadastrar", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    nomeServer: nome,
+                    sobrenomeServer: sobrenome,
+                    celularServer: celular,
+                    telefoneServer: telefone,
+                    emailServer: email,
+                    cpfServer: cpf,
+                    cargoServer: cargo,
+                    dtNascimentoServer: dtNascimento,
+                    usuarioServer: usuario,
+                    gerenteServer: gerente,
+                    empresaServer: empresa,
+                    logradouroServer: logradouro,
+                    cepServer: cep,
+                    numServer: num,
+                    bairroServer: bairro,
+                    complServer: compl,
+                    cidadeServer: cidade,
+                    ufServer: uf
+                }),
+            })
+                .then(function (res) {
+                    console.log("Resposta: ", res);
+
+                    if (res.ok) {
+                        alert("Funcionário cadastrado com sucesso!");
+
+                        window.location.reload();
+                    } else {
+                        alert("Dados de funcionário inválido!");
+                    }
+                })
+                .catch(function (erro) {
+                    console.log("Erro: ", erro);
+                });
+        }
+
+        function navCadastro(opt) {
+            var func = document.getElementById("formFunc");
+            var endFunc = document.getElementById("formEndFunc");
+            var cadFunc = document.getElementById("cadFuncBtn");
+            var proxEnd = document.getElementById("proxEndBtn");
+            var voltar = document.getElementById("voltarBtn");
+
+            if (opt === 'avancar') {
+
+                if (!validarInfoFunc()) return;
+
+                func.style.display = 'none'
+                endFunc.style.display = 'flex'
+
+                proxEnd.style.display = 'none'
+                cadFunc.style.display = 'block'
+                voltar.style.display = 'block'
+            } else {
+                func.style.display = 'flex'
+                endFunc.style.display = 'none'
+
+                proxEnd.style.display = 'block'
+                cadFunc.style.display = 'none'
+                voltar.style.display = 'none'
+            }
+        }
+
+        function validarInfoFunc() {
+            var nome = nomeElement.value;
+            var sobrenome = sobrenomeElement.value;
+            var celular = celularElement.value;
+            var telefone = telefoneElement.value;
+            var email = emailElement.value;
+            var cpf = cpfElement.value;
+            var cargo = cargoElement.value;
+            var usuario = usuarioElement.value;
+            var gerente = sessionStorage.ID_USUARIO;
+            var empresa = sessionStorage.ID_EMPRESA_USUARIO;
+            var dtNascimento = dtNascimentoElement.value;
+
             var spans = document.querySelectorAll('span[id^="span_"]');
-            spans.forEach(function(span) {
+            spans.forEach(function (span) {
                 span.innerHTML = "";
             });
 
-            // Validate input fields
             var valid = true;
 
             if (nome.trim() === "") {
-                document.getElementById('span_nome').innerHTML = `<p class="error-message">Informe o nome!</p>`;
+                document.getElementById('span_nome').innerHTML = `<p class="error-message">*Informe o nome</p>`;
                 valid = false;
             }
+
             if (sobrenome.trim() === "") {
                 document.getElementById('span_sobrenome').innerHTML = `<p class="error-message">Informe o sobrenome!</p>`;
                 valid = false;
@@ -185,8 +349,8 @@
                 document.getElementById('span_cpf').innerHTML = `<p class="error-message">*Informe o CPF</p>`;
                 valid = false;
             }
-            if (email.trim() === "") {
-                document.getElementById('span_email').innerHTML = `<p class="error-message">*Informe o e-mail</p>`;
+            if (email.trim() === "" || !validarEmail(email)) {
+                document.getElementById('span_email').innerHTML = `<p class="error-message">*Informe um e-mail válido</p>`;
                 valid = false;
             }
             if (cargo.trim() === "") {
@@ -197,53 +361,58 @@
                 document.getElementById('span_usuario').innerHTML = `<p class="error-message">*Informe o nome de usuário</p>`;
                 valid = false;
             }
-            
-            if (senha.trim() === "") {
-                document.getElementById('span_senha').innerHTML = `<p class="error-message">*Informe a senha</p>`;
+
+            return valid;
+        }
+
+        function validarInfoEnd() {
+            var logradouro = logradouroElement.value;
+            var cep = cepElement.value;
+            var num = numElement.value;
+            var bairro = bairroElement.value;
+            var compl = complElement.value;
+            var cidade = cidadeElement.value;
+            var uf = ufElement.value;
+
+            var spans = document.querySelectorAll('span[id^="span_"]');
+            spans.forEach(function (span) {
+                span.innerHTML = "";
+            });
+
+            var valid = true;
+
+            if (logradouro.trim() === "") {
+                document.getElementById('span_logradouro').innerHTML = `<p class="error-message">*Informe o logradouro</p>`;
                 valid = false;
-            } 
-            
-            else {
-        fetch("/usuarios/cadastrar", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                nomeServer: nome,
-                sobrenomeServer: sobrenome,
-                celularServer: celular,
-                emailServer: email,
-                cpfServer: cpf,
-                cargoServer: cargo,
-                usuarioServer: usuario,
-                senhaServer: senha,
-                gerenteServer: gerente,
-                empresaServer: empresa
-            }),
-        })
-        .then(function (res) {
-            console.log("Resposta: ", res);
-
-            if (res.ok) {
-                alert("Funcionário cadastrado com sucesso!");
-
-                setTimeout(() => {
-                    window.location.reload();
-                }, 1500);
-                exibirFunc();
-            } else {
-                alert("Dados de funcionário inválido!");
             }
-        })
-        .catch(function (erro) {
-            console.log("Erro: ", erro);
-        });
-    }
-}
+
+            if (cep.trim() === "") {
+                document.getElementById('span_cep').innerHTML = `<p class="error-message">Informe o CEP</p>`;
+                valid = false;
+            }
+
+            if (num.trim() === "") {
+                document.getElementById('span_num').innerHTML = `<p class="error-message">*Informe o número</p>`;
+                valid = false;
+            }
+            if (bairro.trim() === "") {
+                document.getElementById('span_bairro').innerHTML = `<p class="error-message">*Informe o bairro</p>`;
+                valid = false;
+            }
+            if (cidade.trim() === "") {
+                document.getElementById('span_cidade').innerHTML = `<p class="error-message">*Informe a cidade</p>`;
+                valid = false;
+            }
+            if (uf.trim() === "") {
+                document.getElementById('span_uf').innerHTML = `<p class="error-message">*Informe o estado</p>`;
+                valid = false;
+            }
+
+            return valid;
+        }
 
 
-        function exibirFunc() {
+        async function exibirFunc() {
             var tbody = document.getElementById('lista-func');
             tbody.innerHTML = '';
 
@@ -274,10 +443,38 @@
             var dt = new Date(dtHora);
 
             var ano = dt.getFullYear();
-            var mes = dt.getMonth();
-            var dia = dt.getDay();
+            var mes = (dt.getMonth() + 1).toString();
+            var dia = (dt.getDate()).toString();
+
+            mes = mes.length > 1 ? mes : "0" + mes;
+            dia = dia.length > 1 ? dia : "0" + dia;
 
             return dia + "/" + mes + "/" + ano;
+        }
+
+        function preencherCamposCEP(cepValue) {
+            if (cepValue.length != 8) return;
+
+            fetch(`https://viacep.com.br/ws/${cepValue}/json/`).then(res => {
+                res.json().then(data => {
+                    if (data.erro) return;
+
+                    console.log(data)
+                    logradouroElement.value = data.logradouro;
+                    bairroElement.value = data.bairro
+                    complElement.value = data.complemento
+                    cidadeElement.value = data.localidade
+                    ufElement.value = data.uf
+
+                    logradouroElement.setAttribute('readonly', 'readonly');
+                    bairroElement.setAttribute('readonly', 'readonly');
+                    complElement.setAttribute('readonly', 'readonly');
+                    cidadeElement.setAttribute('readonly', 'readonly');
+                    ufElement.setAttribute('readonly', 'readonly');
+                })
+            })
+
+
         }
     </script>
 
