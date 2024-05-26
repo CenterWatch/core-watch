@@ -52,7 +52,7 @@
 
                 <div class="div-input-botao">
                     <div class="div-input">
-                        <input onkeydown="setTimeout(buscarArtigos,2000)" id="pesquisa_input"
+                        <input onkeyup="buscarArtigos()" id="pesquisa_input"
                             placeholder="Buscar artigo"><i class="fa-solid fa-magnifying-glass"></i>
                     </div>
                     <div class="div-botao">
@@ -74,13 +74,9 @@
                             </select>
                             <input type="text" placeholder="Dê um título para o artigo" id="artigo_titulo"> 
                             
-                            <textarea placeholder="Digite seu artigo aqui para contribuir com nosso conhecimento. Todo o processo está nas suas mãos..." name="" id="artigo_descricao" maxlength="300">
                             <input type="text" placeholder="Dê um título para o artigo" id="artigo_titulo">
 
-                            <textarea
-                                placeholder="Digite seu artigo aqui para contribuir com nosso conhecimento. Todo o processo está nas suas mãos..."
-                                name="" id="artigo_descricao">
-                            </textarea>
+                            <textarea placeholder="Digite seu artigo aqui para contribuir com nosso conhecimento. Todo o processo está nas suas mãos..." maxlength="300" name="" id="artigo_descricao"></textarea>
 
                             <input type="text" name="" id="palavras_chaves"  placeholder="Palavras-Chaves. (Separe por espaço, sem virgula e pontuações.)">
 
@@ -206,9 +202,8 @@
 
                     if (res.ok) {
                         alert("Artigo cadastrado com sucesso!")
-                        setTimeout(() => {
-                            window.location.reload();;
-                        }, 1500);
+                        
+                        window.location.reload();
                     } else {
                         alert("Não foi possível cadastrar artigo!")
                     }
