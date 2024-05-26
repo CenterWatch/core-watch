@@ -58,7 +58,7 @@ function cadastrarUser(usuario, id_funcionario){
 }
 
 function listarOperadores(idGerente){
-    var instrucao = `select f.* from funcionario f join funcionario g on g.id_funcionario = f.fk_gerente where g.id_funcionario = ${idGerente} and f.cargo = 'Operador';`
+    var instrucao = `select f.*, e.*, u.username from funcionario f join usuario u on u.id_usuario = f.id_funcionario join endereco e on f.fk_endereco = e.id_endereco join funcionario g on g.id_funcionario = f.fk_gerente where g.id_funcionario = ${idGerente} and f.cargo = 'Operador';`
     return database.executar(instrucao);
 }
 
@@ -116,6 +116,25 @@ function concluirTarefa(idTarefa) {
     return database.executar(instrucao);
 }
 
+function editarFunc(idFunc, idEnd, nome, sobrenome, celular, telefone, email, cpf, cargo, usuario, dtNascimento, logradouro, cep, num, bairro, compl, cidade, uf) {
+    var instrucao = `
+    update endereco set logradouro='${logradouro}', cep='${cep}', numero='${num}', bairro='${bairro}', complemento='${compl}', cidade='${cidade}', uf='${uf}' where id_endereco=${idEnd};
+    `
+    return database.executar(instrucao)
+    .then(function () {
+        var instrucao = `
+        update funcionario set primeiro_nome='${nome}', sobrenome='${sobrenome}', celular='${celular}', telefone='${telefone}', email='${email}', cpf='${cpf}', cargo='${cargo}', dt_nasc='${dtNascimento}' where id_funcionario=${idFunc};
+        `
+        return database.executar(instrucao)
+        .then(function () {
+            var instrucao = `
+            update usuario set username='${usuario}' where id_usuario=${idFunc};
+            `
+            return database.executar(instrucao)
+        })
+    })
+}
+
 module.exports = {
     autenticar,
     listar,
@@ -131,5 +150,6 @@ module.exports = {
     realizarFeedback,
     buscarTarefas,
     buscarChamadosOperador,
-    concluirTarefa
+    concluirTarefa,
+    editarFunc
 };

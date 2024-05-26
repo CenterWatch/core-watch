@@ -98,6 +98,11 @@
     flex-direction: column;
 }
 
+.fa-pen-to-square:hover {
+    color: #52c3e3;
+    cursor: pointer;
+}
+
 /*  tabela funcionários */
 /* table  #tabela-funcionario {
     width: 100%;
