@@ -51,7 +51,6 @@
             </div>
             <div class="visao-geral">
 
-
                 <!-- TABELA FUNCIONÁRIOS -->
                 <div class="tabela-container">
                     <table id="tabela-funcionario">
@@ -160,43 +159,38 @@
                                     <span id="span_bairro"></span>
                                 </div>
                                 <div class="input-field">
-                                    <label for="compl_input">Complemento</label>
+                                    <label for="compl_input">Complemento (opcional)</label>
                                     <input class="input_formulario" id="compl_input">
                                     <span id="span_complimento"></span>
                                 </div>
                                 <div class="input-field">
                                     <label for="cidade_input">Cidade</label>
-                                    <input class="input_formulario" type="text" id="cidade_input"
-                                        placeholder="000.000.000-00">
+                                    <input class="input_formulario" type="text" id="cidade_input">
                                     <span id="span_cidade"></span>
                                 </div>
                                 <div class="input-field">
                                     <label for="uf_input">Estado</label>
-                                    <input class="input_formulario" type="text" id="uf_input"
-                                        placeholder="000.000.000-00">
+                                    <input class="input_formulario" type="text" id="uf_input">
                                     <span id="span_uf"></span>
                                 </div>
                             </div>
                         </div>
-                        <div id="proxEndBtn" class="btn-cadastrar">
-                            <button onclick="navCadastro('avancar')">Próximo</button>
-                        </div>
-                        <div style="display: flex; gap: 15px;">
-                            <div id="voltarBtn" style="display: none;" class="btn-cadastrar">
-                                <button onclick="navCadastro('voltar')">Voltar</button>
-                            </div>
-                            <div id="cadFuncBtn" style="display: none" class="btn-cadastrar">
-                                <button onclick="cadastrar()">Cadastrar</button>
-                            </div>
+                        <div class="btn-container">
+                            <button id="proxEndBtn" class="btn-cadastrar" onclick="navCadastro('avancar')">Próximo</button>
+                            <button id="voltarBtn" style="display: none;" class="btn-cadastrar" onclick="navCadastro('voltar')">Voltar</button>
+                            <button id="cadFuncBtn" style="display: none" class="btn-cadastrar" onclick="cadastrar()">Cadastrar</button>
                         </div>
                     </div>
             </div>
         </div>
         </dialog>
-
         </div>
         </div>
     </section>
+
+    <div id="mascara"></div>
+
+    <script src="../js/modal.js"></script>
 
     <script>
         var nomeElement = document.getElementById('nome_input')
@@ -430,14 +424,6 @@
                 tbody.appendChild(tr);
             });
         }
-
-        document.getElementById('btn-abrir-modal').addEventListener('click', function () {
-            document.getElementById('cadastro-dialog').style.display = 'block';
-        });
-
-        document.getElementById('close-modal').addEventListener('click', function () {
-            document.getElementById('cadastro-dialog').style.display = 'none';
-        });
 
         function converterData(dtHora) {
             var dt = new Date(dtHora);
