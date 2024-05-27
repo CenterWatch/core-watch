@@ -12,7 +12,7 @@
     <script src="https://kit.fontawesome.com/384071f692.js" crossorigin="anonymous"></script>
 </head>
 
-<body onload="buscarTarefas(),exibirNomeUsuario()">
+<body onload="buscarTarefas(),exibirNomeUsuario(),verificaFb()">
 
     <section class="section-body">
         <div class="leftbar">
@@ -54,7 +54,7 @@
                 <div class="lista-task">
                     <table id="tabelaTask">
                         <tr>
-                            <th>Data de tribuição</th>
+                            <th>Data de atribuição</th>
                             <th>Descrição</th>
                             <th>Prioridade</th>
                             <th>Data de entrega</th>
@@ -73,7 +73,7 @@
     </section>
 
     <script>
-        id_usuario = sessionStorage.ID_USUARIO;
+        let id_usuario = sessionStorage.ID_USUARIO;
         let listaTarefas = []
 
         function buscarTarefas() {
@@ -131,6 +131,32 @@
                     console.log(res)
                     window.location.reload();
                 })
+        }
+
+
+        function verificaFb(){
+            fetch(`/usuarios/verificaFb?idOperador=${id_usuario}`)
+            .then(res => {
+                    if (!res.ok) {
+                        throw new Error(`Erro na solicitação: ${res.statusText}`);
+                    }
+                    return res.json();
+                })
+                .then(data => {
+                    console.log(data.length)
+                    exibirFeedback(data.length)
+                })
+                .catch(error => {
+                    console.error('Erro ao buscar feedbacks:', error);
+                });
+        }
+
+        function exibirFeedback(deveExibir){
+            if (deveExibir == 0){
+                console.log("Exibir feedback para responder");
+            }else{
+                console.log("Já respondeu o ultimo questionário");
+            }
         }
 
     </script>

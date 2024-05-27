@@ -265,13 +265,14 @@
                 })
                 .then(res => {
                     console.log(res);
-                    listarFeedbacks();
+                    buscarConfigAtual()
                     alert("Feedback cadastrado com sucesso");
                 })
             }
         }
 
         function listarFeedbacks(){
+            document.getElementById('feedbacks-view').innerHTML = ''
             listaFb.forEach(fb => {
                 document.getElementById('feedbacks-view').innerHTML += `
                                                                             <p>${fb.id_quest} - Inicio: ${fb.inicio} Fim: ${fb.fim}<p>

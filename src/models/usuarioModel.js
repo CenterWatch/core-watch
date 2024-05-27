@@ -135,6 +135,13 @@ function editarFunc(idFunc, idEnd, nome, sobrenome, celular, telefone, email, cp
     })
 }
 
+function verificaFb(idFunc){
+    var instrucao = `
+    select * from  questionario join funcionario on id_funcionario = fk_funcionario where id_funcionario = ${idFunc} and respondido_em > (select inicio from agendamento_quest order by inicio desc limit 1) and respondido_em < (select fim from agendamento_quest order by inicio desc limit 1) and (select inicio from agendamento_quest order by inicio desc limit 1) > now();
+    `
+    return database.executar(instrucao);
+}
+
 module.exports = {
     autenticar,
     listar,
@@ -151,5 +158,6 @@ module.exports = {
     buscarTarefas,
     buscarChamadosOperador,
     concluirTarefa,
-    editarFunc
+    editarFunc,
+    verificaFb
 };

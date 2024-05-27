@@ -258,6 +258,19 @@ function editarFunc(req, res) {
     })
 }
 
+function verificaFb(req, res){
+    var idFunc = req.query.idOperador;
+
+    usuarioModel.verificaFb(idFunc)
+    .then(result => {
+        res.status(200).json(result);
+    })
+    .catch(error => {
+        console.error("Erro ao processar a solicitação: ", error);
+        res.status(500).json({ error: "Erro interno do servidor" });
+    })
+}
+
 module.exports = {
     autenticar,
     listarOperadores,
@@ -270,5 +283,6 @@ module.exports = {
     buscarTarefas,
     buscarChamadosOperador,
     concluirTarefa,
-    editarFunc
+    editarFunc,
+    verificaFb
 }
