@@ -16,5 +16,5 @@ async function buscarOperadores(){
 }
 
 function exibirNomeUsuario(){
-    document.getElementById('nome-usuario').innerHTML = `${sessionStorage.USERNAME_USUARIO}`
+    document.getElementById('nome-usuario').innerHTML = `${sessionStorage.NOME_USUARIO} ${sessionStorage.SOBRENOME_USUARIO}`
 }
