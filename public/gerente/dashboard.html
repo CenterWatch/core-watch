@@ -33,7 +33,7 @@
         </div>
         <div class="main">
             <div class="upbar">
-                <input class="buscar-inp" type="text" placeholder="Buscar">
+                
                 <div class="profile-container">
                     <div class="user-wrap">
                         <img src="../img/user_placeholder.png" class="img-user">
@@ -52,14 +52,13 @@
                 <div class="dados-geral">
                     <div class="cards">
                         <div class="card-kpi">
-                            <span class="card-title">Perdas em ociosidade</span>
-                            <span class="card-user">R$ <span class="card-user-valor">5850,00</span></span>
-
+                            <span class="card-title">Máquinas</span>
+                            <span class="card-user">2 em alerta <br> 1 inoperante</span></span>
                         </div>
 
                         <div class="card-kpi" id="card-kpi-center">
                             <span class="card-title">Tarefas em atraso </span>
-                            <span class="card-user"><span id="view_total_tarefas" class="card-user-valor">9 </span>tarefas de <br>
+                            <span class="card-user"><span id="view_total_tarefas" class="card-user-valor">9</span> tarefas de <br>
                             <span id="view_total_operadores" class="card-user-valor">7</span> colaboradores</span>
                         </div>
 
@@ -77,17 +76,24 @@
                         </div>
                     </div>
                     <div class="monitorar-atrasados">
+                        <div class="filtros">
+                            <input onchange="buscarTempoNoUltimoPeriodo(periodoInput.value, 'tempo')" type="date" name="periodo" id="periodoInput">
+                            <select onchange="buscarTempoNoUltimoPeriodo(periodoInput.value, document.getElementById('ordenarPor').value)" name="ordernar" id="ordenarPor">
+                                <option value="tempo" selected>Ociosidade</option>
+                                <option value="tarefa">Atrasos</option>
+                            </select>
+                        </div>
                         <div class="tarefas-atrasadas">
-                            <canvas id="myChart" class="dash-tarefas"></canvas>
-                        </div>
-                        <div class="card-op">
-                            <span class="card-title-op">Operadores com tarefas atrasadas recorrentes</span>
-                            <ul id="view_operadores_atrasos">
-                                <!-- <li><span><i class="fa-solid fa-circle-user" style="color: #313131; "></i>Jorge operador</span></li>
-                                <li><span><i class="fa-solid fa-circle-user" style="color: #313131; "></i>Jorge operador</span></li>
-                                <li><span><i class="fa-solid fa-circle-user" style="color: #313131; "></i>Jorge operador</span></li> -->
-                            </ul>
-                        </div>
+                        <canvas id="myChart" class="dash-tarefas"></canvas>
+                    </div>
+                    <div class="card-op">
+                        <span class="card-title-op">Operadores com tarefas atrasadas recorrentes</span>
+                        <ul id="view_operadores_atrasos">
+                            <!-- <li><span><i class="fa-solid fa-circle-user" style="color: #313131; "></i>Jorge operador</span></li>
+                            <li><span><i class="fa-solid fa-circle-user" style="color: #313131; "></i>Jorge operador</span></li>
+                            <li><span><i class="fa-solid fa-circle-user" style="color: #313131; "></i>Jorge operador</span></li> -->
+                        </ul>
+                    </div>
                     </div>
                 </div>
 
@@ -107,27 +113,37 @@
     const idEmpresa = sessionStorage.ID_EMPRESA_USUARIO;
     var txt_nome = document.getElementById('nome-usuario');
     txt_nome.innerHTML = `${usuario}`
+    const idGerente = sessionStorage.ID_USUARIO;
+
+    var ordenarSelect = document.getElementById('ordenarPor');
+
+    periodoInput.valueAsDate = new Date();
+    buscarTempoNoUltimoPeriodo(periodoInput.value, ordenarSelect.value)
+
+    const labels = [];
+
+    JSON.parse(sessionStorage.FUNCIONARIOS).forEach(func => {
+        labels.push(func.primeiro_nome + " " + func.sobrenome)
+    });
 
     const ctx = document.getElementById('myChart');
-    new Chart(ctx, {
+    var chart1 = new Chart(ctx, {
         type: 'bar',
         data: {
-            labels: ['Gabriel', 'Denis', 'Juliana', 'Fabiana', 'Paula', 'Fernanda'],
+            labels: labels,
             datasets: [{
-                label: 'Tarefas atrasadas ',
-                data: [2, 9, 3, 5, 9, 3],
+                label: 'Tarefas atrasadas',
+                data: [],
                 borderWidth: 2,
                 backgroundColor: '#313131',
                 borderColor: '#313131'
             },{
-                label: 'Tempo ocioso por operador',
-                data: [12, 19, 3, 5, 2, 3],
+                label: 'Tempo ocioso',
+                data: [],
                 borderWidth: 2,
                 backgroundColor: '#52c3e3',
                 borderColor: '#cdcdcd'
             }],
-            
-            
         },
         options: {
             scales: {
@@ -213,6 +229,38 @@
             .then(res => {
                 console.log(res);
                 document.getElementById('view_nota_media').innerHTML = `${res[0].media}`
+            })
+            .catch(erro => {
+                console.log(erro);
+                console.log("Não foi  possivel realizar o select: ", erro);
+            })
+    }
+
+    function buscarTempoNoUltimoPeriodo(periodo, ordem){
+        console.log(ordem)
+        
+        fetch(`/empresas/buscarTempoNoUltimoPeriodo?ordem=${ordem}&periodo=${periodo}&idGerente=${idGerente}`).then(res => {
+            if (!res.ok) {
+                throw new Error(`Erro na solicitação: ${res.statusText}`);
+            }
+            return res.json();
+        })
+            .then(res => {
+                console.log(res);
+
+                var taskData = [];
+                var timeData = [];
+
+                res.forEach(item => {
+                    taskData.push(item.tarefa)
+                    timeData.push((item.tempo/1000).toFixed(0))
+                });
+
+                console.log(taskData)
+                console.log(timeData)
+                chart1.data.datasets[0].data = taskData;
+                chart1.data.datasets[1].data = timeData;
+                chart1.update();
             })
             .catch(erro => {
                 console.log(erro);

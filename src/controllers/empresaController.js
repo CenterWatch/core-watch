@@ -160,6 +160,37 @@ function buscarSatisfacaoOperadores(req, res){
     })
 }
 
+function cadastrarFeedback(req, res){
+    var dtInicio = req.body.dtInicioServer;
+    var dtFim = req.body.dtFimServer;
+    var idEmpresa = req.body.idEmpresaServer;
+
+    empresaModel.cadastrarFeedback(dtInicio,dtFim,idEmpresa)
+    .then(function (resCadastro){
+        res.json(resCadastro);
+    })
+    .catch(function (erro){
+        console.log(erro)
+        console.log(`houve um erro ao realizar o select, erro: ${erro}`)
+    })
+}
+
+function buscarTempoNoUltimoPeriodo(req, res){
+    var idGerente = req.query.idGerente;
+    var periodo = req.query.periodo;
+    var ordem = req.query.ordem;
+    console.log(ordem)
+
+    empresaModel.buscarTempoNoUltimoPeriodo(periodo, idGerente, ordem)
+    .then(function (resBuscar){
+        res.json(resBuscar);
+    })
+    .catch(function (erro){
+        console.log(erro)
+        console.log(`houve um erro ao realizar o select, erro: ${erro}`)
+    })
+}
+
 module.exports = {
     cadastrar,
     buscarMatriz,
@@ -170,5 +201,7 @@ module.exports = {
     atualizarConfigAtualVolume,
     buscarTarefasAtrasadas,
     buscarOperadoresComMaisTarefasAtrasadas,
-    buscarSatisfacaoOperadores
+    buscarSatisfacaoOperadores,
+    cadastrarFeedback,
+    buscarTempoNoUltimoPeriodo
 }

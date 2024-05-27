@@ -35,4 +35,10 @@ router.get("/buscarOperadoresComMaisTarefasAtrasadas", function (req, res){
 router.get("/buscarSatisfacaoOperadores", function (req, res){
     empresaController.buscarSatisfacaoOperadores(req, res);
 })
+router.post("/cadastrarFeedback", function (req, res){
+    empresaController.cadastrarFeedback(req, res);
+})
+router.get("/buscarTempoNoUltimoPeriodo", function (req, res){
+    empresaController.buscarTempoNoUltimoPeriodo(req, res);
+})
 module.exports = router;

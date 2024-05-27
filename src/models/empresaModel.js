@@ -51,7 +51,7 @@ function  buscarFunc(id_empresa){
 
 function buscarConfigAtual(id_empresa){
     var instrucao = `
-    select * from config where id_config = ${id_empresa};
+    select DATE_FORMAT(fim,'%d-%m-%Y %H:%i') as fim,DATE_FORMAT(inicio,'%d-%m-%Y %H:%i') as inicio,max_cpu,max_ram,max_volume,sensibilidade_mouse,timer_mouse_ms,intervalo_volume_ms,intervalo_registro_ms,id_quest,intervalo_quest_dias from config join agendamento_quest on id_config = fk_config where id_config = ${id_empresa};
 `
 console.log(`Executando a instrucao sql: ${instrucao}`)
 return database.executar(instrucao)
@@ -97,6 +97,22 @@ function buscarSatisfacaoOperadores(id_empresa){
     return database.executar(instrucao)
 }
 
+function cadastrarFeedback(dtInicio, dtFim, idEmpresa){
+    var instrucao = `
+    insert into agendamento_quest (inicio, fim, fk_config) values ('${dtInicio}','${dtFim}',${idEmpresa});
+    `
+    console.log(`Executando a instrucao sql: ${instrucao}`)
+    return database.executar(instrucao)
+}
+
+function buscarTempoNoUltimoPeriodo(periodo, idGerente, ordem) {
+    var instrucao = `
+    select fk_usuario, sum(tempo_registro_ms) tempo, count(h.id_historico_tarefa) tarefa from tempo_ociosidade join usuario on fk_usuario = id_usuario join funcionario on id_usuario = id_funcionario join tarefa t on t.fk_funcionario = id_funcionario join historico_tarefa h on id_tarefa = fk_tarefa where dt_hora_registro >= '${periodo}' and status='ATRASO' and t.fk_gerente = ${idGerente} group by fk_usuario order by ${ordem} desc;
+    `
+    console.log(`Executando a instrucao sql: ${instrucao}`)
+    return database.executar(instrucao)
+}
+
 module.exports = {
     cadastrarEndereco,
     cadastrar,
@@ -108,5 +124,7 @@ module.exports = {
     atualizarConfigAtualVolume,
     buscarTarefasAtrasadas,
     buscarOperadoresComMaisTarefasAtrasadas,
-    buscarSatisfacaoOperadores
+    buscarSatisfacaoOperadores,
+    cadastrarFeedback,
+    buscarTempoNoUltimoPeriodo
 };

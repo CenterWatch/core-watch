@@ -63,3 +63,7 @@ input {
 button:hover {
     letter-spacing: 0.5px;
 }
+
+.fb input{
+    width: 40%;
+}

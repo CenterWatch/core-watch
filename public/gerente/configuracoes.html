@@ -29,7 +29,7 @@
         </div>
         <div class="main">
             <div class="upbar">
-                <input class="buscar-inp" type="text" placeholder="Buscar">
+                
                 <div class="profile-container">
                     <div class="user-wrap">
                         <img src="../img/user_placeholder.png" class="img-user">
@@ -88,6 +88,40 @@
                         
                     </div>
                 </div>
+                <div class="cards">
+                    <div class="registros">
+                        <div class="titulo-div">
+                            Cadastrar Formulário de Feedback
+                        </div>
+                        <div class="container-registros">
+                            <div class="cr fb">
+                                <span>Data inicial de feedback</span>
+                                <input type="datetime-local" id="cfg_inicio_fb">
+                            </div>
+                            <div class="cr fb">
+                                <span>Data final de feedback</span>
+                                <input type="datetime-local" id="cfg_fim_fb">
+                            </div>
+
+                            <div class="div-botao2">
+                                <button onclick="cadastrarFormularioFb()">Cadastrar</button>
+                            </div>
+                        </div>
+                        
+                    </div>
+                    <div class="registros">
+                        <div class="titulo-div">
+                            Feedbacks cadastrados
+                        </div>
+                        <div class="container-registros" id="feedbacks-view">
+                            
+
+                            
+                        </div>
+                        
+                    </div>
+                </div>
+
             </div>
         <div>
     </section>
@@ -101,6 +135,7 @@
 
         var id_empresa = sessionStorage.ID_EMPRESA_USUARIO;
 
+        var listaFb = []
         function buscarConfigAtual(){
             fetch (`/empresas/buscarConfig?id_empresa=${id_empresa}`).then(res => {
             if (!res.ok) {
@@ -109,8 +144,10 @@
             return res.json();
             })
             .then(res => {
-                console.log(res)
+                console.log(res);
                 atualizarInput(res);
+                listaFb = res;
+                listarFeedbacks();
             })      
         }
 
@@ -188,6 +225,58 @@
                     alert("Valores atualizados!")
                 })
             }
+        }
+
+        function cadastrarFormularioFb(){
+            var inicioFb = cfg_inicio_fb.value;
+            var fimFb = cfg_fim_fb.value;
+            var idEmpresa = sessionStorage.ID_EMPRESA_USUARIO;
+
+            var diaAtual = new Date().getDate();
+            var mesAtual = new Date().getMonth();
+            var anoAtual = new Date().getFullYear();
+
+            var horaAtual = new Date().getHours();
+            var minAtual = new Date().getMinutes();
+            var segAtual = new Date().getSeconds();
+
+            var dataAtual = `${anoAtual}-0${mesAtual+1}-${diaAtual}T${horaAtual}:${minAtual}`
+
+
+            if (inicioFb < dataAtual || fimFb < inicioFb || fimFb < dataAtual){
+                alert("Valores de data inválidos")
+            }else{
+                fetch ("/empresas/cadastrarFeedback", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        dtInicioServer: inicioFb,
+                        dtFimServer: fimFb,
+                        idEmpresaServer: idEmpresa
+                    }),
+                })
+                .then(res => {
+                if (!res.ok) {
+                    throw new Error(`Erro na solicitação: ${res.statusText}`);
+                }
+                return res.json();
+                })
+                .then(res => {
+                    console.log(res);
+                    listarFeedbacks();
+                    alert("Feedback cadastrado com sucesso");
+                })
+            }
+        }
+
+        function listarFeedbacks(){
+            listaFb.forEach(fb => {
+                document.getElementById('feedbacks-view').innerHTML += `
+                                                                            <p>${fb.id_quest} - Inicio: ${fb.inicio} Fim: ${fb.fim}<p>
+                                                                        `
+            })
         }
 
     </script>
