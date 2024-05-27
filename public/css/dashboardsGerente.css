@@ -1,18 +1,24 @@
+body {
+    background-color: #fafafa;
+}
+
+.visao-geral {
+    align-items: flex-start;
+    margin-top: 0;
+}
+
 .cards {
-    padding: 30px;
-    justify-content: space-evenly;
-    gap: 20px;
-    flex-wrap: wrap;
-    height: 30vh;
+    padding: 0;
+    margin: 30px;
 }
 
 .card-kpi {
-    width: 25%;
-    height: 80%;
+    width: 300px;
+    height: 200px;
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: 14px;
+    border-radius: 7px;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
     /* background-color: #fdfdfd; */
     background-color: white;
@@ -20,36 +26,41 @@
     justify-content: space-evenly;
     position: relative;
     transition: 200ms;
-    padding: 8px;
 }
-#card-kpi-center{
+
+#card-kpi-center {
     background-color: #13b7c9;
     color: white;
 }
-.card-user-valor{
+
+.card-user-valor {
     font-size: 28px;
 }
 
-.dash-tarefas{
-width: 400px;;
+.dash-tarefas {
+    width: 400px;
+    ;
 }
-.card-op{
+
+.card-op {
     flex-direction: column;
     display: flex;
     background-color: white;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-    height: 350px;
-    width: 300px;
+    height: 450px;
+    width: 400px;
     border-radius: 5px;
     padding: 2%;
     gap: 30px;
+    overflow: scroll;
 }
 
-.card-op span{
+.card-op span {
     display: flex;
     align-items: center;
     gap: 10px;
 }
+
 /* .fa-regular{
     background-color:#cdcdcd;
     border-radius: 50%;
@@ -59,11 +70,19 @@ width: 400px;;
     border-radius: 50%;
     margin-right: 25px;
 } */
-.monitorar-atrasados{
-    width: 100%;
+.monitorar-atrasados {
     display: flex;
-    justify-content: space-evenly;
-    gap: 20px;
+    height: 500px;
+    gap: 30px;
+    margin-left: 30px;
+}
+
+.monitorar-atrasados select,
+input {
+    background-color: white;
+    border: none;
+    padding: 15px;
+    border-radius: 7px;
 }
 
 .monitorar-atrasados ul {
@@ -71,7 +90,7 @@ width: 400px;;
     display: flex;
     flex-direction: column;
     gap: 10px;
-    
+
 
     li {
         padding: 10px;
@@ -86,35 +105,92 @@ width: 400px;;
 }
 
 .card-title {
-    font-size: 14pt;
+    font-size: 20pt;
     font-weight: normal;
 }
+
+.kpi-container {
+    display: flex;
+    gap: 25px;
+    align-items: center;
+}
+
+.kpi-container i {
+    font-size: 50px;
+}
+
+.kpi-container .fa-desktop {
+    font-size: 80px;
+    color: #13b7c9;
+}
+
+.kpi-desktop .fa-square-check {
+    font-size: 26px;
+    color: #01a801;
+    margin-left: 2px;
+}
+
+.kpi-desktop .fa-triangle-exclamation {
+    font-size: 26px;
+    color: #dfcd28;
+}
+
+.kpi-desktop .fa-circle-exclamation {
+    margin-left: 1px;
+    font-size: 24px;
+    color: #df2828;
+}
+
+#qtdOp,
+#qtdAl,
+#qtdIno {
+    font-size: 20px;
+}
+
+.kpi-alert-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+}
+
+.kpi-alert-list li {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+}
+
 .icon-gerente {
     font-size: 70px;
     color: #13b7c9;
 }
-.card-title-op{
+
+.card-title-op {
     text-align: center;
 }
 
 .card-user {
-    font-size: 16pt;
+    font-size: 13pt;
 }
 
-.tarefas-atrasadas{
-    height: 350px;
-    width: 60%;
+.tarefas-atrasadas {
+    /* height: 350px;
+    width: 600px;
     display: flex;
     justify-content: center;
+    align-items: center;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    background-color: white; */
 }
 
-
-.dados-geral{
-    width: 80%;
+.chart-container {
+    background-color: white;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    width: 700px;
+    height: 450px;
+    padding: 30px;
 }
 
-.dash-titulo{
+.dash-titulo {
     width: 100%;
     display: flex;
     justify-content: start;
@@ -141,5 +217,31 @@ width: 400px;;
     font-size: 30pt;
     color: #313131;
     font-weight: 500;
-    margin-right: 10px; 
+    margin-right: 10px;
+}
+
+.qtd-operador {
+    flex-direction: row;
+}
+
+.qtd-operador i {
+    font-size: 60px;
+}
+
+.qtd-operador div {
+    display: flex;
+    flex-direction: column;
+    line-height: 38px;
+}
+
+.qtd-operador .card-title {
+    font-size: 20px;
+}
+
+#qtdOperador {
+    font-size: 50px;
+}
+
+.card-user {
+    line-height: 28px;
 }

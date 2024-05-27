@@ -8,6 +8,10 @@
     font-weight: normal;
 }
 
+body {
+    background-color: eeeee;
+}
+
 .section-body {
     display: flex;
 }

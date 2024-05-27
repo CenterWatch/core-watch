@@ -14,26 +14,30 @@
     <script src="../js/usuario.js"></script>
 </head>
 
-<body onload="buscarTarefasAtrasadas(),buscarOperadoresComMaisTarefasAtrasadas(),buscarSatisfacaoOperadores(),buscarOperadores()">
+<body
+    onload="buscarTarefasAtrasadas(),buscarSatisfacaoOperadores(),buscarOperadores()">
 
 
     <section class="section-body">
         <div class="leftbar">
             <div class="links-nav">
                 <img class="logo text-logo" src="https://i.imgur.com/RjhX0a9.png" alt="">
-                <a class="nav-btn btn-ativo" href="#"><i class="fa-solid fa-square-poll-vertical"></i><span></i>Dashboard</span></a>
-                <a class="nav-btn" href="funcionarios.html"><i class="fa-solid fa-users"></i></i><span>Funcionários</span></a>
+                <a class="nav-btn btn-ativo" href="#"><i
+                        class="fa-solid fa-square-poll-vertical"></i><span></i>Dashboard</span></a>
+                <a class="nav-btn" href="funcionarios.html"><i
+                        class="fa-solid fa-users"></i></i><span>Funcionários</span></a>
                 <a class="nav-btn" href="tasks.html"><i class="fa-solid fa-list-check"></i></i><span>Tasks</span></a>
             </div>
             <div class="cfg-nav">
                 <a class="nav-btn" href="configuracoes.html"><i
                         class="fa-solid fa-gear"></i><span>Configurações</span></a>
-                <a class="nav-btn" onclick="sair()"><i class="fa-solid fa-arrow-right-from-bracket"></i><span>Sair</span></a>
+                <a class="nav-btn" onclick="sair()"><i
+                        class="fa-solid fa-arrow-right-from-bracket"></i><span>Sair</span></a>
             </div>
         </div>
         <div class="main">
             <div class="upbar">
-                
+
                 <div class="profile-container">
                     <div class="user-wrap">
                         <img src="../img/user_placeholder.png" class="img-user">
@@ -51,15 +55,42 @@
                 </div>
                 <div class="dados-geral">
                     <div class="cards">
+                        <div class="card-kpi qtd-operador" id="card-kpi-center">
+                            <div>
+                                <span id="qtdOperador">97</span>
+                                <span class="card-title">Operadores</span>
+                            </div>
+                            <i class="fa-solid fa-user-tie"></i>
+                        </div>
+                        <div class="card-kpi" id="card-kpi-center">
+                            <span class="card-title">Em Atraso</span>
+                            <div class="kpi-container">
+                                <div class="kpi-content">
+                                    <span class="card-user"><span id="view_total_tarefas"
+                                            class="card-user-valor">9</span>
+                                        tarefas de <br>
+                                        <span id="view_total_operadores" class="card-user-valor">7</span>
+                                        colaboradores</span>
+                                </div>
+                                <i class="fa-solid fa-calendar-check"></i>
+                            </div>
+                        </div>
                         <div class="card-kpi">
                             <span class="card-title">Máquinas</span>
-                            <span class="card-user">2 em alerta <br> 1 inoperante</span></span>
-                        </div>
+                            <div class="kpi-container kpi-desktop">
+                                <i class="fa-solid fa-desktop"></i>
+                                <div class="kpi-content">
+                                    <ul class="kpi-alert-list">
+                                        <li><i class="fa-solid fa-square-check"></i><span>Operante: <span
+                                                    id="qtdOp">12</span></span></li>
+                                        <li><i class="fa-solid fa-triangle-exclamation"></i><span>Alerta: <span
+                                                    id="qtdAl">2</span></span></li>
+                                        <li><i class="fa-solid fa-circle-exclamation"></i><span>Inoperante: <span
+                                                    id="qtdIno">1</span></span></li>
+                                    </ul>
 
-                        <div class="card-kpi" id="card-kpi-center">
-                            <span class="card-title">Tarefas em atraso </span>
-                            <span class="card-user"><span id="view_total_tarefas" class="card-user-valor">9</span> tarefas de <br>
-                            <span id="view_total_operadores" class="card-user-valor">7</span> colaboradores</span>
+                                </div>
+                            </div>
                         </div>
 
                         <div class="card-kpi">
@@ -76,24 +107,24 @@
                         </div>
                     </div>
                     <div class="monitorar-atrasados">
-                        <div class="filtros">
-                            <input onchange="buscarTempoNoUltimoPeriodo(periodoInput.value, 'tempo')" type="date" name="periodo" id="periodoInput">
-                            <select onchange="buscarTempoNoUltimoPeriodo(periodoInput.value, document.getElementById('ordenarPor').value)" name="ordernar" id="ordenarPor">
-                                <option value="tempo" selected>Ociosidade</option>
-                                <option value="tarefa">Atrasos</option>
-                            </select>
+                        <div class="chart-container">
+                            <div class="filtros">
+                                <input onchange="buscarTempoNoUltimoPeriodo(periodoInput.value, 'tempo')" type="date"
+                                    name="periodo" id="periodoInput">
+                                <select
+                                    onchange="buscarTempoNoUltimoPeriodo(periodoInput.value, document.getElementById('ordenarPor').value)"
+                                    name="ordernar" id="ordenarPor">
+                                    <option value="tempo" selected>Ociosidade</option>
+                                    <option value="tarefa">Atrasos</option>
+                                </select>
+                            </div>
+                            <div class="tarefas-atrasadas">
+                                <canvas id="myChart" class="dash-tarefas"></canvas>
+                            </div>
                         </div>
-                        <div class="tarefas-atrasadas">
-                        <canvas id="myChart" class="dash-tarefas"></canvas>
-                    </div>
-                    <div class="card-op">
-                        <span class="card-title-op">Operadores com tarefas atrasadas recorrentes</span>
-                        <ul id="view_operadores_atrasos">
-                            <!-- <li><span><i class="fa-solid fa-circle-user" style="color: #313131; "></i>Jorge operador</span></li>
-                            <li><span><i class="fa-solid fa-circle-user" style="color: #313131; "></i>Jorge operador</span></li>
-                            <li><span><i class="fa-solid fa-circle-user" style="color: #313131; "></i>Jorge operador</span></li> -->
-                        </ul>
-                    </div>
+                        <div class="chart-container">
+                            <canvas id="myLineChart" class="chart-tasks"></canvas>
+                        </div>
                     </div>
                 </div>
 
@@ -109,15 +140,30 @@
 
 <script>
 
+    function formatarData(data) {
+        var dt = data.split('-');
+
+        var mesAnterior = (parseInt(dt[1]) - 1).toString();
+
+        mesAnterior = mesAnterior.length == 1 ? "0" + mesAnterior : mesAnterior;
+
+        return (dt[0] + "-" + mesAnterior + "-" + dt[2]);
+    }
+
     var usuario = sessionStorage.USERNAME_USUARIO;
     const idEmpresa = sessionStorage.ID_EMPRESA_USUARIO;
     var txt_nome = document.getElementById('nome-usuario');
     txt_nome.innerHTML = `${usuario}`
     const idGerente = sessionStorage.ID_USUARIO;
+    
+    document.getElementById('qtdOperador').innerHTML = JSON.parse(sessionStorage.FUNCIONARIOS).length
 
     var ordenarSelect = document.getElementById('ordenarPor');
 
     periodoInput.valueAsDate = new Date();
+
+    periodoInput.value = formatarData(periodoInput.value)
+
     buscarTempoNoUltimoPeriodo(periodoInput.value, ordenarSelect.value)
 
     const labels = [];
@@ -137,7 +183,7 @@
                 borderWidth: 2,
                 backgroundColor: '#313131',
                 borderColor: '#313131'
-            },{
+            }, {
                 label: 'Tempo ocioso',
                 data: [],
                 borderWidth: 2,
@@ -146,6 +192,7 @@
             }],
         },
         options: {
+            responsive: true,
             scales: {
                 y: {
                     beginAtZero: true
@@ -160,12 +207,83 @@
                     }
                 }
             }
-        }, 
-        
+        },
+
     });
 
+    var diasSemana = []
+    numSemana = new Date().getDay();
+    var i = numSemana;
+    for (let index = numSemana; index < numSemana + 7; index++) {
+        i++;
+        if (i > 6) i = 0;
+        diasSemana.push(numParaSemana(i))
+    }
+    diasSemana.reverse();
+
+    const ctx2 = document.getElementById('myLineChart');
+    var chart2 = new Chart(ctx2, {
+        type: 'line',
+        data: {
+            labels: diasSemana,
+            datasets: [{
+                label: 'Tarefas atrasadas',
+                data: [34, 23, 17, 8, 32, 12, 38],
+                borderWidth: 2,
+                backgroundColor: '#52c3e3',
+                borderColor: '#52c3e3'
+            }],
+        },
+        options: {
+            responsive: true,
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            },
+            plugins: {
+                title: {
+                    display: true,
+                    text: 'Tarefas Concluídas Ao Longo Da Semana',
+                    font: {
+                        size: 18
+                    }
+                }
+            }
+        },
+
+    });
+
+    function numParaSemana(opt) {
+        switch (opt) {
+            case 1:
+                return 'Seg'
+                break;
+            case 2:
+                return 'Ter'
+                break;
+            case 3:
+                return 'Qua'
+                break;
+            case 4:
+                return 'Qui'
+                break;
+            case 5:
+                return 'Sex'
+                break;
+            case 6:
+                return 'Sáb'
+                break;
+            case 0:
+                return 'Dom'
+                break;
+            default:
+                break;
+        }
+    }
+
     var listaTarefas = []
-    function buscarTarefasAtrasadas(){
+    function buscarTarefasAtrasadas() {
         fetch(`/empresas/buscarTarefasAtrasadas?idEmpresa=${idEmpresa}`).then(res => {
             if (!res.ok) {
                 throw new Error(`Erro na solicitação: ${res.statusText}`);
@@ -183,7 +301,7 @@
             })
     }
 
-    function exibirTarefasAtrasadas(){
+    function exibirTarefasAtrasadas() {
         let totalTarefas = 0
         let totalOp = 0
         listaTarefas.forEach(t => {
@@ -195,7 +313,7 @@
     }
 
     var listaOperadoresTarefas = []
-    function buscarOperadoresComMaisTarefasAtrasadas(){
+    function buscarOperadoresComMaisTarefasAtrasadas() {
         fetch(`/empresas/buscarOperadoresComMaisTarefasAtrasadas?idEmpresa=${idEmpresa}`).then(res => {
             if (!res.ok) {
                 throw new Error(`Erro na solicitação: ${res.statusText}`);
@@ -213,13 +331,13 @@
             })
     }
 
-    function exibirOperadoresComMaisTarefasAtrasadas(){
+    function exibirOperadoresComMaisTarefasAtrasadas() {
         listaOperadoresTarefas.forEach(op => {
             document.getElementById('view_operadores_atrasos').innerHTML += `<li><span><i class="fa-solid fa-circle-user" style="color: #313131; "></i>${op.primeiro_nome} ${op.sobrenome} - ${op.tarefasAtrasadas} em atraso</span></li>`
         })
     }
 
-    function buscarSatisfacaoOperadores(){
+    function buscarSatisfacaoOperadores() {
         fetch(`/empresas/buscarSatisfacaoOperadores?idEmpresa=${idEmpresa}`).then(res => {
             if (!res.ok) {
                 throw new Error(`Erro na solicitação: ${res.statusText}`);
@@ -236,9 +354,9 @@
             })
     }
 
-    function buscarTempoNoUltimoPeriodo(periodo, ordem){
+    function buscarTempoNoUltimoPeriodo(periodo, ordem) {
         console.log(ordem)
-        
+
         fetch(`/empresas/buscarTempoNoUltimoPeriodo?ordem=${ordem}&periodo=${periodo}&idGerente=${idGerente}`).then(res => {
             if (!res.ok) {
                 throw new Error(`Erro na solicitação: ${res.statusText}`);
@@ -250,16 +368,19 @@
 
                 var taskData = [];
                 var timeData = [];
+                var labels = [];
 
                 res.forEach(item => {
                     taskData.push(item.tarefa)
-                    timeData.push((item.tempo/1000).toFixed(0))
+                    timeData.push((item.tempo / 1000).toFixed(0))
+                    labels.push(item.primeiro_nome + " " + item.sobrenome);
                 });
 
                 console.log(taskData)
                 console.log(timeData)
                 chart1.data.datasets[0].data = taskData;
                 chart1.data.datasets[1].data = timeData;
+                chart1.data.labels = labels;
                 chart1.update();
             })
             .catch(erro => {
