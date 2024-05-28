@@ -137,7 +137,7 @@
 
         var listaFb = []
         function buscarConfigAtual(){
-            fetch (`/empresas/buscarConfig?id_empresa=${id_empresa}`).then(res => {
+            fetch (`/empresas/buscarConfigAtual?id_empresa=${id_empresa}`).then(res => {
             if (!res.ok) {
                 throw new Error(`Erro na solicitação: ${res.statusText}`);
             }
@@ -150,6 +150,8 @@
                 listarFeedbacks();
             })      
         }
+
+        console.log(listaFb)
 
         function atualizarInput(res){
             inp_ram.value = (res[0].max_ram)

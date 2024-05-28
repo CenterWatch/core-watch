@@ -1,5 +1,6 @@
 let proximaAtualizacao;
 const ATUALIZACAO_MS = 1000;
+const config = JSON.parse(sessionStorage.CONFIG)[0];
 
 function desenharGraficos(hostname, resposta, idMaquina) {
 
@@ -258,6 +259,21 @@ function atualizarGraficos(idMaquina, dadosRam, dadosCpu, chartRam, chartCpu, ho
                 var ultimaLabel = dadosCpu.labels[dadosCpu.labels.length - 1];
 
                 if (ultimaLabel != horario) {
+
+                    console.log(novoDado.cpu[0], config.max_cpu, verificarAlerta(novoDado.cpu, config.max_cpu))
+                    // chartRam.classList.add("card-error");
+                    const ramParent = chartRam.canvas.parentNode
+                    const cpuParent = chartCpu.canvas.parentNode
+
+                    var cpuDado = parseFloat(novoDado.ram[0])
+                    var ramDado = parseFloat(novoDado.cpu[0])
+
+                    if (verificarAlerta(cpuDado, config.max_ram)) ramParent.classList.add("card-error")
+                    else ramParent.classList.remove("card-error")
+                        
+                    if (verificarAlerta(ramDado, config.max_cpu)) cpuParent.classList.add("card-error")
+                    else cpuParent.classList.remove("card-error")
+
                     dadosRam.labels.shift()
                     dadosRam.labels.push(horario)
 
@@ -297,4 +313,8 @@ function atualizarUptime(hostname, uptime) {
     }
 
     spanUptime.innerHTML = msg.replace('.', ',');
+}
+
+function verificarAlerta(metrica, parametro) {
+    return metrica > parametro;
 }

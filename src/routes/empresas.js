@@ -14,8 +14,11 @@ router.get("/buscarMatriz", function (req,res){
 router.get("/buscarFiliais", function (req, res){
     empresaController.buscarFiliais(req, res);
 })
-router.get("/buscarConfig", function (req, res) {
+router.get("/buscarConfigAtual", function (req, res) {
     empresaController.buscarConfigAtual(req, res);
+})
+router.get("/buscarConfig", function (req, res) {
+    empresaController.buscarConfig(req, res);
 })
 router.post("/atualizarConfigAtualRegistro", function (req, res) {
     empresaController.atualizarConfigAtualRegistro(req, res);
@@ -40,5 +43,8 @@ router.post("/cadastrarFeedback", function (req, res){
 })
 router.get("/buscarTempoNoUltimoPeriodo", function (req, res){
     empresaController.buscarTempoNoUltimoPeriodo(req, res);
+})
+router.get("/buscarUltimasTarefasConcluidas", function (req, res){
+    empresaController.buscarUltimasTarefasConcluidas(req, res);
 })
 module.exports = router;

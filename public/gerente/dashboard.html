@@ -12,11 +12,10 @@
     <script src="../js/sessao.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="../js/usuario.js"></script>
+    <script src="../js/setup.js"></script>
 </head>
 
-<body
-    onload="buscarTarefasAtrasadas(),buscarSatisfacaoOperadores(),buscarOperadores()">
-
+<body onload="buscarTarefasAtrasadas(), buscarSatisfacaoOperadores(), buscarOperadores()">
 
     <section class="section-body">
         <div class="leftbar">
@@ -213,7 +212,7 @@
 
     var diasSemana = []
     numSemana = new Date().getDay();
-    var i = numSemana;
+    var i = numSemana-1;
     for (let index = numSemana; index < numSemana + 7; index++) {
         i++;
         if (i > 6) i = 0;
@@ -227,8 +226,8 @@
         data: {
             labels: diasSemana,
             datasets: [{
-                label: 'Tarefas atrasadas',
-                data: [34, 23, 17, 8, 32, 12, 38],
+                label: 'Tarefas Concluídas',
+                data: [],
                 borderWidth: 2,
                 backgroundColor: '#52c3e3',
                 borderColor: '#52c3e3'
@@ -299,6 +298,34 @@
                 console.log(erro);
                 console.log("Não foi  possivel realizar o select: ", erro);
             })
+    }
+    buscarUltimasTarefasConcluidas();
+
+    function buscarUltimasTarefasConcluidas() {
+        fetch(`/empresas/buscarUltimasTarefasConcluidas?idGerente=${idGerente}`).then(res => {
+            if (!res.ok) {
+                throw new Error(`Erro na solicitação: ${res.statusText}`);
+            }
+            return res.json();
+        })
+            .then(res => {
+                atualizarGraficoTarefas(res);
+            })
+            .catch(erro => {
+                console.log(erro);
+                console.log("Não foi  possivel realizar o select: ", erro);
+            })
+    }
+
+    function atualizarGraficoTarefas(res) {
+        var dados = [];
+
+        res.forEach(item => {
+            dados.push(item.qtdTask)
+        });
+
+        chart2.data.datasets[0].data = dados;
+        chart2.update();
     }
 
     function exibirTarefasAtrasadas() {
@@ -388,4 +415,8 @@
                 console.log("Não foi  possivel realizar o select: ", erro);
             })
     }
+
+    const atualizarDados = setInterval(() => {
+        buscarUltimasTarefasConcluidas()
+    }, 2000);
 </script>

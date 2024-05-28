@@ -76,7 +76,21 @@ function buscarFunc(req, res){
 
 function buscarConfigAtual(req, res){
     var idEmpresa = req.query.id_empresa;
+    
     empresaModel.buscarConfigAtual(idEmpresa)
+    .then(function (resBuscar){
+        res.json(resBuscar);
+    })
+    .catch(function (erro){
+        console.log(erro)
+        console.log(`houve um erro ao realizar o select, erro: ${erro}`)
+    })
+}
+
+function buscarConfig(req, res){
+    var idEmpresa = req.query.id_empresa;
+    
+    empresaModel.buscarConfig(idEmpresa)
     .then(function (resBuscar){
         res.json(resBuscar);
     })
@@ -191,6 +205,19 @@ function buscarTempoNoUltimoPeriodo(req, res){
     })
 }
 
+function buscarUltimasTarefasConcluidas(req, res) {
+    var idGerente = req.query.idGerente;
+
+    empresaModel.buscarUltimasTarefasConcluidas(idGerente)
+    .then(function (resBuscar){
+        res.json(resBuscar);
+    })
+    .catch(function (erro){
+        console.log(erro)
+        console.log(`houve um erro ao realizar o select, erro: ${erro}`)
+    })
+}
+
 module.exports = {
     cadastrar,
     buscarMatriz,
@@ -203,5 +230,7 @@ module.exports = {
     buscarOperadoresComMaisTarefasAtrasadas,
     buscarSatisfacaoOperadores,
     cadastrarFeedback,
-    buscarTempoNoUltimoPeriodo
+    buscarTempoNoUltimoPeriodo,
+    buscarUltimasTarefasConcluidas,
+    buscarConfig
 }
