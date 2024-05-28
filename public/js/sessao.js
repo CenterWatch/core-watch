@@ -10,4 +10,25 @@ function validarSessao(){
 function sair() {
     sessionStorage.clear();
     window.location = '../login.html'
+
+    logout();
+}
+
+function logout() {
+    fetch("/java/logout", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        }
+    }).then(function (resposta) {
+        if (resposta.ok) {
+            console.log(resposta);
+        } else {
+            console.log("Houve um erro ao tentar realizar o login!");   
+            console.log("Erro")
+        }
+
+    }).catch(function (erro) {
+        console.log(erro);
+    })
 }

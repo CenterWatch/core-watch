@@ -54,8 +54,6 @@
                 if (resposta.ok) {
                     console.log(resposta);
 
-
-
                     resposta.json().then(json => {
                         console.log(json);
                         console.log(JSON.stringify(json));
@@ -75,12 +73,6 @@
                             return res.json();
                         })
                             .then(res => {
-                                // Caso não haja uma sessão, não será feito o login
-                                // if (res.length == 0) {
-                                //     sessionStorage.clear();
-                                //     window.location = "";
-                                // }
-
                                 sessionStorage.ID_SESSAO = res[0].id_sessao;
                             })
                             .catch(erro => {
@@ -100,6 +92,7 @@
                                 var enderecaPara = "./suporte/visao_geral.html"
                                 break;
                             case "Operador":
+                                loginJava(usuario, senha)
                                 var enderecaPara = "./operador/home.html"
                                 break;
                         
@@ -108,7 +101,7 @@
                                 var enderecaPara = "";
                                 break;
                         }
-                        
+                                                
                         setTimeout(function () {
                             window.location = enderecaPara;
                         }, 1500); 
@@ -125,6 +118,32 @@
             })
 
             return false;
+        }
+
+        function loginJava(usr, pwd) {
+            fetch("/java/loginJava", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    username: usr,
+                    senha: pwd,
+                })
+            }).then(function (resposta) {
+                console.log("ESTOU NO THEN DO entrar()!")
+
+                if (resposta.ok) {
+                    console.log(resposta);
+
+                } else {
+                    console.log("Houve um erro ao tentar realizar o login!");   
+                    console.log("Os  dados nao confererm")
+                }
+
+            }).catch(function (erro) {
+                console.log(erro);
+            })
         }
 
     </script>
