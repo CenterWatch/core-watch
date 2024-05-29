@@ -103,3 +103,8 @@ button:hover {
     letter-spacing: 0.5px;
 }
 
+.loading-gif {
+    width: 41.2px;
+    margin: 0 auto;
+    display: none;
+}

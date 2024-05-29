@@ -4,7 +4,7 @@ function loginJava(user) {
     return new Promise((resolve, reject) => {
         const client = new net.Socket();
     
-        client.connect(37373, '127.0.0.1', () => {
+        client.connect(12761, '127.0.0.1', () => {
           client.write(JSON.stringify(user));
           client.destroy()
         });
@@ -25,8 +25,8 @@ function logout() {
     return new Promise((resolve, reject) => {
         const client = new net.Socket();
     
-        client.connect(37374, '127.0.0.1', () => {
-          client.write(' ');
+        client.connect(12761, '127.0.0.1', () => {
+          client.write('');
           client.destroy()
         });
     

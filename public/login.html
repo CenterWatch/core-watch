@@ -27,7 +27,8 @@
                 <div class="underline"></div>
             </div>
 
-            <button onclick="logar()">ENTRAR</button>
+            <button id="loginBtn" onclick="logar()">ENTRAR</button>
+            <img id="loadingLogin" class="loading-gif" src="img/loading.gif" alt="">
         </div>
 
     
@@ -36,6 +37,10 @@
     <script>
 
         function logar(){
+
+            document.getElementById('loginBtn').style.display = 'none';
+            document.getElementById('loadingLogin').style.display = 'block';
+
             var usuario = input_usuario.value;
             var senha = input_senha.value;
 
@@ -116,6 +121,11 @@
             }).catch(function (erro) {
                 console.log(erro);
             })
+
+            setTimeout(() => {
+                document.getElementById('loginBtn').style.display = 'block';
+                document.getElementById('loadingLogin').style.display = 'none';
+            }, 1500);
 
             return false;
         }
