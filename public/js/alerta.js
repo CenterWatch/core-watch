@@ -66,6 +66,10 @@ function atualizarStatusMaquina(res,hostname){
 }
 
 
+setTimeout(() => {
+    buscarUltimoRegistro()
+}, 100);
+
 setInterval(() => {
     buscarUltimoRegistro();
 }, 2000);

@@ -142,6 +142,13 @@ function verificaFb(idFunc){
     return database.executar(instrucao);
 }
 
+function buscarChamadosSuporte(idEmpresa){
+    var instrucao = `
+    select * from ocorrencia join sessao on fk_sessao = id_sessao join usuario on fk_usuario = id_usuario join funcionario on id_usuario = id_funcionario where fk_empresa = ${idEmpresa} and tipo not like '%SISTEMA%';
+    ` // Busca todos os chamados, vamos filtrar pelo front para não fazer 3 requisicoes para cada status do chamado
+    return database.executar(instrucao);
+}
+
 module.exports = {
     autenticar,
     listar,
@@ -159,5 +166,6 @@ module.exports = {
     buscarChamadosOperador,
     concluirTarefa,
     editarFunc,
-    verificaFb
+    verificaFb,
+    buscarChamadosSuporte
 };

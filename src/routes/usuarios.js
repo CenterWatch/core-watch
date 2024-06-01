@@ -57,4 +57,8 @@ router.put("/editarFunc", function (req, res){
 router.get("/verificaFb", function (req, res){
     usuarioController.verificaFb(req, res);
 })
+
+router.get("/buscarChamadosSuporte", function (req, res){
+    usuarioController.buscarChamadosSuporte(req, res);
+})
 module.exports = router;

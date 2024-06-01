@@ -271,6 +271,18 @@ function verificaFb(req, res){
     })
 }
 
+function buscarChamadosSuporte(req, res){
+    var idEmpresa = req.query.idEmpresa;
+
+    usuarioModel.buscarChamadosSuporte(idEmpresa)
+    .then(result => {
+        res.status(200).json(result);
+    })
+    .catch(error => {
+        console.error("Erro ao processar a solicitação: ", error);
+        res.status(500).json({ error: "Erro interno do servidor" });
+    })
+}
 module.exports = {
     autenticar,
     listarOperadores,
@@ -284,5 +296,6 @@ module.exports = {
     buscarChamadosOperador,
     concluirTarefa,
     editarFunc,
-    verificaFb
+    verificaFb,
+    buscarChamadosSuporte
 }

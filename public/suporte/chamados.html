@@ -18,8 +18,8 @@
                 <img class="logo text-logo" src="https://i.imgur.com/RjhX0a9.png" alt="">
                 <a class="nav-btn" href="visao_geral.html"><i class="fa-solid fa-border-all"></i><span>Visão Geral</span></a>
                 <a class="nav-btn" href="dashboard.html"><i class="fa-solid fa-square-poll-vertical"></i><span>Dashboard</span></a>
-                <a class="nav-btn btn-ativo" href="#"><i class="fa-solid fa-book"></i><span>Artigos</span></a>
-                <a class="nav-btn btn-ativo" href="chamados.html"><i class="fa-solid fa-list"></i><span>Meus Chamados</span></a>
+                <a class="nav-btn" href="artigos.html"><i class="fa-solid fa-book"></i><span>Artigos</span></a>
+                <a class="nav-btn btn-ativo" href="#"><i class="fa-solid fa-list"></i><span>Chamados</span></a>
             </div>
             <div class="cfg-nav">
                 <a class="nav-btn" onclick="sair()"><i class="fa-solid fa-arrow-right-from-bracket"></i><span>Sair</span></a>
@@ -49,14 +49,15 @@
                     <table id="tabela-artigo">
                         <thead>
                             <tr>
-                                <th>Título</th>
+                                <th>Assunto</th>
                                 <th>Descrição</th>
                                 <th class="descricao">Tipo</th>
-                                <th>Criação</th>
-                                <th>Ação</th>
+                                <th>Operador</th>
+                                <th>Data</th>
                             </tr>
                         </thead>
-                        <tbody id="tbodyArtigo">
+                        <tbody id="chamados-aberto">
+
                         </tbody>
                     </table>
                 </div>
@@ -74,7 +75,7 @@
                                 <th>Ação</th>
                             </tr>
                         </thead>
-                        <tbody id="tbodyArtigo">
+                        <tbody id="chamados-andamento">
                         </tbody>
                     </table>
                 </div>
@@ -95,7 +96,7 @@
                                 <th>Ação</th>
                             </tr>
                         </thead>
-                        <tbody id="tbodyArtigo">
+                        <tbody id="chamados-finalizados">
                         </tbody>
                     </table>
                 </div>
@@ -106,44 +107,12 @@
 
 </html>
 <script>
-    function cadastrarChamado() {
-        var id_sessao = sessionStorage.ID_SESSAO;
-        var assunto = input_assunto.value;
-        var tipoProblema = input_problema.value;
-        var descricao = input_descricao.value;
-
-        fetch("/usuarios/cadastrarChamado", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                sessaoServer: id_sessao,
-                assuntoServer: assunto,
-                tipoProblemaServer: tipoProblema,
-                descricaoServer: descricao
-            }),
-        })
-        .then(function (res) {
-            console.log("Resposta: ", res);
-
-            if (res.ok) {
-                alert("Chamado aberto com sucesso!");
-                window.location.reload();
-            } else {
-                alert("Não foi possível enviar chamado!");
-            }
-        })
-        .catch(function (erro) {
-            console.log("Erro: ", erro);
-        });
-    }
-
+    const id_empresa = sessionStorage.ID_EMPRESA_USUARIO;
     const id_usuario = sessionStorage.ID_USUARIO;
     listaChamados = [];
     
     function buscarChamados() {
-        fetch(`/usuarios/buscarChamadosOperador?idOperador=${id_usuario}`)
+        fetch(`/usuarios/buscarChamadosSuporte?idEmpresa=${id_empresa}`)
         .then(res => {
             if (!res.ok) {
                 throw new Error(`Erro na solicitação: ${res.statusText}`);
@@ -152,6 +121,7 @@
         })
         .then(data => {
             listaChamados = data;
+            listarChamados()
         })
         .catch(error => {
             console.error('Erro ao buscar tarefas:', error);
@@ -159,9 +129,27 @@
     }
 
     function listarChamados() {
-        // listaChamados.forEach(element => {
-        //     document.getElementById('').innerHTML += `
-        //         `
-        // });
+
+        listaChamados.forEach(element => {
+            var statusView = "" // id do elemento view
+            if (element.resolvido == 0){ // Chamados aberto
+                statusView = "chamados-aberto"
+            } else if(element.resolvido == 1 && element.fk_atribuido == id_usuario){ // Chamados em andamento atribuidos ao suporte logado
+                statusView = "chamados-andamento"
+            } else if(element.resolvido == 2 && element.fk_atribuido == id_usuario){ // Chamados finalizados pelo suporte logado
+                statusView = "chamados-finalizados"
+            } 
+            // 
+            document.getElementById(`${statusView}`).innerHTML +=   `
+                                                                    <tr>
+                                                                        <th>${element.titulo}</th>
+                                                                        <th>${element.descricao}</th>
+                                                                        <th class="descricao">${element.tipo}</th>
+                                                                        <th>${element.username}</th>
+                                                                        <th>${element.dt_criado}</th>
+                                                                    </tr>
+                                                                    `
+        });
+        
     }
 </script>
