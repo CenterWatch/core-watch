@@ -56,6 +56,18 @@ function listarMaquinas(req, res) {
         );
 }
 
+function buscarMaquinasEmAlerta(req,res){
+
+    maquinaModel.buscarMaquinasEmAlerta()
+    .then(function(resBuscar){
+        res.json(resBuscar);
+    })
+    .catch(function(erro){
+        console.log(erro)
+        console.log(`Houve um erro ao realizar o select, erro`)
+    })
+}
+
 function verificarMaquinaOff(req, res) {
     const idSessao = req.body.idSessao;
     const idMaquina = req.body.idMaquina;
@@ -87,5 +99,6 @@ module.exports = {
     cadastrar,
     listarMaquinas,
     verificarMaquinaOff,
+    buscarMaquinasEmAlerta,
     buscarDadosRam
 }

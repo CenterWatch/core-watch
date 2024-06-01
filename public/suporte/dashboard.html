@@ -12,7 +12,7 @@
     <script src="https://kit.fontawesome.com/384071f692.js" crossorigin="anonymous"></script>
 </head>
 
-<body onload="exibirNomeUsuario()">
+<body onload="exibirNomeUsuario(),buscarMaquinasEmAlerta()">
 
     <section class="section-body">
         <div class="leftbar">
@@ -53,20 +53,8 @@
                 <div class="container-maquinas">
                     <div class="maquinasEmAlerta">
                         <h3>Máquinas em Alerta</h3>
-                        <div class="maquinas-alerta">
-                  
-                            <div class="maquina">Máquina 1</div>
-                            <div class="maquina">Máquina 2</div>
-                            <div class="maquina">Máquina 3</div>
-                            <div class="maquina">Máquina 4</div>
-                            <div class="maquina">Máquina 5</div>
-                            <div class="maquina">Máquina 6</div>
-                            <div class="maquina">Máquina 7</div>
-                            <div class="maquina">Máquina 8</div>
-                            <div class="maquina">Máquina 9</div>
-                            <div class="maquina">Máquina 10</div>
-                            <div class="maquina">Máquina 11</div>
-                            <div class="maquina">Máquina 12</div>
+                        <div id="view-maquinas-alerta" class="maquinas-alerta">
+
                             
                             <!-- adicionar as maquinas no javascript -->
                             <!-- adicionar o hostname e o porque do alerta -->
@@ -133,3 +121,36 @@
 </body>
 
 </html>
+
+<script>
+
+var listaMaquinasAlerta = [];
+
+function buscarMaquinasEmAlerta(){
+    fetch(`/maquina/buscarMaquinasEmAlerta`).then(res => {
+        if(!res.ok){
+            throw new Error(`Erro na solicitação: ${res.statusText}`);
+        }
+        return res.json();
+    })
+    .then(res=> {
+        console.log(res);
+        listaMaquinasAlerta = res;
+        listarMaquinasEmAlerta();
+
+    })
+    .catch(erro => {
+        console.log(erro);
+        console.log("Não foi possivel realizar o select: ", erro)
+    })
+}
+
+function listarMaquinasEmAlerta(){
+    listaMaquinasAlerta.forEach(maquina => {
+        document.getElementById('view-maquinas-alerta').innerHTML += `
+        <div class="maquina">${maquina.hostname} - ${maquina.tipo}</div>
+        `
+    })
+}
+
+</script>

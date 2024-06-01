@@ -11,6 +11,7 @@
     <script src="https://kit.fontawesome.com/384071f692.js" crossorigin="anonymous"></script>
     <script src="../js/usuario.js"></script>
     <script src="../js/setup.js"></script>
+    <script src="../js/alerta.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
@@ -138,7 +139,7 @@
             cardsElements.innerHTML += `
         <div onclick="abrirModal('${maquina.hostname}','${maquina.id_maquina}')" class="card-pc selecionar-hover">
             <span class="card-title">${maquina.hostname}</span>
-            <span class="card-circle"><i class="fa-solid fa-check"></i></span>
+            <span id="status${maquina.hostname}" class="card-circle"><i class="fa-solid fa-check"></i></span>
             <i class="fa-solid fa-desktop"></i>
             <span class="card-user">Jorge Operador</span>
         </div>
