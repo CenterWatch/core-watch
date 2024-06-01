@@ -8,10 +8,17 @@ function validarSessao(){
 }
 
 function sair() {
-    sessionStorage.clear();
-    window.location = '../login.html'
+    
+    if (sessionStorage.CARGO_USUARIO == "Operador") {
+        logout()
+    }
 
-    logout();
+    console.log(sessionStorage.CARGO_USUARIO == "Operador")
+
+    setTimeout(() => {
+        sessionStorage.clear();
+        window.location = '../login.html'
+    }, 500);
 }
 
 function logout() {

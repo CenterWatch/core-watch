@@ -95,7 +95,9 @@
                         <div class="card-kpi">
                             <h4 class="card-title">Satisfação</h4>
                             <div class="satisfacao">
-                                <i class="fa-solid fa-face-laugh-beam icon-gerente"></i>
+                                <span id="face-satisfacao">
+                                    <i class="fa-solid fa-face-laugh-beam icon-gerente"></i>
+                                </span>
                                 <span id="view_nota_media" class="pontuacao">9,3</span>
                                 <div class="seta-indicador">
                                     <i class="fa-solid fa-arrow-trend-up"></i>
@@ -374,11 +376,26 @@
             .then(res => {
                 console.log(res);
                 document.getElementById('view_nota_media').innerHTML = `${res[0].media}`
+                alteraCarinha(res[0].media)
             })
             .catch(erro => {
                 console.log(erro);
                 console.log("Não foi  possivel realizar o select: ", erro);
             })
+    }
+
+    function alteraCarinha(nota){
+        if (nota <= 2.5){
+            document.getElementById('face-satisfacao').innerHTML = `<i class="fa-solid fa-face-angry icon-gerente" style="color: #850d00;"></i>`
+        }else if(nota < 5){
+            document.getElementById('face-satisfacao').innerHTML = `<i class="fa-solid fa-face-frown icon-gerente" style="color: #bb2a2a;"></i>`
+        }else if(nota <= 7){
+            document.getElementById('face-satisfacao').innerHTML = `<i class="fa-solid fa-face-meh icon-gerente" style="color: #e5bb24;"></i>`
+        }else if(nota <= 8.5){
+            document.getElementById('face-satisfacao').innerHTML = `<i class="fa-solid fa-face-smile-beam icon-gerente" style="color: #2c972b;"></i>`
+        }else{
+            document.getElementById('face-satisfacao').innerHTML = `<i class="fa-solid fa-face-laugh-beam icon-gerente" style="color: #45be2d;"></i>`
+        }
     }
 
     function buscarTempoNoUltimoPeriodo(periodo, ordem) {

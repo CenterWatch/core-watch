@@ -1,6 +1,7 @@
 <!DOCTYPE html>
-<html lang="pt-br"> 
-<head> 
+<html lang="pt-br">
+
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="../js/sessao.js"></script>
@@ -8,6 +9,7 @@
     <title>Login Form</title>
     <link rel="stylesheet" href="./css/login.css">
 </head>
+
 <body>
     <main class="container">
         <div class="logo">
@@ -16,14 +18,12 @@
         <div class="form">
             <div class="input-field">
                 <label for="">Usuário</label>
-                <input type="text" name="username" id="input_usuario"
-                    placeholder="user">
+                <input type="text" name="username" id="input_usuario" placeholder="user">
                 <div class="underline"></div>
             </div>
             <div class="input-field">
                 <label for="">Senha</label>
-                <input type="password" name="password" id="input_senha"
-                    placeholder="********">
+                <input type="password" name="password" id="input_senha" placeholder="********">
                 <div class="underline"></div>
             </div>
 
@@ -31,12 +31,12 @@
             <img id="loadingLogin" class="loading-gif" src="img/loading.gif" alt="">
         </div>
 
-    
+
     </main>
 
     <script>
 
-        function logar(){
+        function logar() {
 
             document.getElementById('loginBtn').style.display = 'none';
             document.getElementById('loadingLogin').style.display = 'block';
@@ -71,7 +71,7 @@
                         sessionStorage.ID_EMPRESA_USUARIO = json.id_empresa;
                         sessionStorage.CARGO_USUARIO = json.cargo;
 
-                        fetch (`/usuarios/buscarSessao?idFuncionarioServer=${json.id}`).then(res => {
+                        fetch(`/usuarios/buscarSessao?idFuncionarioServer=${json.id}`).then(res => {
                             if (!res.ok) {
                                 throw new Error(`Erro na solicitação: ${res.statusText}`);
                             }
@@ -97,24 +97,33 @@
                                 var enderecaPara = "./suporte/visao_geral.html"
                                 break;
                             case "Operador":
-                                loginJava(usuario, senha)
+
+                                fetch('https://api.ipify.org?format=json')
+                                    .then(response => response.json())
+                                    .then(data => {
+                                        loginJava(usuario, senha, data.ip)
+                                    })
+                                    .catch(error => {
+                                        console.log('Error:', error);
+                                    });
+
                                 var enderecaPara = "./operador/home.html"
                                 break;
-                        
+
                             default:
                                 // Cargo desconhecido
                                 var enderecaPara = "";
                                 break;
                         }
-                                                
+
                         setTimeout(function () {
                             window.location = enderecaPara;
-                        }, 1500); 
+                        }, 1500);
 
                     });
 
                 } else {
-                    console.log("Houve um erro ao tentar realizar o login!");   
+                    console.log("Houve um erro ao tentar realizar o login!");
                     console.log("Os  dados nao confererm")
                 }
 
@@ -130,7 +139,7 @@
             return false;
         }
 
-        function loginJava(usr, pwd) {
+        function loginJava(usr, pwd, ip) {
             fetch("/java/loginJava", {
                 method: "POST",
                 headers: {
@@ -139,6 +148,7 @@
                 body: JSON.stringify({
                     username: usr,
                     senha: pwd,
+                    ip: ip
                 })
             }).then(function (resposta) {
                 console.log("ESTOU NO THEN DO entrar()!")
@@ -147,7 +157,7 @@
                     console.log(resposta);
 
                 } else {
-                    console.log("Houve um erro ao tentar realizar o login!");   
+                    console.log("Houve um erro ao tentar realizar o login!");
                     console.log("Os  dados nao confererm")
                 }
 
@@ -158,4 +168,5 @@
 
     </script>
 </body>
+
 </html>
