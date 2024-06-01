@@ -69,3 +69,11 @@ thead th:first-child {
 thead th:last-child {
     border-top-right-radius: 1rem;
 }
+
+#chamados-concluidos {
+    padding-bottom: 1rem;
+}
+
+h2 {
+    font-size: 1rem;
+}
