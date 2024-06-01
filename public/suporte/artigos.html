@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="../css/dashboards.css">
     <link rel="stylesheet" href="../css/suporte/artigos.css">
     <link rel="stylesheet" href="../css/tabela.css">
+    <link rel="stylesheet" href="../css/modal.css">
     <script src="../js/sessao.js"></script>
     <script src="../js/usuario.js"></script>
     <script src="https://kit.fontawesome.com/384071f692.js" crossorigin="anonymous"></script>
@@ -60,36 +61,6 @@
                     </div>
                 </div>
 
-                <!---------------------------------------------------------------->
-
-                <div class="modal-completo">
-                    <dialog>
-                        <div class="modal">
-                            <select name="" id="artigo_categoria">
-                                <option value="lentidão">Lentidão</option>
-                                <option value="redes">Redes</option>
-                                <option value="componentes de hardware">Componentes de Hardware</option>
-                                <option value="periféricos">Periféricos</option>
-                                <option value="acessos">Acessos</option>
-                            </select>
-                            <input type="text" placeholder="Dê um título para o artigo" id="artigo_titulo"> 
-                            
-                            <input type="text" placeholder="Dê um título para o artigo" id="artigo_titulo">
-
-                            <textarea placeholder="Digite seu artigo aqui para contribuir com nosso conhecimento. Todo o processo está nas suas mãos..." maxlength="300" name="" id="artigo_descricao"></textarea>
-
-                            <input type="text" name="" id="palavras_chaves"  placeholder="Palavras-Chaves. (Separe por espaço, sem virgula e pontuações.)">
-
-                            <div class="div-botoes">
-                                <button style="background-color: red;">FECHAR</button>
-                                <!--INVERTER OS BOTÕES NÃO FUNCIONA-->
-                                <button onclick="cadastrarArtigo()">PUBLICAR</button>
-                            </div>
-                        </div>
-                    </dialog>
-                </div>
-
-                <!---------------------------------------------------------------->
                 <div class="container-lista">
                     <div class="listaArtigo">
                         <table id="tabela-artigo">
@@ -108,13 +79,61 @@
                     </div>
                 </div>
 
+                <!---------------------------------------------------------------->
 
+                <div class="modal-completo">
+                    <dialog id="dialog_modal">
+                        <div class="modal-header">
+                            <h2>Publicar Artigo</h2>
+                            <button type="button" id="close-modal">Fechar</button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="formulario-cadastro">
+                                <div class="form">
+                                        
+                                        <div class="input-field">
+                                            <label for="artigo_titulo">Título</label>
+                                            <input id="artigo_titulo" type="text" placeholder="Dê um título para o artigo" id="artigo_titulo">
+                                        </div>
 
+                                        <div class="input-field">
+                                            <label for="artigo_descricao">Descrição</label>
+                                            <textarea placeholder="Digite seu artigo aqui para contribuir com nosso conhecimento. Todo o processo está nas suas mãos..." maxlength="300" name="" id="artigo_descricao"></textarea>
+                                        </div>
+                                        </div>
 
+                                        <div class="input-field">
+                                            <label for="palavras_chaves">Palavras-Chaves</label>
+                                            <input type="text" name="" id="palavras_chaves" placeholder="Palavras-Chaves. (Separe por espaço, sem virgula e pontuações.)">
+                                    </div>
+            
+                                    <div class="input-field">
+                                        <label for="cargo_input">Categoria</label>
+                                        <select id="artigo_categoria">
+                                            <option value="lentidão">Lentidão</option>
+                                            <option value="redes">Redes</option>
+                                            <option value="componentes de hardware">Componentes de Hardware</option>
+                                            <option value="periféricos">Periféricos</option>
+                                            <option value="acessos">Acessos</option>
+                                        </select>
+                                        <span id="span_cargo"></span>
+                                    </div>
+
+                                    <div class="div-botoes">
+                                        <button class="btn" onclick="cadastrarArtigo()">PUBLICAR</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </dialog>
+                </div>
+
+                <!---------------------------------------------------------------->
+                
             </div>
             <div>
     </section>
-
+    <div id="mascara"></div>
     <script>
 
 
@@ -123,13 +142,18 @@
         const button = document.querySelector("button")
         const modal = document.querySelector("dialog")
         const buttonClose = document.querySelector("dialog button")
+        const mascara = document.getElementById('mascara');
 
         button.onclick = function () {
             modal.showModal()
+            document.getElementsByTagName("body")[0].style.overflow = "hidden";
+            mascara.style.display = 'block';
         }
 
         buttonClose.onclick = function () {
             modal.close()
+            document.getElementsByTagName("body")[0].style.overflow = "scroll";
+            mascara.style.display = 'none';
         }
 
         // FIM SCRIPT MODAL

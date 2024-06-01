@@ -1,10 +1,13 @@
 const net = require('net');
 
+const PORTA = 12761;
+const IP = '127.0.0.1';
+
 function loginJava(user) {
     return new Promise((resolve, reject) => {
         const client = new net.Socket();
     
-        client.connect(12761, '127.0.0.1', () => {
+        client.connect(PORTA, IP, () => {
           client.write(JSON.stringify(user));
           client.destroy()
         });
@@ -25,7 +28,7 @@ function logout() {
     return new Promise((resolve, reject) => {
         const client = new net.Socket();
     
-        client.connect(12761, '127.0.0.1', () => {
+        client.connect(PORTA, IP, () => {
           client.write('');
           client.destroy()
         });
