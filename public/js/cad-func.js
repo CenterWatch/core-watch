@@ -1,5 +1,5 @@
 const modalCad = `
-<div class="modal-header">
+                    <div class="modal-header">
                         <h2>Cadastrar Funcionário</h2>
                         <button type="button" id="close-modal">Fechar</button>
                     </div>

@@ -72,49 +72,13 @@ button:hover {
     letter-spacing: 0.5px;
 }
 
-/*parte de estilização do modal */
 
-/* Adicione estas regras CSS ao seu arquivo CSS existente */
-.modal {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    z-index: 1000;
-}
 
-.modal-content {
-    background-color: #fff;
-    /* cor de fundo do modal */
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-    /* sombra para efeito visual */
-    width: 80%;
-    /* largura do modal */
-    max-width: 600px;
-    /* largura máxima do modal */
-
-}
 
 .div-botoes {
     display: flex;
     justify-content: flex-end;
-    /* alinha os botões à direita */
     margin-top: 10px;
-}
-
-.modal input {
-    width: 55%;
-    height: 3rem;
-    padding: 1rem;
-    outline: none;
 }
 
 .modal select {
@@ -149,6 +113,8 @@ button:hover {
 .div-botoes button:hover {
     letter-spacing: 0.5px;
 }
+
+
 
 /*FIM MODAL*/
 
