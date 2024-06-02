@@ -61,6 +61,26 @@
     cursor: pointer;
 }
 
+.sit-circle {
+    color: #2c972b;
+    font-size: 20px;
+}
+
+.ocioso-popup {
+    position: absolute;
+    color: black;
+    background-color: white;
+    font-size: 14px;
+    padding: 8px;
+    border: 1px solid rgb(211, 211, 211);
+    border-radius: 7px;
+    display: none;
+}
+
+td {
+    overflow: visible;
+}
+
 /*  tabela funcionários */
 /* table  #tabela-funcionario {
     width: 100%;

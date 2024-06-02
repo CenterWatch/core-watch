@@ -8,8 +8,8 @@
     <link rel="stylesheet" href="../css/navbar.css">
     <link rel="stylesheet" href="../css/dashboards.css">
     <link rel="stylesheet" href="../css/gerente/operador.css">
-    <link rel="stylesheet" href="../css/gerente/funcionarios.css">
     <link rel="stylesheet" href="../css/tabela.css">
+    <link rel="stylesheet" href="../css/gerente/funcionarios.css">
     <link rel="stylesheet" href="../css/modal.css">
     <script src="../js/sessao.js"></script>
     <script src="https://kit.fontawesome.com/384071f692.js" crossorigin="anonymous"></script>
@@ -38,7 +38,7 @@
         </div>
         <div class="main">
             <div class="upbar">
-                
+
                 <div class="profile-container">
                     <div class="user-wrap">
                         <img src="../img/user_placeholder.png" class="img-user">
@@ -63,7 +63,7 @@
                                 <th>Email</th>
                                 <th>Data de Nascimento</th>
                                 <th>CPF</th>
-                                <th>Cargo</th>
+                                <th>Situação</th>
                                 <th>Ação</th>
                             </tr>
                         </thead>
@@ -324,11 +324,30 @@
                     <td>${func.email}</td>
                     <td>${converterData(func.dt_nasc)}</td>
                     <td>${func.cpf}</td>
-                    <td>${func.cargo}</td>
+                    <td><i id="farol${func.id_funcionario}" class="fa-solid fa-circle sit-circle"></i><span id="popup${func.id_funcionario}" class="ocioso-popup">Não está ocioso</span></td>
                     <td><i onclick="editarFunc(${func.id_funcionario})" class="fa-solid fa-pen-to-square"></i></td>
                 `;
                 tbody.appendChild(tr);
+
+                const farol = document.getElementById(`farol${func.id_funcionario}`);
+                const popup = document.getElementById(`popup${func.id_funcionario}`);
+
+                farol.addEventListener("mouseover", (event) => {
+                    popup.style.display = "block"
+                    popup.style.left = event.x + 15 + "px"
+                    popup.style.top = event.y + 15 + "px"
+                });
+
+                farol.addEventListener("mouseout", (event) => {
+                    popup.style.display = "none"
+                });
             });
+
+            atualizarOciosidade();
+
+            setInterval(() => {
+                atualizarOciosidade();
+            }, 1000);
         }
 
         function editarFunc(id) {
@@ -361,27 +380,27 @@
         }
 
         function atualizarCad() {
-            const dados = 
-                {
-                    "idFunc": idFuncElement.value,
-                    "idEnd": idEndElement.value,
-                    "nome": nomeElement.value,
-                    "sobrenome": sobrenomeElement.value,
-                    "celular": celularElement.value,
-                    "telefone": telefoneElement.value,
-                    "email": emailElement.value,
-                    "cpf": cpfElement.value,
-                    "cargo": cargoElement.value,
-                    "usuario": usuarioElement.value,
-                    "dtNascimento": dtNascimentoElement.value,
-                    "logradouro": logradouroElement.value,
-                    "cep": cepElement.value,
-                    "num": numElement.value,
-                    "bairro": bairroElement.value,
-                    "compl": complElement.value,
-                    "cidade": cidadeElement.value,
-                    "uf": ufElement.value
-                }
+            const dados =
+            {
+                "idFunc": idFuncElement.value,
+                "idEnd": idEndElement.value,
+                "nome": nomeElement.value,
+                "sobrenome": sobrenomeElement.value,
+                "celular": celularElement.value,
+                "telefone": telefoneElement.value,
+                "email": emailElement.value,
+                "cpf": cpfElement.value,
+                "cargo": cargoElement.value,
+                "usuario": usuarioElement.value,
+                "dtNascimento": dtNascimentoElement.value,
+                "logradouro": logradouroElement.value,
+                "cep": cepElement.value,
+                "num": numElement.value,
+                "bairro": bairroElement.value,
+                "compl": complElement.value,
+                "cidade": cidadeElement.value,
+                "uf": ufElement.value
+            }
 
             fetch("/usuarios/editarFunc", {
                 method: "PUT",
@@ -390,16 +409,16 @@
                 },
                 body: JSON.stringify(dados)
             }).then(function (res) {
-                    console.log("Resposta: ", res);
+                console.log("Resposta: ", res);
 
-                    if (res.ok) {
-                        alert("Funcionário atualizado com sucesso!");
+                if (res.ok) {
+                    alert("Funcionário atualizado com sucesso!");
 
-                        window.location.reload();
-                    } else {
-                        alert("Dados de funcionário inválido!");
-                    }
-                })
+                    window.location.reload();
+                } else {
+                    alert("Dados de funcionário inválido!");
+                }
+            })
                 .catch(function (erro) {
                     console.log("Erro: ", erro);
                 });
@@ -433,6 +452,60 @@
                     ufElement.value = data.uf
                 })
             })
+        }
+
+        function atualizarOciosidade() {
+            JSON.parse(sessionStorage.FUNCIONARIOS).forEach(func => {
+                const farolAtual = document.getElementById(`farol${func.id_funcionario}`);
+                const popupAtual = document.getElementById(`popup${func.id_funcionario}`);
+                buscarUltimaOciosidade(func.id_funcionario, farolAtual, popupAtual)
+            });
+        }
+
+        function buscarUltimaOciosidade(id, farol, popup) {
+            fetch(`/usuarios/buscarUltimaOciosidade?idFuncionario=${id}`)
+                .then(res => {
+                    if (!res.ok) {
+                        throw new Error(`Erro na solicitação: ${res.statusText}`);
+                    }
+                    return res.json();
+                })
+                .then(data => {
+                    if (data.length != 0) {
+
+                        var tempoRegistro = data[0].tempo;
+                        var horaRegistro = Math.trunc((tempoRegistro / 3600) * 1) / 1;
+                        var minRegistro = Math.trunc((tempoRegistro / 60) * 1) / 1
+
+                        if (tempoRegistro > 0 && tempoRegistro < 60) {
+                            var tempo = tempoRegistro + ((tempoRegistro == 1) ? " segundo" : " segundos");
+                        } else if (tempoRegistro < 3600) {
+                            var seg = tempoRegistro - (60 * minRegistro);
+
+                            var tempo = minRegistro + ((minRegistro == 1) ? " minuto" : " minutos");
+                            if (seg > 0) tempo += " e " + seg + ((seg == 1) ? " segundo" : " segundos");
+                        } else {
+                            var min = minRegistro - (60 * horaRegistro);
+
+                            var tempo = horaRegistro + ((horaRegistro == 1) ? " hora" : " horas");
+                            if (min > 0) tempo += " e " + min + ((min == 1) ? " minuto" : " minutos");
+                        }
+
+                        var tempoOcioso = data[0].ocioso_a;
+
+                        if (tempoOcioso != null) {
+                            farol.style.color = '#2c972b'
+                            popup.innerHTML = "Não está ocioso";
+                        } else {
+                            farol.style.color = '#bb2a2a'
+                            popup.innerHTML = "Ocioso há " + tempo;
+                        }
+
+                    }
+                })
+                .catch(error => {
+                    console.error('Erro ao buscar tarefas:', error);
+                });
         }
 
     </script>

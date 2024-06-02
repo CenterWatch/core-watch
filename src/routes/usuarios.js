@@ -61,4 +61,9 @@ router.get("/verificaFb", function (req, res){
 router.get("/buscarChamadosSuporte", function (req, res){
     usuarioController.buscarChamadosSuporte(req, res);
 })
+
+router.get("/buscarUltimaOciosidade", function (req, res){
+    usuarioController.buscarUltimaOciosidade(req, res);
+})
+
 module.exports = router;

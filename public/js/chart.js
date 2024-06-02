@@ -260,7 +260,7 @@ function atualizarGraficos(idMaquina, dadosRam, dadosCpu, chartRam, chartCpu, ho
 
                 if (ultimaLabel != horario) {
 
-                    console.log(novoDado.cpu[0], config.max_cpu, verificarAlerta(novoDado.cpu, config.max_cpu))
+                    // console.log(novoDado.cpu[0], config.max_cpu, verificarAlerta(novoDado.cpu, config.max_cpu))
                     // chartRam.classList.add("card-error");
                     const ramParent = chartRam.canvas.parentNode
                     const cpuParent = chartCpu.canvas.parentNode

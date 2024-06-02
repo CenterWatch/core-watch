@@ -149,6 +149,13 @@ function buscarChamadosSuporte(idEmpresa){
     return database.executar(instrucao);
 }
 
+function buscarUltimaOciosidade(idFuncionario) {
+    var instrucao = `
+    select truncate(tempo_registro_ms/1000, 0) ocioso_a, time_to_sec((timediff(now(), dt_hora_registro))) tempo from tempo_ociosidade where fk_usuario = ${idFuncionario} order by dt_hora_registro desc limit 1;
+    `
+    return database.executar(instrucao);
+}
+
 module.exports = {
     autenticar,
     listar,
@@ -167,5 +174,6 @@ module.exports = {
     concluirTarefa,
     editarFunc,
     verificaFb,
-    buscarChamadosSuporte
+    buscarChamadosSuporte,
+    buscarUltimaOciosidade
 };

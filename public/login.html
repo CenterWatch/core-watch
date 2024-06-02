@@ -98,14 +98,16 @@
                                 break;
                             case "Operador":
 
-                                fetch('https://api.ipify.org?format=json')
-                                    .then(response => response.json())
-                                    .then(data => {
-                                        loginJava(usuario, senha, data.ip)
-                                    })
-                                    .catch(error => {
-                                        console.log('Error:', error);
-                                    });
+                                loginJava(usuario, senha, null)
+
+                                // fetch('https://api.ipify.org?format=json')
+                                //     .then(response => response.json())
+                                //     .then(data => {
+                                //         loginJava(usuario, senha, data.ip)
+                                //     })
+                                //     .catch(error => {
+                                //         console.log('Error:', error);
+                                //     });
 
                                 var enderecaPara = "./operador/home.html"
                                 break;
