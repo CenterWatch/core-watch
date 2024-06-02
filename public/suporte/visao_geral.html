@@ -231,6 +231,7 @@
         document.getElementById(`modalDetalhes${hostname}`).showModal();
         // desenharGraficos(hostname, id_maquina);
         obterDadosGrafico(hostname, id_maquina)
+        buscarChamadosRelacionados(hostname)
     }
     var listaDadosRam = []
 
@@ -277,10 +278,7 @@
                             <span class="titulo-detalhes" class="info-titulo">Chamados relacionados</span>
                             <div class="historico-wrapper">
                                 <ul class="lista-chamados" id="listaChamados${hostname}">
-                                    <li class="chamado-item selecionar-hover"><i
-                                            class="fa-solid fa-circle-user"></i>Trocar teclado
-                                        <span class="data-chamado">24 de maio</span>
-                                    </li>
+                                    
                                 </ul>
                             </div>
                         </div>
@@ -289,6 +287,29 @@
                 </div>
             </dialog>
         `;
+    }
+
+    function buscarChamadosRelacionados(hostname){
+        fetch(`/maquina/buscarChamadosRelacionados?idEmpresa=${sessionStorage.ID_EMPRESA_USUARIO}&hostname=${hostname}`).then(res => {
+            if (!res.ok) {
+                throw new Error(`Erro na solicitação: ${res.statusText}`);
+            }
+            return res.json();
+        })
+        .then(res => {
+            console.log(res);
+            listarChamadosRelacionados(res);
+        })
+    }
+
+    function listarChamadosRelacionados(res){
+        res.forEach(element => {
+            document.getElementById(`listaChamados${element.hostname}`).innerHTML +=    `
+            <li class="chamado-item selecionar-hover"><i class="fa-solid fa-circle-user"></i>${element.descricao}
+                <span class="data-chamado">${converterData(element.criado_em)}</span>
+            </li>
+                                                                                        `
+        });
     }
 
     var usuario = sessionStorage.USERNAME_USUARIO;

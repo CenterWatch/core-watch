@@ -95,10 +95,25 @@ function buscarDadosRam(req, res) {
         })
 }
 
+function buscarChamadosRelacionados(req, res){
+    var hostname = req.query.hostname;
+    var idEmpresa = req.query.idEmpresa;
+
+    maquinaModel.buscarChamadosRelacionados(hostname, idEmpresa)
+        .then(function (result){
+            res.json(result);
+        })
+        .catch(function (erro) {
+            console.log(erro)
+            console.log(`houve um erro ao realizar o select, erro: ${erro}`)
+        })
+}
+
 module.exports = {
     cadastrar,
     listarMaquinas,
     verificarMaquinaOff,
     buscarMaquinasEmAlerta,
-    buscarDadosRam
+    buscarDadosRam,
+    buscarChamadosRelacionados
 }
