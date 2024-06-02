@@ -68,37 +68,8 @@ function buscarMaquinasEmAlerta(req,res){
     })
 }
 
-function verificarMaquinaOff(req, res) {
-    const idSessao = req.body.idSessao;
-    const idMaquina = req.body.idMaquina;
-
-    maquinaModel.verificarMaquinaOff(idSessao, idMaquina)
-        .then(function (resSegundos) {
-            res.json(resSegundos);
-        })
-        .catch(function (erro) {
-            console.log(erro)
-            console.log(`houve um erro ao realizar o select, erro: ${erro}`)
-        })
-}
-
-function buscarDadosRam(req, res) {
-    var idMaquina = req.query.idMaquinaServer;
-    console.log(idMaquina)
-    maquinaModel.buscarDadosRam(idMaquina)
-        .then(function (dadosRam){
-            res.json(dadosRam);
-        })
-        .catch(function (erro) {
-            console.log(erro)
-            console.log(`houve um erro ao realizar o select, erro: ${erro}`)
-        })
-}
-
 module.exports = {
     cadastrar,
     listarMaquinas,
-    verificarMaquinaOff,
     buscarMaquinasEmAlerta,
-    buscarDadosRam
 }

@@ -75,7 +75,7 @@ return database.executar(instrucao)
 
 function buscarTarefasAtrasadas(id_empresa){
     var instrucao = `
-    select count(id_tarefa) as qtdTarefas from tarefa join funcionario on fk_funcionario = id_funcionario where concluida=false and dt_fim < now() and fk_empresa = ${id_empresa} group by fk_funcionario;
+    select count(id_tarefa) as qtdTarefas from tarefa join funcionario on fk_funcionario = id_funcionario where concluida=false and dt_fim < getdate() and fk_empresa = ${id_empresa} group by fk_funcionario;
     `
     console.log(`Executando a instrucao sql: ${instrucao}`)
     return database.executar(instrucao)
@@ -83,7 +83,7 @@ function buscarTarefasAtrasadas(id_empresa){
 
 function buscarOperadoresComMaisTarefasAtrasadas(id_empresa){
     var instrucao = `
-    select primeiro_nome,sobrenome,count(id_tarefa) as tarefasAtrasadas from tarefa join funcionario where fk_funcionario = id_funcionario and fk_empresa = ${id_empresa} group by fk_funcionario ORDER BY tarefasAtrasadas DESC limit 3;
+    select top 3 primeiro_nome, sobrenome, count(id_tarefa) as tarefasAtrasadas from tarefa inner join funcionario f on tarefa.fk_funcionario = f.id_funcionario where f.fk_empresa = ${id_empresa} group by primeiro_nome, sobrenome order by count(id_tarefa) desc;
     `
     console.log(`Executando a instrucao sql: ${instrucao}`)
     return database.executar(instrucao)
@@ -107,14 +107,16 @@ function cadastrarFeedback(dtInicio, dtFim, idEmpresa){
 
 function buscarTempoNoUltimoPeriodo(periodo, idGerente, ordem) {
     var instrucao = `
-    select primeiro_nome, sobrenome, fk_usuario, sum(tempo_registro_ms) tempo, count(h.id_historico_tarefa) tarefa from tempo_ociosidade join usuario on fk_usuario = id_usuario join funcionario on id_usuario = id_funcionario join tarefa t on t.fk_funcionario = id_funcionario join historico_tarefa h on id_tarefa = fk_tarefa where dt_hora_registro >= '${periodo}' and status='ATRASO' and t.fk_gerente = ${idGerente} group by fk_usuario order by ${ordem} desc;
+    select primeiro_nome, sobrenome, fk_usuario, sum(tempo_registro_ms) tempo, count(h.id_historico_tarefa) tarefa from tempo_ociosidade join usuario on fk_usuario = id_usuario join funcionario on id_usuario = id_funcionario join tarefa t on t.fk_funcionario = id_funcionario join historico_tarefa h on id_tarefa = fk_tarefa where dt_hora_registro >= ${periodo} and status='ATRASO' and t.fk_gerente = ${idGerente} group by fk_usuario, primeiro_nome, sobrenome order by ${ordem} desc;
     `
     console.log(`Executando a instrucao sql: ${instrucao}`)
     return database.executar(instrucao)
 }
 
 function buscarUltimasTarefasConcluidas(idGerente) {
-    var instrucao = `select DATE(dt_hora_concluida) data, count(*) qtdTask from historico_tarefa join tarefa on id_tarefa = fk_tarefa where status='CONCLUIDO' and fk_gerente=${idGerente} group by data limit 7;`;
+    var instrucao = `
+    select top 7 convert(date, dt_hora_concluida) as data, count(*) as qtdtask from historico_tarefa join tarefa on id_tarefa = fk_tarefa where status='concluido' and fk_gerente=${idGerente} group by convert(date, dt_hora_concluida) order by data desc;
+    `;
 
     return database.executar(instrucao)
 }
@@ -126,9 +128,8 @@ function buscarConfig(idEmpresa) {
 }
 
 
-function buscarSessoes(idEmpresa, intervalo) {
-    var instrucao = `select * from sessao join maquina on maquina.id_maquina = sessao.fk_maquina where maquina.fk_empresa = ${idEmpresa}
-                     AND date(dt_hora_sessao) >= (curdate() - interval ${intervalo} day);`;
+function buscarSessoes(idEmpresa) {
+    var instrucao = `select * from sessao join maquina on maquina.id_maquina = sessao.fk_maquina where maquina.fk_empresa = ${idEmpresa} AND convert(date, dt_hora_sessao) >= convert(date, dateadd(day, -1, getdate()));`;
 
     console.log(`Executando a instrucao sql: ${instrucao}`)
     return database.executar(instrucao);

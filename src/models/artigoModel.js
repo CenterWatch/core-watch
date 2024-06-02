@@ -4,7 +4,7 @@ function buscarArtigos(idEmpresa, pesquisa) {
     var instrucao = `
     select a.*,f.* from empresa e join funcionario f on e.id_empresa = f.fk_empresa join artigo a on a.fk_funcionario = f.id_funcionario where fk_empresa = ${idEmpresa} and (titulo like "%${pesquisa}%" or descricao like "%${pesquisa}%" or categoria like "%${pesquisa}%" or palavra_chave like "%${pesquisa}%");
     `
-    console.log("Executando a instrução: "+instrucao);
+    
     return database.executar(instrucao);
 }
 
