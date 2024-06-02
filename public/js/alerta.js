@@ -1,7 +1,6 @@
 function buscarUltimoRegistro(){
-    contador = 1
     for (let [key, value] of mapMaquinas) {
-
+ 
         fetch(`/registros/tempo-real/${value.id_maquina}`).then(function (response) {
             if (response.ok) {
                 response.json().then(function (resposta) {
@@ -64,11 +63,6 @@ function atualizarStatusMaquina(res,hostname){
     }
     
 }
-
-
-setTimeout(() => {
-    buscarUltimoRegistro()
-}, 100);
 
 setInterval(() => {
     buscarUltimoRegistro();

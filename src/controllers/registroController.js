@@ -62,8 +62,28 @@ function buscarRegistrosEmTempoReal(req, res) {
     });
 }
 
+function buscarTempoRealVolume(req, res) {
+
+    var uuid = req.params.uuid;
+
+    console.log(`Recuperando registros em tempo real`);
+
+    registroModel.buscarTempoRealVolume(uuid).then(function (resultado) {
+        if (resultado.length > 0) {
+            res.status(200).json(resultado);
+        } else {
+            res.status(204).send("Nenhum resultado encontrado!")
+        }
+    }).catch(function (erro) {
+        console.log(erro);
+        console.log("Houve um erro ao buscar as ultimas registros.", erro.sqlMessage);
+        res.status(500).json(erro.sqlMessage);
+    });
+}
+
 module.exports = {
     buscarUltimosRegistros,
     buscarUltimosRegistrosVolume,
-    buscarRegistrosEmTempoReal
+    buscarRegistrosEmTempoReal,
+    buscarTempoRealVolume
 }

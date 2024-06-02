@@ -8,6 +8,7 @@
     <script src="https://kit.fontawesome.com/1ab94d0eba.js" crossorigin="anonymous"></script>
     <title>Login Form</title>
     <link rel="stylesheet" href="./css/login.css">
+    <script src="js/usuario.js"></script>
 </head>
 
 <body>
@@ -91,6 +92,7 @@
                                 var enderecaPara = "./empresa/selecionaFilial.html"
                                 break;
                             case "Gerente":
+                                buscarOperadores();
                                 var enderecaPara = "./gerente/dashboard.html"
                                 break;
                             case "Suporte":

@@ -15,7 +15,7 @@
     <script src="../js/setup.js"></script>
 </head>
 
-<body onload="buscarTarefasAtrasadas(), buscarSatisfacaoOperadores(), buscarOperadores()">
+<body onload="buscarOperadores(); buscarTarefasAtrasadas(); buscarSatisfacaoOperadores();">
 
     <section class="section-body">
         <div class="leftbar">
@@ -156,7 +156,7 @@
     var txt_nome = document.getElementById('nome-usuario');
     txt_nome.innerHTML = `${usuario}`
     const idGerente = sessionStorage.ID_USUARIO;
-    
+
     document.getElementById('qtdOperador').innerHTML = JSON.parse(sessionStorage.FUNCIONARIOS).length
 
     var ordenarSelect = document.getElementById('ordenarPor');
@@ -214,7 +214,7 @@
 
     var diasSemana = []
     numSemana = new Date().getDay();
-    var i = numSemana-1;
+    var i = numSemana - 1;
     for (let index = numSemana; index < numSemana + 7; index++) {
         i++;
         if (i > 6) i = 0;
@@ -292,7 +292,6 @@
             return res.json();
         })
             .then(res => {
-                console.log(res);
                 listaTarefas = res;
                 exibirTarefasAtrasadas();
             })
@@ -374,7 +373,6 @@
             return res.json();
         })
             .then(res => {
-                console.log(res);
                 document.getElementById('view_nota_media').innerHTML = `${res[0].media}`
                 alteraCarinha(res[0].media)
             })
@@ -384,23 +382,21 @@
             })
     }
 
-    function alteraCarinha(nota){
-        if (nota <= 2.5){
+    function alteraCarinha(nota) {
+        if (nota <= 2.5) {
             document.getElementById('face-satisfacao').innerHTML = `<i class="fa-solid fa-face-angry icon-gerente" style="color: #850d00;"></i>`
-        }else if(nota < 5){
+        } else if (nota < 5) {
             document.getElementById('face-satisfacao').innerHTML = `<i class="fa-solid fa-face-frown icon-gerente" style="color: #bb2a2a;"></i>`
-        }else if(nota <= 7){
+        } else if (nota <= 7) {
             document.getElementById('face-satisfacao').innerHTML = `<i class="fa-solid fa-face-meh icon-gerente" style="color: #e5bb24;"></i>`
-        }else if(nota <= 8.5){
+        } else if (nota <= 8.5) {
             document.getElementById('face-satisfacao').innerHTML = `<i class="fa-solid fa-face-smile-beam icon-gerente" style="color: #2c972b;"></i>`
-        }else{
+        } else {
             document.getElementById('face-satisfacao').innerHTML = `<i class="fa-solid fa-face-laugh-beam icon-gerente" style="color: #45be2d;"></i>`
         }
     }
 
     function buscarTempoNoUltimoPeriodo(periodo, ordem) {
-        console.log(ordem)
-
         fetch(`/empresas/buscarTempoNoUltimoPeriodo?ordem=${ordem}&periodo=${periodo}&idGerente=${idGerente}`).then(res => {
             if (!res.ok) {
                 throw new Error(`Erro na solicitação: ${res.statusText}`);
@@ -408,8 +404,6 @@
             return res.json();
         })
             .then(res => {
-                console.log(res);
-
                 var taskData = [];
                 var timeData = [];
                 var labels = [];
@@ -419,9 +413,7 @@
                     timeData.push((item.tempo / 1000).toFixed(0))
                     labels.push(item.primeiro_nome + " " + item.sobrenome);
                 });
-
-                console.log(taskData)
-                console.log(timeData)
+                
                 chart1.data.datasets[0].data = taskData;
                 chart1.data.datasets[1].data = timeData;
                 chart1.data.labels = labels;
@@ -431,6 +423,109 @@
                 console.log(erro);
                 console.log("Não foi  possivel realizar o select: ", erro);
             })
+    }
+
+    function buscarMaquinas() {
+        fetch("/maquina/listarMaquinas", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                idEmpresaServer: sessionStorage.ID_EMPRESA_USUARIO
+            })
+        }).then(function (resposta) {
+            console.log("ESTOU NO THEN DO listarMaquinas()!")
+
+            if (resposta.ok) {
+                console.log(resposta);
+
+                resposta.json().then(json => {
+                    console.log(json);
+                    sessionStorage.MAQUINAS = JSON.stringify(json.maquinas);
+                    sessionStorage.VOLUMES = JSON.stringify(json.volumes);
+                });
+
+            } else {
+                console.log("Houve um erro ao tentar listar as máquinas!");
+            }
+
+        }).catch(function (erro) {
+            console.log(erro);
+        })
+    }
+
+    function buscarRegistroMaquinas() {
+        JSON.parse(sessionStorage.MAQUINAS).forEach(element => {
+            fetch(`/registros/tempo-real/${element.id_maquina}`).then(function (response) {
+                if (response.ok) {
+                    response.json().then(function (res) {
+                        console.log(`Dados recebidos: ${JSON.stringify(res)}`);
+                        console.log(res);
+
+                        res = res[0]
+
+                        var usoRam = parseFloat(res.uso_ram)
+                        var disponivelRam = parseFloat(res.disponivel_ram)
+
+                        var ram = parseFloat((usoRam / (usoRam + disponivelRam) * 100).toFixed(1));
+                        var cpu = parseFloat(res.uso_cpu)
+
+                        var discos = []
+                        var promessas = [];
+
+                        JSON.parse(sessionStorage.VOLUMES).forEach(volume => {
+                            if (volume.fk_maquina == element.id_maquina) {
+                                var promessa = fetch(`/registros/tempoRealVolume/${volume.uuid}`)
+                                    .then(response => {
+                                        if (response.ok) {
+                                            return response.json();
+                                        } else {
+                                            throw new Error('Nenhum dado encontrado ou erro na API');
+                                        }
+                                    })
+                                    .then(res => {
+                                        res = res[0];
+                                        var usoVolume = parseFloat(res.volume_disponivel / res.volume_total * 100).toFixed(2);
+                                        discos.push(parseFloat(usoVolume));
+                                    })
+                                    .catch(error => {
+                                        console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+                                    });
+
+                                promessas.push(promessa);
+                            }
+                        });
+
+                        Promise.all(promessas)
+                            .then(() => {
+                                verificarMaquinas(ram, cpu, discos);
+                            })
+                            .catch(error => {
+                                console.error('Erro ao processar todas as promessas:', error);
+                            });
+                    });
+                } else {
+                    console.error('Nenhum dado encontrado ou erro na API');
+                }
+            }).catch(function (error) {
+                console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+            });
+        });
+
+    }
+
+    function verificarMaquinas(ram, cpu, discos) {
+        const config = JSON.parse(sessionStorage.CONFIG)[0];
+        maxRam = config.max_ram;
+        maxCpu = config.max_cpu;
+        maxVol = config.max_volume;
+
+        if (ram >= maxRam || cpu >= maxCpu) console.log('alerta')
+
+        discos.forEach(volume => {
+            if ((100 - volume) >= maxVol) console.log('alerta disco')
+        })
     }
 
     const atualizarDados = setInterval(() => {

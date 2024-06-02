@@ -15,4 +15,8 @@ router.get("/tempo-real/:idMaquina", function (req, res) {
     registroController.buscarRegistrosEmTempoReal(req, res);
 })
 
+router.get("/tempoRealVolume/:uuid", function (req, res) {
+    registroController.buscarTempoRealVolume(req, res);
+});
+
 module.exports = router;
