@@ -66,4 +66,12 @@ router.get("/buscarUltimaOciosidade", function (req, res){
     usuarioController.buscarUltimaOciosidade(req, res);
 })
 
+router.put("/atribuirChamado", function (req, res){
+    usuarioController.atribuirChamado(req, res);
+})
+
+router.put("/concluirChamado", function (req, res){
+    usuarioController.concluirChamado(req, res);
+})
+
 module.exports = router;

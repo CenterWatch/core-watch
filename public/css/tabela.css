@@ -45,3 +45,38 @@ td {
     overflow: hidden;
     height: 50px;
 }
+
+.table-filter-tr {
+    display: flex;
+    padding: 0;
+    gap: 20px;
+    justify-content: center;
+    position: relative;
+}
+
+.search-table {
+    width: 100%;
+    border: 1px solid rgb(199, 199, 199);
+    height: 40px;
+    border-radius: 10px;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    padding-left: 10px;
+}
+
+.filter-table {
+    width: 200px;
+    height: 40px;
+    border: none;
+    padding-left: 10px;
+    border-radius: 10px;
+    background-color: #eeeeee;
+    border: 1px solid rgb(199, 199, 199);
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+}
+
+.search-icon {
+    color: gray;
+    position: absolute;
+    right: 200px;
+    top: 10px;
+}

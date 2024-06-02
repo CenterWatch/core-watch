@@ -258,6 +258,33 @@ function editarFunc(req, res) {
     })
 }
 
+function atribuirChamado(req, res) {
+    var idFuncionario = req.body.idFuncionario;
+    var idOcorrencia = req.body.idOcorrencia;
+
+    usuarioModel.atribuirChamado(idFuncionario, idOcorrencia)
+    .then(result => {
+        res.status(200).json(result);
+    })
+    .catch(error => {
+        console.error("Erro ao processar a solicitação: ", error);
+        res.status(500).json({ error: "Erro interno do servidor" });
+    })
+}
+
+function concluirChamado(req, res) {
+    var idOcorrencia = req.body.idOcorrencia;
+
+    usuarioModel.concluirChamado(idOcorrencia)
+    .then(result => {
+        res.status(200).json(result);
+    })
+    .catch(error => {
+        console.error("Erro ao processar a solicitação: ", error);
+        res.status(500).json({ error: "Erro interno do servidor" });
+    })
+}
+
 function verificaFb(req, res){
     var idFunc = req.query.idOperador;
 
@@ -312,5 +339,7 @@ module.exports = {
     editarFunc,
     verificaFb,
     buscarChamadosSuporte,
-    buscarUltimaOciosidade
+    buscarUltimaOciosidade,
+    atribuirChamado,
+    concluirChamado
 }

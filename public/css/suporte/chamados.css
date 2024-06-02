@@ -1,11 +1,7 @@
 .container {
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    flex-wrap: wrap;
-    width: 100%;
-    padding: 7rem 0 0 240px;
-    box-sizing: border-box;
+    width: 80%;
+    margin-left: 280px;
+    margin-top: 40px;
 }
 
 .lista-chamados {
@@ -40,40 +36,23 @@
 }
 
 th, td {
-    padding: 0.5rem;
-    text-align: left;
-}
-
-table {
-    width: 100%;
-    border-collapse: collapse;
-    border-radius: 1rem;
-    overflow: hidden;
-}
-
-td, th {
-    padding: 0.5rem;
+    padding: 0.5rem 1.5rem;
     text-align: center;
 }
 
-thead {
-    background-color: #52C3E3;
-    color: white;
-    height: 50px;
+.select-status {
+    border: 1px solid rgb(224, 224, 224);
+    padding: 7px 10px;
+    background-color: white;
+    border-radius: 14px;
 }
 
-thead th:first-child {
-    border-top-left-radius: 1rem;
+table {
+    width: 100% !important;
 }
 
-thead th:last-child {
-    border-top-right-radius: 1rem;
-}
-
-#chamados-concluidos {
-    padding-bottom: 1rem;
-}
-
-h2 {
-    font-size: 1rem;
+.tabela-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
 }

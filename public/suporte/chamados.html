@@ -8,21 +8,25 @@
     <script src="../js/usuario.js"></script>
     <link rel="stylesheet" href="../css/dashboards.css">
     <link rel="stylesheet" href="../css/suporte/chamados.css">
+    <link rel="stylesheet" href="../css/tabela.css">
     <title>Meus Chamados</title>
 </head>
 
-<body onload="listarChamados(),exibirNomeUsuario()">
+<body onload="">
     <section class="section-body">
         <div class="leftbar">
             <div class="links-nav">
                 <img class="logo text-logo" src="https://i.imgur.com/RjhX0a9.png" alt="">
-                <a class="nav-btn" href="visao_geral.html"><i class="fa-solid fa-border-all"></i><span>Visão Geral</span></a>
-                <a class="nav-btn" href="dashboard.html"><i class="fa-solid fa-square-poll-vertical"></i><span>Dashboard</span></a>
+                <a class="nav-btn" href="visao_geral.html"><i class="fa-solid fa-border-all"></i><span>Visão
+                        Geral</span></a>
+                <a class="nav-btn" href="dashboard.html"><i
+                        class="fa-solid fa-square-poll-vertical"></i><span>Dashboard</span></a>
                 <a class="nav-btn" href="artigos.html"><i class="fa-solid fa-book"></i><span>Artigos</span></a>
                 <a class="nav-btn btn-ativo" href="#"><i class="fa-solid fa-list"></i><span>Chamados</span></a>
             </div>
             <div class="cfg-nav">
-                <a class="nav-btn" onclick="sair()"><i class="fa-solid fa-arrow-right-from-bracket"></i><span>Sair</span></a>
+                <a class="nav-btn" onclick="sair()"><i
+                        class="fa-solid fa-arrow-right-from-bracket"></i><span>Sair</span></a>
             </div>
         </div>
         <div class="main">
@@ -43,113 +47,225 @@
 
             <!--LISTA DE TAREFAS PENDENTES GERAL-->
             <div class="container">
-                
-                <div class="lista-chamados">
-                    <h2>Chamados Geral</h2>
-                    <table id="tabela-artigo">
+
+                <div class="tabela-container">
+                    <table id="tabela-chamados">
                         <thead>
+                            <tr>
+                                <div class="table-filter-tr">
+                                    <input onkeyup="pesquisarChamados(this.value)" type="text" class="search-table"
+                                        id="searchChamados">
+                                    <i class="fa-solid search-icon fa-magnifying-glass"></i>
+                                    <select onchange="filtrar(this.value), plotarConcluido(this.value)" name="filtro" id="filtroStatus"
+                                        class="filter-table">
+                                        <option value="aberto">Aberto</option>
+                                        <option value="andamento">Andamento</option>
+                                        <option value="concluido">Concluído</option>
+                                    </select>
+                                </div>
+                            </tr>
                             <tr>
                                 <th>Assunto</th>
                                 <th>Descrição</th>
-                                <th class="descricao">Tipo</th>
+                                <th>Tipo</th>
                                 <th>Operador</th>
-                                <th>Data</th>
+                                <th>Aberto em</th>
+                                <th id="thConcluido">Status</th>
                             </tr>
                         </thead>
-                        <tbody id="chamados-aberto">
-
-                        </tbody>
-                    </table>
-                </div>
-
-                <!--LISTA DE TAREFAS PENDENTES UNITÁRIA-->
-                <div class="lista-chamados">
-                    <h2>Meus Chamados</h2>
-                    <table id="tabela-artigo">
-                        <thead>
-                            <tr>
-                                <th>Título</th>
-                                <th>Descrição</th>
-                                <th class="descricao">Tipo</th>
-                                <th>Criação</th>
-                                <th>Ação</th>
-                            </tr>
-                        </thead>
-                        <tbody id="chamados-andamento">
-                        </tbody>
+                        <tbody id="lista-chamados"></tbody>
                     </table>
                 </div>
             </div>
-
-            <!--LISTA DE TAREFAS CONCLUÍDAS-->
-            <div class="container-lista">
-                
-                <div class="listaArtigo">
-                    <h2 id="chamados-concluidos">Chamados Concluídos</h2>
-                    <table id="tabela-artigo">
-                        <thead>
-                            <tr>
-                                <th>Título</th>
-                                <th>Descrição</th>
-                                <th class="descricao">Tipo</th>
-                                <th>Criação</th>
-                                <th>Ação</th>
-                            </tr>
-                        </thead>
-                        <tbody id="chamados-finalizados">
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
     </section>
 </body>
 
 </html>
 <script>
+    if (sessionStorage.FILTRO === undefined) sessionStorage.FILTRO = 'aberto';
     const id_empresa = sessionStorage.ID_EMPRESA_USUARIO;
     const id_usuario = sessionStorage.ID_USUARIO;
-    listaChamados = [];
-    
-    function buscarChamados() {
+    buscarChamados(searchChamados.value)
+
+    function buscarChamados(value) {
         fetch(`/usuarios/buscarChamadosSuporte?idEmpresa=${id_empresa}`)
-        .then(res => {
-            if (!res.ok) {
-                throw new Error(`Erro na solicitação: ${res.statusText}`);
+            .then(res => {
+                if (!res.ok) {
+                    throw new Error(`Erro na solicitação: ${res.statusText}`);
+                }
+                return res.json();
+            })
+            .then(data => {
+                sessionStorage.CHAMADOS = JSON.stringify(data);
+                pesquisarChamados(value)
+            })
+            .catch(error => {
+                console.error('Erro ao buscar tarefas:', error);
+            });
+    }
+
+    function listarChamados(filtro, chamados) {
+        console.log(chamados)
+        document.getElementById('lista-chamados').innerHTML = '';
+
+        chamados.forEach(element => {
+
+            if (element.fk_atribuido == null) {
+                var estado = 'aberto'
+            } else if (!element.resolvido) {
+                var estado = 'andamento'
+            } else {
+                var estado = 'concluido'
             }
-            return res.json();
+
+            if (estado === filtro) document.getElementById('lista-chamados').innerHTML += `
+                                    <tr>
+                                        <td>${element.titulo}</td>
+                                        <td>${element.descricao}</td>
+                                        <td class="descricao">${element.tipo}</td>
+                                        <td>${element.username}</td>
+                                        <td>${formatarDataHora(element.criado_em)}</td>
+                                        <td>${picklist(filtro, element.id_ocorrencia)}</td>
+                                    </tr>
+                                    `
+        });
+
+    }
+
+    function picklist(dft, id) {
+        var picklist = `<select onchange="verificarStatus(${id}), buscarChamados(searchChamados.value)" class="select-status" name="status${id}" id="status${id}"><option value="aberto"`;
+
+        if (dft == 'aberto') picklist += 'selected'
+        picklist += '>Aberto</option><option value="andamento"'
+        if (dft == 'andamento') picklist += 'selected'
+        picklist += '>Andamento</option><option value="concluido"'
+        if (dft == 'concluido') picklist += 'selected'
+        picklist += '>Concluído</option></select>'
+
+        return picklist;
+    }
+
+    function verificarStatus(id) {
+
+        valor = document.getElementById(`status${id}`).value;
+
+        switch (valor) {
+            case 'aberto':
+                // ???
+                break;
+            case 'andamento':
+                // Atribuir ao suporte em questão
+                atribuirChamado(id)
+
+                break;
+            case 'concluido':
+                // Update como conluido
+                atribuirChamado(id);
+                concluirChamado(id)
+                plotarConcluido();
+
+                break;
+
+            default:
+                break;
+        }
+
+        setTimeout(() => {
+            buscarChamados(searchChamados.value)
+        }, 100);
+    }
+
+    function atribuirChamado(idOcorrencia) {
+        fetch("/usuarios/atribuirChamado", {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                "idOcorrencia": idOcorrencia,
+                "idFuncionario": sessionStorage.ID_USUARIO
+            })
+        }).then(function (res) {
+            console.log("Resposta: ", res);
+
+            if (res.ok) {
+                // pesquisarChamados(searchChamados.value);
+            } else {
+                alert("Dados do chamado inválido!");
+            }
         })
-        .then(data => {
-            listaChamados = data;
-            listarChamados()
+            .catch(function (erro) {
+                console.log("Erro: ", erro);
+            });
+
+            return false;
+    }
+
+    function concluirChamado(idOcorrencia) {
+        fetch("/usuarios/concluirChamado", {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                "idOcorrencia": idOcorrencia
+            })
+        }).then(function (res) {
+            console.log("Resposta: ", res);
+
+            if (res.ok) {
+                // pesquisarChamados(searchChamados.value);
+            } else {
+                alert("Dados do chamado inválido!");
+            }
         })
-        .catch(error => {
-            console.error('Erro ao buscar tarefas:', error);
+            .catch(function (erro) {
+                console.log("Erro: ", erro);
+            });
+
+            return false;
+    }
+
+    async function pesquisarChamados(value) {
+        const chamados = [];
+
+        JSON.parse(sessionStorage.CHAMADOS).forEach(item => {
+            if (item.titulo.toLowerCase().includes(value.toLowerCase())) chamados.push(item)
+        });
+
+        listarChamados(sessionStorage.FILTRO, chamados)
+    }
+
+    function filtrar(value) {
+        sessionStorage.FILTRO = value;
+        pesquisarChamados(searchChamados.value)
+    }
+
+    function plotarConcluido(value) {
+        if (value !== 'concluido') {
+            thConcluido.innerHTML = 'Status'
+            return;
+        }
+        
+        thConcluido.innerHTML = 'Concluído em'
+
+        JSON.parse(sessionStorage.CHAMADOS).forEach(item => {
+            if (item.resolvido_em != null && item.resolvido) {
+                const element = document.getElementById(`status${item.id_ocorrencia}`).parentNode;
+                element.innerHTML = formatarDataHora(item.resolvido_em)
+            }
         });
     }
 
-    function listarChamados() {
-
-        listaChamados.forEach(element => {
-            var statusView = "" // id do elemento view
-            if (element.resolvido == 0){ // Chamados aberto
-                statusView = "chamados-aberto"
-            } else if(element.resolvido == 1 && element.fk_atribuido == id_usuario){ // Chamados em andamento atribuidos ao suporte logado
-                statusView = "chamados-andamento"
-            } else if(element.resolvido == 2 && element.fk_atribuido == id_usuario){ // Chamados finalizados pelo suporte logado
-                statusView = "chamados-finalizados"
-            } 
-            // 
-            document.getElementById(`${statusView}`).innerHTML +=   `
-                                                                    <tr>
-                                                                        <th>${element.titulo}</th>
-                                                                        <th>${element.descricao}</th>
-                                                                        <th class="descricao">${element.tipo}</th>
-                                                                        <th>${element.username}</th>
-                                                                        <th>${element.dt_criado}</th>
-                                                                    </tr>
-                                                                    `
-        });
+    function formatarDataHora(data) {
+        var dt = new Date(data)
         
+        var ano = dt.getFullYear();
+        var mes = String(dt.getMonth() + 1).padStart(2, '0');
+        var dia = String(dt.getDate()).padStart(2, '0');
+        var hora = String(dt.getHours()).padStart(2, '0');
+        var minuto = String(dt.getMinutes()).padStart(2, '0');
+
+        return `${ano}/${mes}/${dia}  ${hora}:${minuto}`;
     }
 </script>

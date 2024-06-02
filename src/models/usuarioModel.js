@@ -156,6 +156,20 @@ function buscarUltimaOciosidade(idFuncionario) {
     return database.executar(instrucao);
 }
 
+function atribuirChamado(idFuncionario, idOcorrencia) {
+    var instrucao = `
+    update ocorrencia set fk_atribuido = ${idFuncionario} where id_ocorrencia = ${idOcorrencia};
+    `
+    return database.executar(instrucao);
+}
+
+function concluirChamado(idOcorrencia) {
+    var instrucao = `
+    update ocorrencia set resolvido=true, resolvido_em=now() where id_ocorrencia = ${idOcorrencia};
+    `
+    return database.executar(instrucao);
+}
+
 module.exports = {
     autenticar,
     listar,
@@ -175,5 +189,7 @@ module.exports = {
     editarFunc,
     verificaFb,
     buscarChamadosSuporte,
-    buscarUltimaOciosidade
+    buscarUltimaOciosidade,
+    atribuirChamado,
+    concluirChamado
 };
