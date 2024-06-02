@@ -126,9 +126,9 @@ function buscarConfig(idEmpresa) {
 }
 
 
-function buscarSessoes(idEmpresa) {
+function buscarSessoes(idEmpresa, intervalo) {
     var instrucao = `select * from sessao join maquina on maquina.id_maquina = sessao.fk_maquina where maquina.fk_empresa = ${idEmpresa}
-                     AND date(dt_hora_sessao) >= (curdate() - interval 1 day);`;
+                     AND date(dt_hora_sessao) >= (curdate() - interval ${intervalo} day);`;
 
     console.log(`Executando a instrucao sql: ${instrucao}`)
     return database.executar(instrucao);

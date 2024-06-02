@@ -15,7 +15,8 @@
     <script src="../js/setup.js"></script>
 </head>
 
-<body onload="buscarOperadores(); buscarTarefasAtrasadas(); buscarSatisfacaoOperadores(); buscarMaquinas(); buscarSessoes();">
+<body
+    onload="buscarOperadores(); buscarTarefasAtrasadas(); buscarSatisfacaoOperadores(); buscarMaquinas(); buscarSessoes();">
 
     <section class="section-body">
         <div class="leftbar">
@@ -255,23 +256,6 @@
 
     });
 
-    function buscarSessoes(){
-
-            var id_empresa = sessionStorage.ID_EMPRESA_USUARIO;
-
-            fetch (`/empresas/buscarSessoes?id_empresa=${id_empresa}`).then(res => {
-            if (!res.ok) {
-                throw new Error(`Erro na solicitação: ${res.statusText}`);
-            }
-            return res.json();
-            })
-            .then(res => {
-                console.log(res);
-            })
-            
-        
-        }
-
     function numParaSemana(opt) {
         switch (opt) {
             case 1:
@@ -430,7 +414,7 @@
                     timeData.push((item.tempo / 1000).toFixed(0))
                     labels.push(item.primeiro_nome + " " + item.sobrenome);
                 });
-                
+
                 chart1.data.datasets[0].data = taskData;
                 chart1.data.datasets[1].data = timeData;
                 chart1.data.labels = labels;
@@ -543,29 +527,29 @@
         timeAtual = Date.now()
         var discoAlerta = false
 
-        if (timeAtual > (timeRegistro + intervalo + 1000)){
+        if (timeAtual > (timeRegistro + intervalo + 1000)) {
             document.getElementById('qtdIno').innerHTML = parseInt(document.getElementById('qtdIno').innerText) + 1
-        }else if(ram >= maxRam || cpu > maxCpu){
+        } else if (ram >= maxRam || cpu > maxCpu) {
             document.getElementById('qtdAl').innerHTML = parseInt(document.getElementById('qtdAl').innerText) + 1
             console.log("caiu no primeiro")
-        }else{
+        } else {
             discos.forEach(volume => {
-                if ((100 - volume) >= maxVol){
+                if ((100 - volume) >= maxVol) {
                     discoAlerta = true
                 }
 
             })
-            if (!discoAlerta){
+            if (!discoAlerta) {
                 document.getElementById('qtdOp').innerHTML = parseInt(document.getElementById('qtdOp').innerText) + 1
                 console.log("caiu no disco sem alerta")
-            }else{
+            } else {
                 document.getElementById('qtdAl').innerHTML = parseInt(document.getElementById('qtdAl').innerText) + 1
                 console.log("caiu no disco com alerta")
             }
         }
     }
 
-    function resetStatsMaquinas(){
+    function resetStatsMaquinas() {
         document.getElementById('qtdIno').innerHTML = 0
         document.getElementById('qtdOp').innerHTML = 0
         document.getElementById('qtdAl').innerHTML = 0

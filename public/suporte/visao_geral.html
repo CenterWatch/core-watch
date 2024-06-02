@@ -15,25 +15,28 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
-<body onload="listarMaquinas(),exibirNomeUsuario()" >
+<body onload="listarMaquinas(), exibirNomeUsuario(), buscarSessoes()">
 
     <section class="section-body">
         <div class="leftbar">
             <div class="links-nav">
                 <img class="logo text-logo" src="https://i.imgur.com/RjhX0a9.png" alt="">
-                <a class="nav-btn btn-ativo" href="#"><i class="fa-solid fa-border-all"></i><span></i>Visão Geral</span></a>
-                <a class="nav-btn" href="dashboard.html"><i class="fa-solid fa-square-poll-vertical"></i><span></i>Dashboard</span></a>
+                <a class="nav-btn btn-ativo" href="#"><i class="fa-solid fa-border-all"></i><span></i>Visão
+                        Geral</span></a>
+                <a class="nav-btn" href="dashboard.html"><i
+                        class="fa-solid fa-square-poll-vertical"></i><span></i>Dashboard</span></a>
                 <a class="nav-btn" href="artigos.html"><i class="fa-solid fa-book"></i><span>Artigos</span></a>
                 <a class="nav-btn" href="chamados.html"><i class="fa-solid fa-list"></i><span>Chamados</span></a>
             </div>
 
             <div class="cfg-nav">
-                <a class="nav-btn" onclick="sair()"><i class="fa-solid fa-arrow-right-from-bracket"></i><span>Sair</span></a>
+                <a class="nav-btn" onclick="sair()"><i
+                        class="fa-solid fa-arrow-right-from-bracket"></i><span>Sair</span></a>
             </div>
         </div>
         <div id="mainDiv" class="main">
             <div class="upbar">
-                
+
                 <div class="profile-container">
                     <div class="user-wrap">
                         <img src="../img/user_placeholder.png" class="img-user">
@@ -48,7 +51,7 @@
             <div class="visao-geral-task">
                 <div class="titulo">
                     Visão Geral
-                </div> 
+                </div>
                 <div class="cards">
                     <!-- <div onclick="abrirModal('DESKTOP-002')" class="card-pc selecionar-hover card-error">
                         <span class="card-title">DESKTOP-002</span>
@@ -78,10 +81,12 @@
 <script>
     const mapMaquinas = new Map();
     const mapVolumes = new Map();
+    const mapSessao = new Map();
+    
     var cardsElements = document.getElementsByClassName("cards")[0];
 
     var maquinas = [];
-    
+
     function listarMaquinas() {
         fetch("/maquina/listarMaquinas", {
             method: "POST",
@@ -114,7 +119,7 @@
                     desenharMaquinas(json.maquinas);
 
                     json.maquinas.forEach(function (maquina) {
-                        desenharModal(maquina.hostname,maquina.id_maquina);
+                        desenharModal(maquina.hostname, maquina.id_maquina);
                         maquinas.push(maquina)
                     });
                 });
@@ -156,7 +161,7 @@
 
         for (let i = 1; i < volumes.length; i++) {
             const volumeAtual = volumes[i];
-            const volumeAnterior = volumes[i-1]
+            const volumeAnterior = volumes[i - 1]
 
             if (volumeAtual.hostname === volumeAnterior.hostname) {
                 volumesAgrupados.push(volumeAtual);
@@ -167,10 +172,33 @@
                 volumesAgrupados = [];
                 volumesAgrupados.push(volumeAtual);
             }
-        
+
         }
 
         mapVolumes.set(volumes[volumes.length - 1].hostname, volumesAgrupados);
+    }
+
+    function buscarSessoes() {
+        var id_empresa = sessionStorage.ID_EMPRESA_USUARIO;
+        var intervalo = 1;
+
+        fetch(`/empresas/buscarSessoes?id_empresa=${id_empresa}&intervalo=${intervalo}`).then(res => {
+            if (!res.ok) {
+                throw new Error(`Erro na solicitação: ${res.statusText}`);
+            }
+            return res.json();
+        })
+            .then(res => {
+                res.forEach(sessao => {
+                    if (!mapSessao.has(sessao.hostname)) {
+                        mapSessao.set(sessao.hostname, []);
+                    }
+
+                    mapSessao.get(sessao.hostname).push(sessao);
+                });
+            })
+
+
     }
 
     function abrirModal(hostname, id_maquina) {
@@ -266,5 +294,5 @@
     var usuario = sessionStorage.USERNAME_USUARIO;
     var txt_nome = document.getElementById('nome-usuario');
     txt_nome.innerHTML = `${usuario}`
-    
+
 </script>

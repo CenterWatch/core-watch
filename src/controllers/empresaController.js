@@ -89,8 +89,9 @@ function buscarConfigAtual(req, res){
 
 function buscarSessoes(req, res) {
     var idEmpresa = req.query.id_empresa;
+    var intervalo = req.query.intervalo;
 
-    empresaModel.buscarSessoes(idEmpresa)
+    empresaModel.buscarSessoes(idEmpresa, intervalo)
     .then(function (resBuscar){
         res.json(resBuscar);
     })
