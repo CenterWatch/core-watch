@@ -87,6 +87,19 @@ function buscarConfigAtual(req, res){
     })
 }
 
+function buscarSessoes(req, res) {
+    var idEmpresa = req.query.id_empresa;
+
+    empresaModel.buscarSessoes(idEmpresa)
+    .then(function (resBuscar){
+        res.json(resBuscar);
+    })
+    .catch(function (erro){
+        console.log(erro)
+        console.log(`houve um erro ao realizar o select, erro: ${erro}`)
+    })
+}
+
 function buscarConfig(req, res){
     var idEmpresa = req.query.id_empresa;
     
@@ -218,6 +231,8 @@ function buscarUltimasTarefasConcluidas(req, res) {
     })
 }
 
+
+
 module.exports = {
     cadastrar,
     buscarMatriz,
@@ -232,5 +247,6 @@ module.exports = {
     cadastrarFeedback,
     buscarTempoNoUltimoPeriodo,
     buscarUltimasTarefasConcluidas,
-    buscarConfig
+    buscarConfig,
+    buscarSessoes
 }

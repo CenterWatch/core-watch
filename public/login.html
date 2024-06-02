@@ -51,7 +51,7 @@
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify({
-                    usuarioServer: usuario,
+                    usuarioServer: usuario.trim(),
                     senhaServer: senha,
                 })
             }).then(function (resposta) {

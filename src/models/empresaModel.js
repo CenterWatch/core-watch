@@ -125,6 +125,14 @@ function buscarConfig(idEmpresa) {
     return database.executar(instrucao);
 }
 
+
+function buscarSessoes(idEmpresa) {
+    var instrucao = `select * from sessao join maquina on maquina.id_maquina = sessao.fk_maquina where maquina.fk_empresa = ${idEmpresa}
+                     AND date(dt_hora_sessao) >= (curdate() - interval 1 day);`;
+
+    console.log(`Executando a instrucao sql: ${instrucao}`)
+    return database.executar(instrucao);
+}
 module.exports = {
     cadastrarEndereco,
     cadastrar,
@@ -140,5 +148,6 @@ module.exports = {
     cadastrarFeedback,
     buscarTempoNoUltimoPeriodo,
     buscarUltimasTarefasConcluidas,
-    buscarConfig
+    buscarConfig,
+    buscarSessoes
 };

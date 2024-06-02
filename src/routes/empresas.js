@@ -47,4 +47,7 @@ router.get("/buscarTempoNoUltimoPeriodo", function (req, res){
 router.get("/buscarUltimasTarefasConcluidas", function (req, res){
     empresaController.buscarUltimasTarefasConcluidas(req, res);
 })
+router.get("/buscarSessoes", function (req, res){
+    empresaController.buscarSessoes(req, res);
+})
 module.exports = router;
