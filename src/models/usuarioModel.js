@@ -1,17 +1,16 @@
-var database = require("../database/config")
+var database = require('../database/config')
 
 function autenticar(usuario, senha) {
-    console.log("ACESSEI O USUARIO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function entrar(): ", usuario, senha)
     var instrucao = `
     SELECT * FROM usuario join funcionario ON id_funcionario = id_usuario join empresa ON fk_empresa = id_empresa WHERE username = '${usuario}' AND senha = '${senha}';
     `;
-    console.log("Executando a instrução SQL: \n" + instrucao);
+    console.log('Executando a instrução SQL: \n' + instrucao);
     return database.executar(instrucao)
 }
 
 function buscarSessao(idUsuario){
     var instrucao = `select top 1 * from sessao where fk_usuario = ${idUsuario} order by dt_hora_sessao desc;`
-    console.log("Executando a instrução SQL: \n" + instrucao);
+    console.log('Executando a instrução SQL: \n' + instrucao);
     return database.executar(instrucao);
 }
 
@@ -19,7 +18,7 @@ function listar() {
     var instrucao = `
         select primeiro_nome, sobrenome, email, cargo from funcionario;
     `
-    console.log("Executando a instrução: "+instrucao);
+    console.log('Executando a instrução: '+instrucao);
     return database.executar(instrucao);
 }
 
@@ -83,16 +82,16 @@ function buscarChamadosPorFuncionario(idFuncionario){
 
 function atribuirTarefa(idOperador, idGerente, tarefa, dtEstimada, prioridade){
     var instrucao=`insert into tarefa (descricao, dt_fim, dt_inicio,fk_funcionario,fk_gerente,prioridade)
-                    values ("${tarefa}","${dtEstimada}",getdate(),${idOperador},${idGerente},'${prioridade}');
+                    values ('${tarefa}','${dtEstimada}',getdate(),${idOperador},${idGerente},'${prioridade}');
     `
     return database.executar(instrucao);
 }
 
 function realizarFeedback(nota, detalhe, idOperador, fkQuest){
     var instrucao = `
-                    insert into questionario (nota, detalhe, fk_funcionario, fk_quest)  values (${nota},"${detalhe}",${idOperador},${fkQuest});
+                    insert into questionario (nota, detalhe, fk_funcionario, fk_quest)  values (${nota},'${detalhe}',${idOperador},${fkQuest});
                     `
-    console.log("Executando a instrução: "+instrucao);
+    console.log('Executando a instrução: '+instrucao);
     return database.executar(instrucao);
 }
 
@@ -147,7 +146,7 @@ function buscarFeedbacks(idFunc, idConfig){
     var instrucao = `
     select * from agendamento_quest where (inicio < getdate()) and (fim > getdate()) and fk_config =  ${idConfig} and (select count(*) from questionario where fk_quest = (select id_quest from agendamento_quest where (inicio < getdate()) and (fim > getdate())) and fk_funcionario = ${idFunc}) = 0 order by inicio;
     `
-    console.log("Executando a instrução: "+instrucao);
+    console.log('Executando a instrução: '+instrucao);
     return database.executar(instrucao);
 }
 
