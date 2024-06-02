@@ -15,7 +15,7 @@
     <script src="../js/setup.js"></script>
 </head>
 
-<body onload="buscarOperadores(); buscarTarefasAtrasadas(); buscarSatisfacaoOperadores(); buscarMaquinas();">
+<body onload="buscarOperadores(); buscarTarefasAtrasadas(); buscarSatisfacaoOperadores(); buscarMaquinas(); buscarSessoes();">
 
     <section class="section-body">
         <div class="leftbar">
@@ -254,6 +254,23 @@
         },
 
     });
+
+    function buscarSessoes(){
+
+            var id_empresa = sessionStorage.ID_EMPRESA_USUARIO;
+
+            fetch (`/empresas/buscarSessoes?id_empresa=${id_empresa}`).then(res => {
+            if (!res.ok) {
+                throw new Error(`Erro na solicitação: ${res.statusText}`);
+            }
+            return res.json();
+            })
+            .then(res => {
+                console.log(res);
+            })
+            
+        
+        }
 
     function numParaSemana(opt) {
         switch (opt) {
@@ -528,7 +545,7 @@
 
         if (timeAtual > (timeRegistro + intervalo + 1000)){
             document.getElementById('qtdIno').innerHTML = parseInt(document.getElementById('qtdIno').innerText) + 1
-        }else if(ram >= maxRam || cpu >= maxCpu){
+        }else if(ram >= maxRam || cpu > maxCpu){
             document.getElementById('qtdAl').innerHTML = parseInt(document.getElementById('qtdAl').innerText) + 1
             console.log("caiu no primeiro")
         }else{
