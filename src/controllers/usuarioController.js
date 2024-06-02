@@ -176,8 +176,9 @@ function realizarFeedback(req, res){
     var idOperador = req.body.idOperadorServer;
     var nota = req.body.notaServer;
     var descricao = req.body.descricaoServer;
+    var fkQuest = req.body.fkQuestServer;
 
-    usuarioModel.realizarFeedback(nota, descricao, idOperador)
+    usuarioModel.realizarFeedback(nota, descricao, idOperador, fkQuest)
     .then(result => {
         res.status(200).json(result);
     })
@@ -298,10 +299,25 @@ function verificaFb(req, res){
     })
 }
 
+function buscarFeedbacks(req, res){
+    var idFunc = req.query.idOperador;
+    var idConfig = req.query.idConfig;
+
+    usuarioModel.buscarFeedbacks(idFunc, idConfig)
+    .then(result => {
+        res.status(200).json(result);
+    })
+    .catch(error => {
+        console.error("Erro ao processar a solicitação: ", error);
+        res.status(500).json({ error: "Erro interno do servidor" });
+    })
+}
+
 function buscarChamadosSuporte(req, res){
     var idEmpresa = req.query.idEmpresa;
+    var idFuncionario = req.query.idFuncionario;
 
-    usuarioModel.buscarChamadosSuporte(idEmpresa)
+    usuarioModel.buscarChamadosSuporte(idEmpresa, idFuncionario)
     .then(result => {
         res.status(200).json(result);
     })
@@ -338,6 +354,7 @@ module.exports = {
     concluirTarefa,
     editarFunc,
     verificaFb,
+    buscarFeedbacks,
     buscarChamadosSuporte,
     buscarUltimaOciosidade,
     atribuirChamado,

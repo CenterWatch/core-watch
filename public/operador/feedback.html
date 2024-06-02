@@ -103,14 +103,17 @@
             body: JSON.stringify({
                 idOperadorServer: idUsuario,
                 notaServer: nota,
-                descricaoServer: descricao
+                descricaoServer: descricao,
+                fkQuestServer: sessionStorage.ID_FEEDBACK
             }),
         })
             .then(function (res) {
                 console.log("Resposta: ", res);
 
                 if (res.ok) {
-                    alert("Feedback enviado!")
+                    setTimeout(() => {
+                        window.location = 'home.html'
+                    }, 300);
                     
                 } else {
                     alert("Não foi possível enviar feedback!")

@@ -58,6 +58,10 @@ router.get("/verificaFb", function (req, res){
     usuarioController.verificaFb(req, res);
 })
 
+router.get("/buscarFeedbacks", function (req, res){
+    usuarioController.buscarFeedbacks(req, res);
+})
+
 router.get("/buscarChamadosSuporte", function (req, res){
     usuarioController.buscarChamadosSuporte(req, res);
 })

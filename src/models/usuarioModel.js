@@ -88,10 +88,11 @@ function atribuirTarefa(idOperador, idGerente, tarefa, dtEstimada, prioridade){
     return database.executar(instrucao);
 }
 
-function realizarFeedback(nota,detalhe,idOperador){
+function realizarFeedback(nota, detalhe, idOperador, fkQuest){
     var instrucao = `
-                    insert into questionario (nota,detalhe,fk_funcionario)  values (${nota},"${detalhe}",${idOperador});
+                    insert into questionario (nota, detalhe, fk_funcionario, fk_quest)  values (${nota},"${detalhe}",${idOperador},${fkQuest});
                     `
+    console.log("Executando a instrução: "+instrucao);
     return database.executar(instrucao);
 }
 
@@ -142,9 +143,17 @@ function verificaFb(idFunc){
     return database.executar(instrucao);
 }
 
-function buscarChamadosSuporte(idEmpresa){
+function buscarFeedbacks(idFunc, idConfig){
     var instrucao = `
-    select * from ocorrencia join sessao on fk_sessao = id_sessao join usuario on fk_usuario = id_usuario join funcionario on id_usuario = id_funcionario where fk_empresa = ${idEmpresa} and tipo not like '%SISTEMA%';
+    select * from agendamento_quest where (inicio < now()) and (fim > now()) and fk_config =  ${idConfig} and (select count(*) from questionario where fk_quest = (select id_quest from agendamento_quest where (inicio < now()) and (fim > now())) and fk_funcionario = ${idFunc}) = 0 order by inicio;
+    `
+    console.log("Executando a instrução: "+instrucao);
+    return database.executar(instrucao);
+}
+
+function buscarChamadosSuporte(idEmpresa, idFuncionario){
+    var instrucao = `
+    select * from ocorrencia join sessao on fk_sessao = id_sessao join usuario on fk_usuario = id_usuario join funcionario on id_usuario = id_funcionario where fk_empresa = ${idEmpresa} and (fk_atribuido is null or fk_atribuido = ${idFuncionario}) and tipo not like '%SISTEMA%';
     ` // Busca todos os chamados, vamos filtrar pelo front para não fazer 3 requisicoes para cada status do chamado
     return database.executar(instrucao);
 }
@@ -188,6 +197,7 @@ module.exports = {
     concluirTarefa,
     editarFunc,
     verificaFb,
+    buscarFeedbacks,
     buscarChamadosSuporte,
     buscarUltimaOciosidade,
     atribuirChamado,

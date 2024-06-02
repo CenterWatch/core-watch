@@ -88,7 +88,7 @@
     buscarChamados(searchChamados.value)
 
     function buscarChamados(value) {
-        fetch(`/usuarios/buscarChamadosSuporte?idEmpresa=${id_empresa}`)
+        fetch(`/usuarios/buscarChamadosSuporte?idEmpresa=${id_empresa}&idFuncionario=${id_usuario}`)
             .then(res => {
                 if (!res.ok) {
                     throw new Error(`Erro na solicitação: ${res.statusText}`);

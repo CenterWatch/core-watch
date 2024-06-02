@@ -12,16 +12,16 @@
     <script src="https://kit.fontawesome.com/384071f692.js" crossorigin="anonymous"></script>
 </head>
 
-<body onload="buscarTarefas(),exibirNomeUsuario(),verificaFb()">
+<body onload="buscarTarefas(),exibirNomeUsuario()">
 
     <section class="section-body">
         <div class="leftbar">
             <div class="links-nav">
                 <img class="logo text-logo" src="https://i.imgur.com/RjhX0a9.png" alt="">
-                <a class="nav-btn btn-ativo" href="home.html"><i class="fa-solid fa-house"></i></i></i><span></i>Home</span></a>
+                <a class="nav-btn btn-ativo" href="home.html"><i
+                        class="fa-solid fa-house"></i></i></i><span></i>Home</span></a>
                 <a class="nav-btn" href="chamados.html"><i class="fa-solid fa-list"></i><span>Chamados</span></a>
-                <a class="nav-btn" href="feedback.html"><i
-                        class="fa-solid fa-pen-to-square"></i><span></i>Feedback</span></a>
+                <a class="nav-btn" id="feedbackItem" href="feedback.html"><i class="fa-solid fa-pen-to-square"></i><span></i>Feedback</span></a>
             </div>
             <div class="cfg-nav">
                 <a class="nav-btn" onclick="sair()"><i
@@ -30,7 +30,7 @@
         </div>
         <div class="main">
             <div class="upbar">
-                
+
                 <div class="profile-container">
                     <div class="user-wrap">
                         <img src="../img/user_placeholder.png" class="img-user">
@@ -72,7 +72,11 @@
     </section>
 
     <script>
+        const fbItem = document.getElementById('feedbackItem')
+        fbItem.style.display = 'none'
+        
         let id_usuario = sessionStorage.ID_USUARIO;
+        buscarFeedbacks()
         let listaTarefas = []
 
         function buscarTarefas() {
@@ -132,30 +136,34 @@
                 })
         }
 
-
-        function verificaFb(){
-            fetch(`/usuarios/verificaFb?idOperador=${id_usuario}`)
-            .then(res => {
+        function buscarFeedbacks() {
+            fetch(`/usuarios/buscarFeedbacks?idOperador=${id_usuario}&idConfig=${sessionStorage.ID_EMPRESA_USUARIO}`)
+                .then(res => {
                     if (!res.ok) {
                         throw new Error(`Erro na solicitação: ${res.statusText}`);
                     }
                     return res.json();
                 })
                 .then(data => {
-                    console.log(data.length)
-                    exibirFeedback(data.length)
+                    exibirFeedback(data)
                 })
                 .catch(error => {
                     console.error('Erro ao buscar feedbacks:', error);
                 });
         }
 
-        function exibirFeedback(deveExibir){
-            if (deveExibir == 0){
-                console.log("Exibir feedback para responder");
-            }else{
-                console.log("Já respondeu o ultimo questionário");
-            }
+        function exibirFeedback(data) {
+            data.forEach(fb => {
+                var inicio = new Date(fb.inicio);
+                console.log(inicio.getTime() < new Date().getTime())
+
+
+
+                if (inicio.getTime() < new Date().getTime()) {
+                    fbItem.style.display = 'block'
+                    sessionStorage.ID_FEEDBACK = fb.id_quest;
+                }
+            })
         }
 
     </script>

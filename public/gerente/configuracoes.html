@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,6 +11,7 @@
     <script src="../js/usuario.js"></script>
     <script src="https://kit.fontawesome.com/384071f692.js" crossorigin="anonymous"></script>
 </head>
+
 <body onload="buscarConfigAtual(),exibirNomeUsuario()">
 
     <section class="section-body">
@@ -18,18 +20,20 @@
                 <img class="logo text-logo" src="https://i.imgur.com/RjhX0a9.png" alt="">
                 <a class="nav-btn" href="dashboard.html"><i
                         class="fa-solid fa-square-poll-vertical"></i><span></i>Dashboard</span></a>
-                <a class="nav-btn" href="funcionarios.html"><i class="fa-solid fa-users"></i></i><span>Funcionários</span></a>
+                <a class="nav-btn" href="funcionarios.html"><i
+                        class="fa-solid fa-users"></i></i><span>Funcionários</span></a>
                 <a class="nav-btn" href="tasks.html"><i class="fa-solid fa-list-check"></i></i><span>Tasks</span></a>
             </div>
 
             <div class="cfg-nav">
                 <a class="nav-btn btn-ativo" href="#"><i class="fa-solid fa-gear"></i><span>Configurações</span></a>
-                <a class="nav-btn" onclick="sair()"><i class="fa-solid fa-arrow-right-from-bracket"></i><span>Sair</span></a>
+                <a class="nav-btn" onclick="sair()"><i
+                        class="fa-solid fa-arrow-right-from-bracket"></i><span>Sair</span></a>
             </div>
         </div>
         <div class="main">
             <div class="upbar">
-                
+
                 <div class="profile-container">
                     <div class="user-wrap">
                         <img src="../img/user_placeholder.png" class="img-user">
@@ -64,7 +68,7 @@
                                 <button onclick="atualizarConfigRegistro()">Salvar</button>
                             </div>
                         </div>
-                        
+
                     </div>
 
                     <div class="registros">
@@ -85,7 +89,7 @@
                                 <button onclick="atualizarConfigVolume()">Salvar</button>
                             </div>
                         </div>
-                        
+
                     </div>
                 </div>
                 <div class="cards">
@@ -107,23 +111,23 @@
                                 <button onclick="cadastrarFormularioFb()">Cadastrar</button>
                             </div>
                         </div>
-                        
+
                     </div>
                     <div class="registros">
                         <div class="titulo-div">
                             Feedbacks cadastrados
                         </div>
                         <div class="container-registros" id="feedbacks-view">
-                            
 
-                            
+
+
                         </div>
-                        
+
                     </div>
                 </div>
 
             </div>
-        <div>
+            <div>
     </section>
 
     <script>
@@ -136,41 +140,41 @@
         var id_empresa = sessionStorage.ID_EMPRESA_USUARIO;
 
         var listaFb = []
-        function buscarConfigAtual(){
-            fetch (`/empresas/buscarConfigAtual?id_empresa=${id_empresa}`).then(res => {
-            if (!res.ok) {
-                throw new Error(`Erro na solicitação: ${res.statusText}`);
-            }
-            return res.json();
+        function buscarConfigAtual() {
+            fetch(`/empresas/buscarConfigAtual?id_empresa=${id_empresa}`).then(res => {
+                if (!res.ok) {
+                    throw new Error(`Erro na solicitação: ${res.statusText}`);
+                }
+                return res.json();
             })
-            .then(res => {
-                console.log(res);
-                atualizarInput(res);
-                listaFb = res;
-                listarFeedbacks();
-            })      
+                .then(res => {
+                    console.log(res);
+                    atualizarInput(res);
+                    listaFb = res;
+                    listarFeedbacks();
+                })
         }
 
         console.log(listaFb)
 
-        function atualizarInput(res){
+        function atualizarInput(res) {
             inp_ram.value = (res[0].max_ram)
             inp_cpu.value = (res[0].max_cpu)
-            inp_int.value = (res[0].intervalo_registro_ms)/1000
+            inp_int.value = (res[0].intervalo_registro_ms) / 1000
             inp_vol.value = (res[0].max_volume)
-            inp_intVol.value = (res[0].intervalo_volume_ms)/1000
+            inp_intVol.value = (res[0].intervalo_volume_ms) / 1000
         }
 
-        function atualizarConfigRegistro(){
+        function atualizarConfigRegistro() {
             var new_ram = inp_ram.value;
             var new_cpu = inp_cpu.value;
             var new_int = inp_int.value;
 
-            if (new_cpu < 0 || new_cpu > 100 || new_ram < 0 || new_ram > 100 || new_int < 1){
+            if (new_cpu < 0 || new_cpu > 100 || new_ram < 0 || new_ram > 100 || new_int < 1) {
                 alert("Valores inválidos")
                 buscarConfigAtual()
-            }else{
-                fetch ("/empresas/atualizarConfigAtualRegistro", {
+            } else {
+                fetch("/empresas/atualizarConfigAtualRegistro", {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
@@ -182,29 +186,29 @@
                         intServer: new_int
                     }),
                 })
-                .then(res => {
-                if (!res.ok) {
-                    throw new Error(`Erro na solicitação: ${res.statusText}`);
-                }
-                return res.json();
-                })
-                .then(res => {
-                    console.log(res)
-                    buscarConfigAtual()
-                    alert("Valores atualizados!")
-                })
+                    .then(res => {
+                        if (!res.ok) {
+                            throw new Error(`Erro na solicitação: ${res.statusText}`);
+                        }
+                        return res.json();
+                    })
+                    .then(res => {
+                        console.log(res)
+                        buscarConfigAtual()
+                        alert("Valores atualizados!")
+                    })
             }
         }
 
-        function atualizarConfigVolume(){
+        function atualizarConfigVolume() {
             var new_vol = inp_vol.value;
             var new_intVol = inp_intVol.value;
 
-            if (new_vol < 0 || new_vol > 100 || new_intVol < 1){
+            if (new_vol < 0 || new_vol > 100 || new_intVol < 1) {
                 alert("Valores inválidos")
                 buscarConfigAtual()
-            }else{
-                fetch ("/empresas/atualizarConfigAtualVolume", {
+            } else {
+                fetch("/empresas/atualizarConfigAtualVolume", {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
@@ -215,65 +219,74 @@
                         intVolServer: new_intVol
                     }),
                 })
-                .then(res => {
-                if (!res.ok) {
-                    throw new Error(`Erro na solicitação: ${res.statusText}`);
-                }
-                return res.json();
-                })
-                .then(res => {
-                    console.log(res)
-                    buscarConfigAtual()
-                    alert("Valores atualizados!")
-                })
+                    .then(res => {
+                        if (!res.ok) {
+                            throw new Error(`Erro na solicitação: ${res.statusText}`);
+                        }
+                        return res.json();
+                    })
+                    .then(res => {
+                        console.log(res)
+                        buscarConfigAtual()
+                        alert("Valores atualizados!")
+                    })
             }
         }
 
-        function cadastrarFormularioFb(){
-            var inicioFb = cfg_inicio_fb.value;
-            var fimFb = cfg_fim_fb.value;
+        function cadastrarFormularioFb() {
+            var inicioFb = new Date(cfg_inicio_fb.value);
+            var fimFb = new Date(cfg_fim_fb.value);
+            console.log(inicioFb, fimFb)
             var idEmpresa = sessionStorage.ID_EMPRESA_USUARIO;
 
-            var diaAtual = new Date().getDate();
-            var mesAtual = new Date().getMonth();
-            var anoAtual = new Date().getFullYear();
+            const inicioTz = fomatarData(inicioFb);
+            const fimTz = fomatarData(fimFb);
 
-            var horaAtual = new Date().getHours();
-            var minAtual = new Date().getMinutes();
-            var segAtual = new Date().getSeconds();
+            var inicio = inicioFb.getTime()
+            var fim = fimFb.getTime()
+            var agora = new Date().getTime()
 
-            var dataAtual = `${anoAtual}-0${mesAtual+1}-${diaAtual}T${horaAtual}:${minAtual}`
-
-
-            if (inicioFb < dataAtual || fimFb < inicioFb || fimFb < dataAtual){
+            if (inicio < agora || fim < inicio || fim <= agora) {
                 alert("Valores de data inválidos")
-            }else{
-                fetch ("/empresas/cadastrarFeedback", {
+            } else {
+                fetch("/empresas/cadastrarFeedback", {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
                     },
                     body: JSON.stringify({
-                        dtInicioServer: inicioFb,
-                        dtFimServer: fimFb,
+                        dtInicioServer: inicioTz,
+                        dtFimServer: fimTz,
                         idEmpresaServer: idEmpresa
                     }),
                 })
-                .then(res => {
-                if (!res.ok) {
-                    throw new Error(`Erro na solicitação: ${res.statusText}`);
-                }
-                return res.json();
-                })
-                .then(res => {
-                    console.log(res);
-                    buscarConfigAtual()
-                    alert("Feedback cadastrado com sucesso");
-                })
+                    .then(res => {
+                        if (!res.ok) {
+                            throw new Error(`Erro na solicitação: ${res.statusText}`);
+                        }
+                        return res.json();
+                    })
+                    .then(res => {
+                        console.log(res);
+                        buscarConfigAtual()
+                        alert("Feedback cadastrado com sucesso");
+                    })
             }
         }
 
-        function listarFeedbacks(){
+        function fomatarData(date) {
+            const ano = date.getFullYear();
+            const mes = String(date.getMonth() + 1).padStart(2, '0');
+            const dia = String(date.getDate()).padStart(2, '0');
+            const hora = String(date.getHours()).padStart(2, '0');
+            const min = String(date.getMinutes()).padStart(2, '0');
+            const seg = String(date.getSeconds()).padStart(2, '0');
+
+            return `${ano}-${mes}-${dia} ${hora}:${min}:${seg}`;
+        }
+
+
+        function listarFeedbacks() {
             document.getElementById('feedbacks-view').innerHTML = ''
             listaFb.forEach(fb => {
                 document.getElementById('feedbacks-view').innerHTML += `
@@ -285,4 +298,5 @@
     </script>
 
 </body>
+
 </html>
