@@ -111,7 +111,7 @@ function buscarChamadosOperador(idOperador){
 
 function concluirTarefa(idTarefa) {
     var instrucao = `
-    update tarefa set concluida=true, dt_hora_concluida=getdate() where id_tarefa=${idTarefa};
+    update tarefa set concluida='true', dt_hora_concluida=getdate() where id_tarefa=${idTarefa};
     `
     return database.executar(instrucao);
 }
@@ -173,7 +173,7 @@ function atribuirChamado(idFuncionario, idOcorrencia) {
 
 function concluirChamado(idOcorrencia) {
     var instrucao = `
-    update ocorrencia set resolvido=true, resolvido_em=getdate() where id_ocorrencia = ${idOcorrencia};
+    update ocorrencia set resolvido='true', resolvido_em=getdate() where id_ocorrencia = ${idOcorrencia};
     `
     return database.executar(instrucao);
 }

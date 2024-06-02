@@ -73,7 +73,7 @@ return database.executar(instrucao)
 
 function buscarTarefasAtrasadas(id_empresa){
     var instrucao = `
-    select count(id_tarefa) as qtdTarefas from tarefa join funcionario on fk_funcionario = id_funcionario where concluida=false and dt_fim < getdate() and fk_empresa = ${id_empresa} group by fk_funcionario;
+    select count(id_tarefa) as qtdTarefas from tarefa join funcionario on fk_funcionario = id_funcionario where concluida='false' and dt_fim < getdate() and fk_empresa = ${id_empresa} group by fk_funcionario;
     `
     console.log(`Executando a instrucao sql: ${instrucao}`)
     return database.executar(instrucao)
