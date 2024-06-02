@@ -9,10 +9,11 @@
     <link rel="stylesheet" href="../css/dashboards.css">
     <link rel="stylesheet" href="../css/suporte/chamados.css">
     <link rel="stylesheet" href="../css/tabela.css">
+    <script src="../js/sessao.js"></script>
     <title>Meus Chamados</title>
 </head>
 
-<body onload="">
+<body onload="exibirNomeUsuario()">
     <section class="section-body">
         <div class="leftbar">
             <div class="links-nav">
@@ -34,7 +35,7 @@
                 <div class="profile-container">
                     <div class="user-wrap">
                         <img src="../img/user_placeholder.png" class="img-user">
-                        <span id="nome-usuario">Usuário</span>
+                        <span id="nome-usuario"></span>
                         <i class="fa-solid fa-angle-down"></i>
                     </div>
                     <div>
