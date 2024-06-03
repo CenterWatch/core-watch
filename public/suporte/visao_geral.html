@@ -232,6 +232,7 @@
         // desenharGraficos(hostname, id_maquina);
         obterDadosGrafico(hostname, id_maquina)
         buscarChamadosRelacionados(hostname)
+        listarSessoesRelacionadas(hostname)
     }
     var listaDadosRam = []
 
@@ -274,6 +275,16 @@
                                 </ul>
                             </div>
                         </div>
+                    </div>
+                    <div class="sessao-container">
+                        <div class="sessao sessao-historico">
+                            <span class="titulo-detalhes" class="info-titulo">Sessões relacionadas</span>
+                            <div class="historico-wrapper">
+                                <ul class="lista-chamados" id="listaSessoes${hostname}">
+                                    
+                                </ul>
+                            </div>
+                        </div>
                         <div class="sessao sessao-historico">
                             <span class="titulo-detalhes" class="info-titulo">Chamados relacionados</span>
                             <div class="historico-wrapper">
@@ -309,6 +320,16 @@
                 <span class="data-chamado">${converterData(element.criado_em)}</span>
             </li>
                                                                                         `
+        });
+    }
+
+    function listarSessoesRelacionadas(hostname){
+        mapSessao.get(hostname).forEach(element => {
+            document.getElementById(`listaSessoes${element.hostname}`).innerHTML +=  `
+            <li class="chamado-item selecionar-hover"><i class="fa-solid fa-circle-user"></i>${element.username}
+                <span class="data-chamado">${converterHorario(element.dt_hora_sessao)}</span>
+            </li>
+                                                                                    `
         });
     }
 
