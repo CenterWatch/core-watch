@@ -1,52 +1,66 @@
-var database = require("../database/config")
+var database = require('../database/config')
 
 function autenticar(usuario, senha) {
-    console.log("ACESSEI O USUARIO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function entrar(): ", usuario, senha)
     var instrucao = `
     SELECT * FROM usuario join funcionario ON id_funcionario = id_usuario join empresa ON fk_empresa = id_empresa WHERE username = '${usuario}' AND senha = '${senha}';
     `;
-    console.log("Executando a instrução SQL: \n" + instrucao);
+    console.log('Executando a instrução SQL: \n' + instrucao);
     return database.executar(instrucao)
 }
 
 function buscarSessao(idUsuario){
-    var  instrucao = `select * from sessao where fk_usuario = ${idUsuario} order by dt_hora_sessao desc limit 1;`
-    console.log("Executando a instrução SQL: \n" + instrucao);
+    var instrucao = `select top 1 * from sessao where fk_usuario = ${idUsuario} order by dt_hora_sessao desc;`
+    console.log('Executando a instrução SQL: \n' + instrucao);
     return database.executar(instrucao);
 }
 
-function listar(){
+function listar() {
     var instrucao = `
         select primeiro_nome, sobrenome, email, cargo from funcionario;
     `
-    console.log("Executando a instrução: "+instrucao);
+    console.log('Executando a instrução: '+instrucao);
     return database.executar(instrucao);
 }
 
 function cadastrarEndereco(nome, sobrenome, celular, telefone, email, nasc, usuario, gerente, empresa, cpf, cargo, logradouro, cep, num, bairro, compl, cidade, uf) {
     var instrucao = `
-        insert into endereco (logradouro, cep, numero, bairro, complemento, cidade, uf)
-        values ('${logradouro}','${cep}','${num}','${bairro}','${compl}','${cidade}','${uf}')
-    `
+    DECLARE @OutputTable TABLE (id_endereco INT);
+    INSERT INTO endereco (logradouro, cep, numero, bairro, complemento, cidade, uf)
+    OUTPUT INSERTED.id_endereco INTO @OutputTable
+    VALUES ('${logradouro}', '${cep}', '${num}', '${bairro}', '${compl}', '${cidade}', '${uf}');
+    SELECT TOP 1 id_endereco FROM @OutputTable;
+    `;
 
+    console.log(instrucao);
+    
     return database.executar(instrucao)
-    .then(function (funcResultado) {
-        var id_endereco = funcResultado.insertId;
+   .then(function (funcResultado) {
+        var id_endereco = funcResultado[0].id_endereco;
         cadastrarFunc(nome, sobrenome, celular, telefone, email, nasc, usuario, gerente, empresa, cpf, cargo, id_endereco);
     })
+   .catch(function (error) {
+        console.error("Erro ao executar a consulta:", error);
+    });
 }
 
-function cadastrarFunc(nome, sobrenome, celular, telefone, email, nasc, usuario, gerente, empresa, cpf, cargo, id_endereco){
+
+function cadastrarFunc(nome, sobrenome, celular, telefone, email, nasc, usuario, gerente, empresa, cpf, cargo, id_endereco) {
     var instrucao = `
-        insert into funcionario (primeiro_nome, sobrenome, celular, telefone, email, dt_nasc, cpf, cargo, fk_gerente, fk_endereco, fk_empresa)
-        values ('${nome}', '${sobrenome}', '${celular}', '${telefone}', '${email}', '${nasc}', '${cpf}', '${cargo}', ${gerente}, ${id_endereco}, ${empresa})
-    `
+        DECLARE @OutputTable TABLE (id_funcionario INT);
+        INSERT INTO funcionario (primeiro_nome, sobrenome, celular, telefone, email, dt_nasc, cpf, cargo, fk_gerente, fk_endereco, fk_empresa)
+        OUTPUT INSERTED.id_funcionario INTO @OutputTable
+        VALUES ('${nome}', '${sobrenome}', '${celular}', '${telefone}', '${email}', '${nasc}', '${cpf}', '${cargo}', ${gerente}, ${id_endereco}, ${empresa});
+        SELECT TOP 1 id_funcionario FROM @OutputTable;
+    `;
 
     return database.executar(instrucao)
-    .then(function (funcResultado) {
-        var id_funcionario = funcResultado.insertId;
+   .then(function (funcResultado) {
+        var id_funcionario = funcResultado[0].id_funcionario;
         cadastrarUser(usuario, id_funcionario);
     })
+   .catch(function (error) {
+        console.error("Erro ao executar a consulta:", error);
+    });
 }
 
 function cadastrarUser(usuario, id_funcionario){
@@ -83,23 +97,23 @@ function buscarChamadosPorFuncionario(idFuncionario){
 
 function atribuirTarefa(idOperador, idGerente, tarefa, dtEstimada, prioridade){
     var instrucao=`insert into tarefa (descricao, dt_fim, dt_inicio,fk_funcionario,fk_gerente,prioridade)
-                    values ("${tarefa}","${dtEstimada}",now(),${idOperador},${idGerente},'${prioridade}');
+                    values ('${tarefa}','${dtEstimada}',getdate(),${idOperador},${idGerente},'${prioridade}');
     `
     return database.executar(instrucao);
 }
 
 function realizarFeedback(nota, detalhe, idOperador, fkQuest){
     var instrucao = `
-                    insert into questionario (nota, detalhe, fk_funcionario, fk_quest)  values (${nota},"${detalhe}",${idOperador},${fkQuest});
+                    insert into questionario (nota, detalhe, fk_funcionario, fk_quest)  values (${nota},'${detalhe}',${idOperador},${fkQuest});
                     `
-    console.log("Executando a instrução: "+instrucao);
+    console.log('Executando a instrução: '+instrucao);
     return database.executar(instrucao);
 }
 
 function buscarTarefas(idOperador){
     var instrucao = `
-                    select id_tarefa, DATE_FORMAT(dt_inicio, '%d/%m/%Y') as dt_inicio,DATE_FORMAT(dt_fim, '%d/%m/%Y') as dt_fim, descricao,prioridade, concluida from tarefa where fk_funcionario = ${idOperador};
-                    `
+    select id_tarefa, format(dt_inicio, 'dd/MM/yyyy') as dt_inicio, format(dt_fim, 'dd/MM/yyyy') as dt_fim, descricao, prioridade, concluida from tarefa where fk_funcionario = ${idOperador};
+    `
     return database.executar(instrucao);
 }
 
@@ -112,7 +126,7 @@ function buscarChamadosOperador(idOperador){
 
 function concluirTarefa(idTarefa) {
     var instrucao = `
-    update tarefa set concluida=true, dt_hora_concluida=now() where id_tarefa=${idTarefa};
+    update tarefa set concluida='true', dt_hora_concluida=getdate() where id_tarefa=${idTarefa};
     `
     return database.executar(instrucao);
 }
@@ -138,16 +152,16 @@ function editarFunc(idFunc, idEnd, nome, sobrenome, celular, telefone, email, cp
 
 function verificaFb(idFunc){
     var instrucao = `
-    select * from  questionario join funcionario on id_funcionario = fk_funcionario where id_funcionario = ${idFunc} and respondido_em > (select inicio from agendamento_quest order by inicio desc limit 1) and respondido_em < (select fim from agendamento_quest order by inicio desc limit 1) and (select inicio from agendamento_quest order by inicio desc limit 1) > now();
+    select * from questionario join funcionario on id_funcionario = fk_funcionario where id_funcionario = ${idFunc} and respondido_em > (select top 1 inicio from agendamento_quest order by inicio desc) and respondido_em < (select top 1 fim from agendamento_quest order by inicio desc) and (select top 1 inicio from agendamento_quest order by inicio desc) > getdate();
     `
     return database.executar(instrucao);
 }
 
 function buscarFeedbacks(idFunc, idConfig){
     var instrucao = `
-    select * from agendamento_quest where (inicio < now()) and (fim > now()) and fk_config =  ${idConfig} and (select count(*) from questionario where fk_quest = (select id_quest from agendamento_quest where (inicio < now()) and (fim > now())) and fk_funcionario = ${idFunc}) = 0 order by inicio;
+    select * from agendamento_quest where (inicio < getdate()) and (fim > getdate()) and fk_config =  ${idConfig} and (select count(*) from questionario where fk_quest = (select id_quest from agendamento_quest where (inicio < getdate()) and (fim > getdate())) and fk_funcionario = ${idFunc}) = 0 order by inicio;
     `
-    console.log("Executando a instrução: "+instrucao);
+    console.log('Executando a instrução: '+instrucao);
     return database.executar(instrucao);
 }
 
@@ -160,7 +174,7 @@ function buscarChamadosSuporte(idEmpresa, idFuncionario){
 
 function buscarUltimaOciosidade(idFuncionario) {
     var instrucao = `
-    select truncate(tempo_registro_ms/1000, 0) ocioso_a, time_to_sec((timediff(now(), dt_hora_registro))) tempo from tempo_ociosidade where fk_usuario = ${idFuncionario} order by dt_hora_registro desc limit 1;
+    select top 1 round(tempo_registro_ms/1000, 0, 2) ocioso_a, datediff(second, dt_hora_registro, getdate()) tempo from tempo_ociosidade where fk_usuario = ${idFuncionario} order by dt_hora_registro desc;
     `
     return database.executar(instrucao);
 }
@@ -174,7 +188,7 @@ function atribuirChamado(idFuncionario, idOcorrencia) {
 
 function concluirChamado(idOcorrencia) {
     var instrucao = `
-    update ocorrencia set resolvido=true, resolvido_em=now() where id_ocorrencia = ${idOcorrencia};
+    update ocorrencia set resolvido='true', resolvido_em=getdate() where id_ocorrencia = ${idOcorrencia};
     `
     return database.executar(instrucao);
 }

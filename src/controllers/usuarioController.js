@@ -101,7 +101,6 @@ function cadastrarChamado(req, res) {
     var tipo = req.body.tipoProblemaServer;
     var fkSessao = req.body.sessaoServer;
 
-
     console.log(req.body.tituloServer)
 
     usuarioModel.cadastrarChamado(titulo, descricao, tipo, fkSessao)
