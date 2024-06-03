@@ -22,8 +22,6 @@ function sair() {
         logout()
     }
 
-    console.log(sessionStorage.CARGO_USUARIO == "Operador")
-
     setTimeout(() => {
         sessionStorage.clear();
         window.location = '../login.html'

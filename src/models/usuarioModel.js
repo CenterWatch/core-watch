@@ -24,28 +24,43 @@ function listar() {
 
 function cadastrarEndereco(nome, sobrenome, celular, telefone, email, nasc, usuario, gerente, empresa, cpf, cargo, logradouro, cep, num, bairro, compl, cidade, uf) {
     var instrucao = `
-        insert into endereco (logradouro, cep, numero, bairro, complemento, cidade, uf)
-        values ('${logradouro}','${cep}','${num}','${bairro}','${compl}','${cidade}','${uf}')
-    `
+    DECLARE @OutputTable TABLE (id_endereco INT);
+    INSERT INTO endereco (logradouro, cep, numero, bairro, complemento, cidade, uf)
+    OUTPUT INSERTED.id_endereco INTO @OutputTable
+    VALUES ('${logradouro}', '${cep}', '${num}', '${bairro}', '${compl}', '${cidade}', '${uf}');
+    SELECT TOP 1 id_endereco FROM @OutputTable;
+    `;
 
+    console.log(instrucao);
+    
     return database.executar(instrucao)
-    .then(function (funcResultado) {
-        var id_endereco = funcResultado.insertId;
+   .then(function (funcResultado) {
+        var id_endereco = funcResultado[0].id_endereco;
         cadastrarFunc(nome, sobrenome, celular, telefone, email, nasc, usuario, gerente, empresa, cpf, cargo, id_endereco);
     })
+   .catch(function (error) {
+        console.error("Erro ao executar a consulta:", error);
+    });
 }
 
-function cadastrarFunc(nome, sobrenome, celular, telefone, email, nasc, usuario, gerente, empresa, cpf, cargo, id_endereco){
+
+function cadastrarFunc(nome, sobrenome, celular, telefone, email, nasc, usuario, gerente, empresa, cpf, cargo, id_endereco) {
     var instrucao = `
-        insert into funcionario (primeiro_nome, sobrenome, celular, telefone, email, dt_nasc, cpf, cargo, fk_gerente, fk_endereco, fk_empresa)
-        values ('${nome}', '${sobrenome}', '${celular}', '${telefone}', '${email}', '${nasc}', '${cpf}', '${cargo}', ${gerente}, ${id_endereco}, ${empresa})
-    `
+        DECLARE @OutputTable TABLE (id_funcionario INT);
+        INSERT INTO funcionario (primeiro_nome, sobrenome, celular, telefone, email, dt_nasc, cpf, cargo, fk_gerente, fk_endereco, fk_empresa)
+        OUTPUT INSERTED.id_funcionario INTO @OutputTable
+        VALUES ('${nome}', '${sobrenome}', '${celular}', '${telefone}', '${email}', '${nasc}', '${cpf}', '${cargo}', ${gerente}, ${id_endereco}, ${empresa});
+        SELECT TOP 1 id_funcionario FROM @OutputTable;
+    `;
 
     return database.executar(instrucao)
-    .then(function (funcResultado) {
-        var id_funcionario = funcResultado.insertId;
+   .then(function (funcResultado) {
+        var id_funcionario = funcResultado[0].id_funcionario;
         cadastrarUser(usuario, id_funcionario);
     })
+   .catch(function (error) {
+        console.error("Erro ao executar a consulta:", error);
+    });
 }
 
 function cadastrarUser(usuario, id_funcionario){

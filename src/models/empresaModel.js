@@ -9,7 +9,7 @@ function cadastrarEndereco(logradouro,cep,numero,complemento,cidade,estado,nomeF
 
     return database.executar(instrucaoSelect)
         .then(function (enderecoResultado) {
-            var enderecoId = enderecoResultado.insertId;
+            var enderecoId = enderecoResultado[0].id_endereco;
             cadastrar(nomeFantasia,razaoSocial,cnpj,matriz,enderecoId)
         })
 }
