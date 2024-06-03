@@ -14,6 +14,10 @@ router.post("/listarMaquinas", function (req, res) {
 });
 
 router.get("/buscarMaquinasEmAlerta", function (req, res) {
-    maquinaController.buscarMaquinasEmAlerta(req, res)
+    maquinaController.buscarMaquinasEmAlerta(req, res);
+})
+
+router.get("/buscarChamadosRelacionados", function (req, res){
+    maquinaController.buscarChamadosRelacionados(req, res);
 })
 module.exports = router;

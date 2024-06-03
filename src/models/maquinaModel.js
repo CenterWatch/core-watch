@@ -43,10 +43,19 @@ function buscarMaquinasEmAlerta(){
     return database.executar(instrucao);
 }
 
+function buscarChamadosRelacionados(hostname,idEmpresa){
+    var instrucao = `
+    select * from ocorrencia join sessao on fk_sessao = id_sessao join maquina on fk_maquina = id_maquina where tipo not like "%SISTEMA%" and hostname = "${hostname}" and fk_empresa = ${idEmpresa};
+    `
+    return database.executar(instrucao);
+}
+
 module.exports = {
     cadastrar,
     listarMaquinas,
     buscarVolumesPorMaquina,
     buscarVolumesPorEmpresa,
+    buscarDadosRam,
+    buscarChamadosRelacionados,
     buscarMaquinasEmAlerta
 };

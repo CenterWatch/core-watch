@@ -242,6 +242,19 @@ function converterHorario(dtHora) {
     return hora + ":" + min + ":" + seg;
 }
 
+function converterData(dtHora) {
+    var dt = new Date(dtHora);
+
+    var ano = dt.getFullYear();
+    var mes = (dt.getMonth() + 1).toString();
+    var dia = (dt.getDate()).toString();
+
+    mes = mes.length > 1 ? mes : "0" + mes;
+    dia = dia.length > 1 ? dia : "0" + dia;
+
+    return dia + "/" + mes + "/" + ano;
+}
+
 function atualizarGraficos(idMaquina, dadosRam, dadosCpu, chartRam, chartCpu, hostname) {
     fetch(`/registros/tempo-real/${idMaquina}`, { cache: 'no-store' }).then(function (response) {
         if (response.ok) {
