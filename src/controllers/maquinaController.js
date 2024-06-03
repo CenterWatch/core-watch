@@ -82,9 +82,39 @@ function buscarChamadosRelacionados(req, res){
         })
 }
 
+function buscarListaProcessos(req, res) {
+    var idEmpresa = req.query.idEmpresa;
+
+    maquinaModel.buscarListaProcessos(idEmpresa)
+        .then(function (result){
+            res.json(result);
+        })
+        .catch(function (erro) {
+            console.log(erro)
+            console.log(`houve um erro ao realizar o select, erro: ${erro}`)
+        })
+}
+
+function updateListaProcessos() {
+    var idEmpresa = req.query.idEmpresa;
+    var nome = req.query.nome;
+    var permitido = req.query.permitido;
+
+    maquinaModel.updateListaProcessos(idEmpresa, nome, permitido)
+        .then(function (result){
+            res.json(result);
+        })
+        .catch(function (erro) {
+            console.log(erro)
+            console.log(`houve um erro ao realizar o select, erro: ${erro}`)
+        })
+}
+
 module.exports = {
     cadastrar,
     listarMaquinas,
     buscarMaquinasEmAlerta,
-    buscarChamadosRelacionados
+    buscarChamadosRelacionados,
+    buscarListaProcessos,
+    updateListaProcessos
 }

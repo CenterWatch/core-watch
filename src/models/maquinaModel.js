@@ -28,6 +28,18 @@ function buscarVolumesPorEmpresa(idEmpresa) {
     return database.executar(instrucao);
 }
 
+function buscarListaProcessos(idEmpresa) {
+    var instrucao = `select * from perm_processo where fk_config = ${idEmpresa};`;
+
+    return database.executar(instrucao);
+}
+
+function updateListaProcessos(idEmpresa, nome, permitido) {
+    var instrucao = `update perm_processo set permitido = '${permitido}' where nome = '${nome}' and fk_config = ${idEmpresa};`;
+
+    return database.executar(instrucao);
+}
+
 function buscarMaquinasEmAlerta(){
     var instrucao =`SELECT maquina.hostname,alerta.tipo, registro.dt_hora
     FROM maquina
@@ -55,7 +67,8 @@ module.exports = {
     listarMaquinas,
     buscarVolumesPorMaquina,
     buscarVolumesPorEmpresa,
-    buscarDadosRam,
     buscarChamadosRelacionados,
-    buscarMaquinasEmAlerta
+    buscarMaquinasEmAlerta,
+    buscarListaProcessos,
+    updateListaProcessos
 };

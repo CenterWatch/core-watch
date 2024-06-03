@@ -20,4 +20,12 @@ router.get("/buscarMaquinasEmAlerta", function (req, res) {
 router.get("/buscarChamadosRelacionados", function (req, res){
     maquinaController.buscarChamadosRelacionados(req, res);
 })
+
+router.get("/buscarListaProcessos", function (req, res) {
+    maquinaController.buscarListaProcessos(req, res);
+})
+
+router.get("/updateListaProcessos", function (req, res){
+    maquinaController.updateListaProcessos(req, res);
+})
 module.exports = router;
