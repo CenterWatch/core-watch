@@ -13,10 +13,6 @@ router.post("/listarMaquinas", function (req, res) {
     maquinaController.listarMaquinas(req, res);
 });
 
-router.get("/buscarDadosRam", function (req, res) {
-    maquinaController.buscarDadosRam(req, res);
-})
-
 router.get("/buscarMaquinasEmAlerta", function (req, res) {
     maquinaController.buscarMaquinasEmAlerta(req, res);
 })

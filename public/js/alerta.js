@@ -4,9 +4,9 @@ function buscarUltimoRegistro(){
         fetch(`/registros/tempo-real/${value.id_maquina}`).then(function (response) {
             if (response.ok) {
                 response.json().then(function (resposta) {
-                    // console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+                    // //console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
                     listaMaquinas = JSON.stringify(resposta)
-                    console.log(listaMaquinas)
+                    //console.log(listaMaquinas)
                     atualizarStatusMaquina(listaMaquinas,key)
                     
                 });
@@ -28,30 +28,30 @@ function atualizarStatusMaquina(res,hostname){
 
     usoRam = (registroMaquina.uso_ram / registroMaquina.ram_total * 100).toFixed(1)
 
-    console.log(registroMaquina)
+    //console.log(registroMaquina)
     timeRegistro = new Date(registroMaquina.dt_hora).getTime()
     timeAtual = Date.now()
-    console.log(new Date(intervalo).getTime())
+    //console.log(new Date(intervalo).getTime())
 
     if (timeAtual > (timeRegistro + intervalo + 1000)) {
-        console.log("Máquina inoperante")
+        //console.log("Máquina inoperante")
         document.getElementById(`status${hostname}`).innerHTML = `<i class="fa-solid fa-power-off"></i>`
         document.getElementById(`status${hostname}`).classList.add('power-off')
         
     } else {
-        console.log("Máquina operante")
+        //console.log("Máquina operante")
         document.getElementById(`status${hostname}`).classList.remove('power-off')
         if (parseInt(usoRam) > parseInt(maxRam)) {
-            console.log(usoRam)
-            console.log(maxRam)
-            console.log("Alerta de ram")
+            //console.log(usoRam)
+            //console.log(maxRam)
+            //console.log("Alerta de ram")
             document.getElementById(`status${hostname}`).innerHTML = `<i class="fa-solid fa-memory"></i>`
             document.getElementById(`status${hostname}`).classList.add('power-off')
         } 
         if (parseInt(registroMaquina.uso_cpu) > parseInt(maxCpu)) {
-            console.log(registroMaquina.uso_cpu)
-            console.log(maxCpu)
-            console.log("Alerta de cpu")
+            //console.log(registroMaquina.uso_cpu)
+            //console.log(maxCpu)
+            //console.log("Alerta de cpu")
             document.getElementById(`status${hostname}`).innerHTML = `<i class="fa-solid fa-microchip"></i>`
             document.getElementById(`status${hostname}`).classList.add('power-off')
         }
