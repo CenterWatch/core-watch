@@ -25,7 +25,8 @@ router.get("/buscarListaProcessos", function (req, res) {
     maquinaController.buscarListaProcessos(req, res);
 })
 
-router.get("/updateListaProcessos", function (req, res){
+router.put("/updateListaProcessos", function (req, res){
+    console.log(req)
     maquinaController.updateListaProcessos(req, res);
 })
 module.exports = router;

@@ -95,10 +95,11 @@ function buscarListaProcessos(req, res) {
         })
 }
 
-function updateListaProcessos() {
-    var idEmpresa = req.query.idEmpresa;
-    var nome = req.query.nome;
-    var permitido = req.query.permitido;
+function updateListaProcessos(req, res) {
+    console.log(req.body)
+    var idEmpresa = req.body.idEmpresa;
+    var nome = req.body.nome;
+    var permitido = req.body.perm;
 
     maquinaModel.updateListaProcessos(idEmpresa, nome, permitido)
         .then(function (result){

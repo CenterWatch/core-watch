@@ -172,15 +172,15 @@ input {
     font-size: 13pt;
 }
 
-.tarefas-atrasadas {
-    /* height: 350px;
+/* .tarefas-atrasadas {
+    height: 350px;
     width: 600px;
     display: flex;
     justify-content: center;
     align-items: center;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-    background-color: white; */
-}
+    background-color: white;
+} */
 
 .chart-container {
     background-color: white;

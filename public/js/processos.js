@@ -35,11 +35,11 @@ function listarProcessos() {
     permitidoList.innerHTML = '';
     bloqueadoList.innerHTML = '';
 
-    mapProcessos.get('Y').forEach(p => {
+    if (mapProcessos.get('Y') !== undefined) mapProcessos.get('Y').forEach(p => {
         permitidoList.innerHTML += `<li id="p${p.nome}" class="battle-item">${p.nome}</li>`;
     })
 
-    mapProcessos.get('N').forEach(p => {
+    if (mapProcessos.get('N') !== undefined) mapProcessos.get('N').forEach(p => {
         bloqueadoList.innerHTML += `<li id="p${p.nome}" class="battle-item">${p.nome}</li>`;
     })
     
@@ -56,8 +56,36 @@ function listarProcessos() {
     }
 }
 
+function updateListaProcessos(processo, perm) {''
+    console.log(processo, perm)
+    fetch("/maquina/updateListaProcessos", {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            "nome": processo,
+            "perm": perm,
+            "idEmpresa": sessionStorage.ID_EMPRESA_USUARIO
+        })
+    }).then(function (res) {
+        console.log("Resposta: ", res);
+
+        if (res.ok) {
+            buscarListaProcessos();
+        } else {
+            console.log("Erro")
+        }
+    })
+        .catch(function (erro) {
+            console.log("Erro: ", erro);
+        });
+
+        return false;
+}
+
 
 buscarListaProcessos()
 setInterval(() => {
-    buscarListaProcessos()
+    // buscarListaProcessos()
 }, 5000);

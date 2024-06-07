@@ -36,7 +36,7 @@ function buscarListaProcessos(idEmpresa) {
 
 function updateListaProcessos(idEmpresa, nome, permitido) {
     var instrucao = `update perm_processo set permitido = '${permitido}' where nome = '${nome}' and fk_config = ${idEmpresa};`;
-
+    console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" + instrucao)
     return database.executar(instrucao);
 }
 

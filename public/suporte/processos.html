@@ -54,7 +54,7 @@
                     Processos
                 </div>
                 <div class="cards">
-
+                    <button onclick="exibirEditProcessos()">Editar</button>
                 </div>
 
             </div>
@@ -66,7 +66,7 @@
     <dialog id="battleDialog">
         <div class="modal-header">
             <h2>Editar Permissões</h2>
-            <button id="close-modal">Fechar</button>
+            <button onclick="battleDialog.close()" id="close-modal">Fechar</button>
         </div>
         <div class="modal-body">
             <div class="battle-container">
@@ -97,9 +97,9 @@
 <script>
     const permitidoList = document.getElementsByClassName('permitido')[0];
     const bloqueadoList = document.getElementsByClassName('bloqueado')[0];
+    const saveBtn = document.getElementsByClassName('save-btn')[0];
+
     var processos;
-    
-    battleDialog.showModal();
 
     var permitidos = [];
     var bloqueados = [];
@@ -138,5 +138,28 @@
         bloqueados.forEach(p => {
             bloqueadoList.appendChild(p);
         })
+    })
+
+    function exibirEditProcessos() {
+        listarProcessos();
+        battleDialog.showModal();
+    }
+
+    saveBtn.addEventListener('click', () => {
+        processos = document.getElementsByClassName('battle-item');
+        const permitidos = [];
+        const bloqueados = [];
+
+        for (const p of processos) {
+
+            if (p.parentNode.classList.contains('permitido')) {
+                updateListaProcessos(p.innerHTML, true);
+                console.log(p.innerHTML)
+            } else if (p.parentNode.classList.contains('bloqueado')) {
+                updateListaProcessos(p.innerHTML, "false");
+            }
+        }
+        
+        battleDialog.close()
     })
 </script>
