@@ -78,12 +78,13 @@
 
 <script src="../js/chart.js"></script>
 <script src="../js/processos.js"></script>
+<script src="../js/volumes.js"></script>
 
 <script>
     const mapMaquinas = new Map();
     const mapVolumes = new Map();
     const mapSessao = new Map();
-    
+
     var cardsElements = document.getElementsByClassName("cards")[0];
 
     var maquinas = [];
@@ -155,28 +156,13 @@
     }
 
     function mapearVolumePorMaquina(volumes) {
-        var hostnameAtual = volumes[0].hostname;
-        var volumesAgrupados = [];
-
-        volumesAgrupados.push(volumes[0])
-
-        for (let i = 1; i < volumes.length; i++) {
-            const volumeAtual = volumes[i];
-            const volumeAnterior = volumes[i - 1]
-
-            if (volumeAtual.hostname === volumeAnterior.hostname) {
-                volumesAgrupados.push(volumeAtual);
-            } else {
-                mapVolumes.set(volumeAnterior.hostname, volumesAgrupados);
-                hostnameAtual = volumeAtual.hostname;
-
-                volumesAgrupados = [];
-                volumesAgrupados.push(volumeAtual);
+        volumes.forEach(v => {
+            if (!mapVolumes.has(v.hostname)) {
+                mapVolumes.set(v.hostname, []);
             }
 
-        }
-
-        mapVolumes.set(volumes[volumes.length - 1].hostname, volumesAgrupados);
+            mapVolumes.get(v.hostname).push(v);
+        })
     }
 
     function buscarSessoes() {
@@ -301,22 +287,22 @@
         `;
     }
 
-    function buscarChamadosRelacionados(hostname){
+    function buscarChamadosRelacionados(hostname) {
         fetch(`/maquina/buscarChamadosRelacionados?idEmpresa=${sessionStorage.ID_EMPRESA_USUARIO}&hostname=${hostname}`).then(res => {
             if (!res.ok) {
                 throw new Error(`Erro na solicitação: ${res.statusText}`);
             }
             return res.json();
         })
-        .then(res => {
-            console.log(res);
-            listarChamadosRelacionados(res);
-        })
+            .then(res => {
+                console.log(res);
+                listarChamadosRelacionados(res);
+            })
     }
 
-    function listarChamadosRelacionados(res){
+    function listarChamadosRelacionados(res) {
         res.forEach(element => {
-            document.getElementById(`listaChamados${element.hostname}`).innerHTML +=    `
+            document.getElementById(`listaChamados${element.hostname}`).innerHTML += `
             <li class="chamado-item selecionar-hover"><i class="fa-solid fa-circle-user"></i>${element.descricao}
                 <span class="data-chamado">${converterData(element.criado_em)}</span>
             </li>
@@ -324,9 +310,9 @@
         });
     }
 
-    function listarSessoesRelacionadas(hostname){
+    function listarSessoesRelacionadas(hostname) {
         mapSessao.get(hostname).forEach(element => {
-            document.getElementById(`listaSessoes${element.hostname}`).innerHTML +=  `
+            document.getElementById(`listaSessoes${element.hostname}`).innerHTML += `
             <li class="chamado-item selecionar-hover"><i class="fa-solid fa-circle-user"></i>${element.username}
                 <span class="data-chamado">${converterHorario(element.dt_hora_sessao)}</span>
             </li>

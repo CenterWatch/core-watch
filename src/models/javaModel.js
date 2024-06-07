@@ -1,7 +1,7 @@
 const net = require('net');
 
-const PORTA = 19609;
-const IP = '4.tcp.ngrok.io';
+const PORTA = 12796;
+const IP = "0.tcp.ngrok.io";
 
 function loginJava(user) {
     return new Promise((resolve, reject) => {

@@ -1,15 +1,28 @@
-.cards {
-    margin-top: 2rem;
-    display: flex;
-    justify-content: center;
-}
-
 .registros {
     background: #fff;
-    border: 1px solid #ccc;
-    padding: 2rem;
-    box-shadow: 1px 1px 15px rgba(0, 0, 0, 0.2);          /* DIV DO CONTEUDO DO FORMULÁRIO*/
+    padding: 2rem;       /* DIV DO CONTEUDO DO FORMULÁRIO*/
     border-radius: 20px;
+    height: 350px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.visao-geral {
+    align-items: flex-start;
+    margin-top: 24px;
+}
+
+.help-text {
+    font-size: 12px;
+    color: #858585;
+}
+
+.container-registros {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
 }
 
 input {
@@ -25,6 +38,19 @@ input {
 .titulo-div {
     text-align: center;
     padding-bottom: 2rem;
+    font-size: 20px;
+}
+
+.cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    width: 100%;
+}
+
+.fb-container {
+    grid-row: span 2;
+    height: 100%;
 }
 
 .div-botao button {
@@ -37,12 +63,18 @@ input {
     border: none;
     border-radius: 4px;
     transition: all 0.3s ease;
-    margin-top: 2rem; 
     width: 150px;
     
  
 }
 
+.column-container {
+    background-color: white;
+    display: flex;
+    padding: 25px;
+    gap: 50px;
+    border-radius: 14px;
+}
 
 .div-botao2 button {
    
@@ -54,10 +86,8 @@ input {
     border: none;
     border-radius: 4px;
     transition: all 0.3s ease;
-    margin-top: 3.5rem; 
     width: 150px;
     
- 
 }
 
 button:hover {
@@ -66,4 +96,13 @@ button:hover {
 
 .fb input{
     width: 40%;
+}
+
+.cr {
+    display: flex;
+    flex-direction: column;
+}
+
+.cr input {
+    width: 100%;
 }

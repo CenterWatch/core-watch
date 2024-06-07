@@ -9,7 +9,7 @@
 }
 
 body {
-    background-color: eeeee;
+    background-color: #f1f1f1;
 }
 
 .section-body {
@@ -329,6 +329,8 @@ section {
 
 .sessao-info {
     height: 55%;
+    width: 100%;
+    margin-bottom: 20px;
 }
 
 .titulo-detalhes {
