@@ -1,0 +1,60 @@
+.battle-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    width: 100%;
+    padding: 5px;
+    height: 100%;
+    position: relative;
+}
+
+.battle-itens {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    width: 100%;
+    overflow: scroll;
+}
+
+.battle-column {
+    margin: 5px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    height: 460px;
+
+    span {
+        font-size: 25px;
+    }
+}
+
+.battle-item {
+    padding: 5px;
+    border: 1px solid rgb(182, 182, 182);
+    margin-right: 20px;
+}
+
+.battle-btn {
+    width: 70%;
+    margin: 0 auto;
+    border: 1px solid rgb(182, 182, 182);
+    padding: 5px;
+    border-radius: 7px;
+}
+
+.save-btn {
+    position: absolute;
+    bottom: 30px;
+    width: 60%;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 5px;
+    background-color: #52C3E3;
+    color: white;
+    border: none;
+    border-radius: 7px;
+}
+
+.on-focus {
+    background-color: #80808025;
+}  

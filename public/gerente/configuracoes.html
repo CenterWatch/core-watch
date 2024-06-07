@@ -46,65 +46,80 @@
                 </div>
             </div>
             <div class="visao-geral">
-                <div class="cards">
-                    <div class="registros">
-                        <div class="titulo-div">
-                            Parâmetros de registro
-                        </div>
-                        <div class="container-registros">
-                            <div class="cr ram">
-                                <span>Máximo de Ram em uso (%)</span>
-                                <input type="text" id="cfg_ram">
-                            </div>
-                            <div class="cr cpu">
-                                <span>Máximo de CPU em uso (%)</span>
-                                <input type="text" id="cfg_cpu">
-                            </div>
-                            <div class="cr intervalo">
-                                <span>Intervalo de registros em segundos</span>
-                                <input type="text" id="cfg_int">
-                            </div>
-                            <div class="div-botao">
-                                <button onclick="atualizarConfigRegistro()">Salvar</button>
-                            </div>
-                        </div>
-
-                    </div>
-
-                    <div class="registros">
-                        <div class="titulo-div">
-                            Parâmetros de volumes
-                        </div>
-                        <div class="container-registros">
-                            <div class="cr ram">
-                                <span>Espaço minÍmo livre em %</span>
-                                <input type="text" id="cfg_vol">
-                            </div>
-                            <div class="cr cpu">
-                                <span>Intervalo de consultas do volume em segundos</span>
-                                <input type="text" id="cfg_intVol">
-                            </div>
-
-                            <div class="div-botao2">
-                                <button onclick="atualizarConfigVolume()">Salvar</button>
-                            </div>
-                        </div>
-
-                    </div>
+                <div class="titulo">
+                    Configurações
                 </div>
                 <div class="cards">
                     <div class="registros">
-                        <div class="titulo-div">
-                            Cadastrar Formulário de Feedback
-                        </div>
                         <div class="container-registros">
-                            <div class="cr fb">
-                                <span>Data inicial de feedback</span>
-                                <input type="datetime-local" id="cfg_inicio_fb">
+                            <div class="titulo-div">
+                                Medições
                             </div>
-                            <div class="cr fb">
-                                <span>Data final de feedback</span>
-                                <input type="datetime-local" id="cfg_fim_fb">
+                            <div class="cr ram">
+                                <span>Máximo de Ram <span class="help-text">(% de uso)</span></span>
+                                <input type="text" id="cfg_ram">
+                            </div>
+                            <div class="cr cpu">
+                                <span>Máximo de CPU <span class="help-text">(% de uso)</span></span>
+                                <input type="text" id="cfg_cpu">
+                            </div>
+                            <div class="cr intervalo">
+                                <span>Intervalo dos Registros <span class="help-text">(Segundos)</span></span>
+                                <input type="text" id="cfg_int">
+                            </div>
+                        </div>
+                        <div class="div-botao">
+                            <button onclick="atualizarConfigRegistro()">Salvar</button>
+                        </div>
+
+                    </div>
+
+                    <div class="registros">
+                        <div class="container-registros">
+                            <div class="titulo-div">
+                                Medições de Volumes
+                            </div>
+                            <div class="cr ram">
+                                <span>Espaço Mínimo <span class="help-text">(% de uso)</span></span>
+                                <input type="text" id="cfg_vol">
+                            </div>
+                            <div class="cr cpu">
+                                <span>Intervalo dos Registros <span class="help-text">(Segundos)</span></span>
+                                <input type="text" id="cfg_intVol">
+                            </div>
+                        </div>
+
+                        <div class="div-botao2">
+                            <button onclick="atualizarConfigVolume()">Salvar</button>
+                        </div>
+
+                    </div>
+
+                    <div class="registros fb-container">
+                        <div class="registros-column">
+                            <div class="titulo-div">
+                                Feedbacks cadastrados
+                            </div>
+                            <div class="container-registros" id="feedbacks-view">
+    
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="column-container">
+                        <div class="fb-item">
+                            <div class="registros-column">
+                                <div class="titulo-div">
+                                    Cadastrar Formulário de Feedback
+                                </div>
+                                <div class="cr fb">
+                                    <span>Data inicial de feedback</span>
+                                    <input type="datetime-local" id="cfg_inicio_fb">
+                                </div>
+                                <div class="cr fb">
+                                    <span>Data final de feedback</span>
+                                    <input type="datetime-local" id="cfg_fim_fb">
+                                </div>
                             </div>
 
                             <div class="div-botao2">
@@ -113,21 +128,32 @@
                         </div>
 
                     </div>
+
                     <div class="registros">
-                        <div class="titulo-div">
-                            Feedbacks cadastrados
+                        <div class="container-registros">
+                            <div class="titulo-div">
+                                Ociosidade do Mouse
+                            </div>
+                            <div class="cr ram">
+                                <span>Tempo para Ocioso <span class="help-text">(Segundos)</span></span>
+                                <input type="text" id="cfg_oc_time">
+                            </div>
+                            <div class="cr cpu">
+                                <span>Sensibilidade do Mouse</span>
+                                <input type="text" id="cfg_sense">
+                            </div>
                         </div>
-                        <div class="container-registros" id="feedbacks-view">
 
-
-
+                        <div class="div-botao2">
+                            <button onclick="atualizarConfigVolume()">Salvar</button>
                         </div>
 
                     </div>
                 </div>
-
             </div>
-            <div>
+
+        </div>
+        <div>
     </section>
 
     <script>
@@ -155,7 +181,7 @@
                 })
         }
 
-    
+
 
         console.log(listaFb)
 

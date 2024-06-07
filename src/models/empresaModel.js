@@ -126,12 +126,15 @@ function buscarConfig(idEmpresa) {
 }
 
 
-function buscarSessoes(idEmpresa) {
-    var instrucao = `select * from sessao join maquina on maquina.id_maquina = sessao.fk_maquina where maquina.fk_empresa = ${idEmpresa} AND convert(date, dt_hora_sessao) >= convert(date, dateadd(day, -1, getdate()));`;
+
+function buscarSessoes(idEmpresa, intervalo) {
+    var instrucao = `select * from sessao join usuario on sessao.fk_usuario = usuario.id_usuario join maquina on maquina.id_maquina = sessao.fk_maquina where maquina.fk_empresa = ${idEmpresa} 
+                    AND convert(date, dt_hora_sessao) >= convert(date, dateadd(day, -${intervalo}, getdate()));`;
 
     console.log(`Executando a instrucao sql: ${instrucao}`)
     return database.executar(instrucao);
 }
+
 module.exports = {
     cadastrarEndereco,
     cadastrar,
