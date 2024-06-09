@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="../css/chart.css">
     <link rel="stylesheet" href="../css/multipicklist.css">
     <link rel="stylesheet" href="../css/modal.css">
+    <link rel="stylesheet" href="../css/tabela.css">
     <script src="../js/sessao.js"></script>
     <script src="https://kit.fontawesome.com/384071f692.js" crossorigin="anonymous"></script>
     <script src="../js/usuario.js"></script>
@@ -53,7 +54,20 @@
                 <div class="titulo">
                     Processos
                 </div>
-                <div class="cards">
+                <div class="process-container">
+                    <table id="tabela-funcionario">
+                        <thead>
+                            <tr>
+                                <th>Nome</th>
+                                <th>Caminho</th>
+                                <th>Data/hora</th>
+                                <th>Ação</th>
+                            </tr>
+                        </thead>
+                        <tbody id="lista-processo">
+                            <!-- Placeholder for dynamically generated rows -->
+                        </tbody>
+                    </table>
                     <button onclick="exibirEditProcessos()">Editar</button>
                 </div>
 
@@ -95,6 +109,29 @@
 <script src="../js/processos.js"></script>
 
 <script>
+
+    function exibirProcessos() {
+        const processos = mapProcessos.get('Q')
+        var tbody = document.getElementById('lista-processo');
+        tbody.innerHTML = '';
+
+        processos.forEach(p => {
+            var tr = document.createElement('tr');
+            tr.innerHTML = `
+                    <td>${p.nome}</td>
+                    <td>${p.path}</td>
+                    <td>${formatarDataHora(p.dt_hora)}</td>
+                    <td>
+                        <span class="perm-btns">
+                            <i onclick="updateListaProcessos('${p.nome}', true)" class="fa-regular fa-circle-check"></i>
+                            <i onclick="updateListaProcessos('${p.nome}', false)" class="fa-solid fa-ban"></i>
+                        </span>    
+                    </td>
+                `;
+            tbody.appendChild(tr);
+        });
+    }
+
     const permitidoList = document.getElementsByClassName('permitido')[0];
     const bloqueadoList = document.getElementsByClassName('bloqueado')[0];
     const saveBtn = document.getElementsByClassName('save-btn')[0];
@@ -159,7 +196,19 @@
                 updateListaProcessos(p.innerHTML, "false");
             }
         }
-        
+
         battleDialog.close()
     })
+
+    function formatarDataHora(data) {
+        var dt = new Date(data)
+        
+        var ano = dt.getFullYear();
+        var mes = String(dt.getMonth() + 1).padStart(2, '0');
+        var dia = String(dt.getDate() + 1).padStart(2, '0');
+        var hora = String(dt.getHours()).padStart(2, '0');
+        var minuto = String(dt.getMinutes()).padStart(2, '0');
+
+        return `${dia}/${mes}/${ano}  ${hora}:${minuto}`;
+    }
 </script>

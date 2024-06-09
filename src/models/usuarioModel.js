@@ -65,8 +65,8 @@ function cadastrarFunc(nome, sobrenome, celular, telefone, email, nasc, usuario,
 
 function cadastrarUser(usuario, id_funcionario){
     var instrucao  = `
-        insert into usuario (username, id_usuario)
-        values ('${usuario}', ${id_funcionario});
+        insert into usuario (username, senha, id_usuario)
+        values ('${usuario}', '${usuario[0] + usuario[1] + usuario[2] + "123123"}', ${id_funcionario});
     `
     return database.executar(instrucao);
 }

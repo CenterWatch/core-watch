@@ -29,6 +29,8 @@ function mapearProcessos(processos) {
 
         mapProcessos.get(opt).push(p);
     })
+
+    exibirProcessos();
 }
 
 function listarProcessos() {
