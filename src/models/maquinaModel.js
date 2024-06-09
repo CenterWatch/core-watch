@@ -36,7 +36,7 @@ function buscarListaProcessos(idEmpresa) {
 
 function updateListaProcessos(idEmpresa, nome, permitido) {
     var instrucao = `update perm_processo set permitido = '${permitido}' where nome = '${nome}' and fk_config = ${idEmpresa};`;
-    console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" + instrucao)
+
     return database.executar(instrucao);
 }
 
@@ -57,8 +57,10 @@ function buscarMaquinasEmAlerta(){
 
 function buscarChamadosRelacionados(hostname,idEmpresa){
     var instrucao = `
-    select * from ocorrencia join sessao on fk_sessao = id_sessao join maquina on fk_maquina = id_maquina where tipo not like "%SISTEMA%" and hostname = "${hostname}" and fk_empresa = ${idEmpresa};
+    select * from ocorrencia join sessao on fk_sessao = id_sessao join maquina on fk_maquina = id_maquina where tipo not like '%SISTEMA%' and hostname = '${hostname}' and fk_empresa = ${idEmpresa};
     `
+
+    console.log(instrucao)
     return database.executar(instrucao);
 }
 

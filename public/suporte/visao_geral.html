@@ -77,8 +77,6 @@
 </html>
 
 <script src="../js/chart.js"></script>
-<script src="../js/processos.js"></script>
-<script src="../js/volumes.js"></script>
 
 <script>
     const mapMaquinas = new Map();
@@ -149,10 +147,12 @@
             <span class="card-title">${maquina.hostname}</span>
             <span id="status${maquina.hostname}" class="card-circle"><i class="fa-solid fa-check"></i></span>
             <i class="fa-solid fa-desktop"></i>
-            <span class="card-user">Jorge Operador</span>
+            <span id="sessaoNome${maquina.hostname}" class="card-user"></span>
         </div>
         `;
         });
+
+        alterarNomeSessao();
     }
 
     function mapearVolumePorMaquina(volumes) {
@@ -185,7 +185,13 @@
                 });
             })
 
+    }
 
+    function alterarNomeSessao() {
+        JSON.parse(sessionStorage.MAQUINAS).forEach(element => {
+            const card = document.getElementById(`sessaoNome${element.hostname}`);
+            card.innerHTML = mapSessao.get(element.hostname)[mapSessao.get(element.hostname).length-1].username;
+        });
     }
 
     function abrirModal(hostname, id_maquina) {
@@ -301,6 +307,8 @@
     }
 
     function listarChamadosRelacionados(res) {
+        document.getElementById(`listaChamados${res[0].hostname}`).innerHTML = ''
+
         res.forEach(element => {
             document.getElementById(`listaChamados${element.hostname}`).innerHTML += `
             <li class="chamado-item selecionar-hover"><i class="fa-solid fa-circle-user"></i>${element.descricao}
@@ -311,6 +319,8 @@
     }
 
     function listarSessoesRelacionadas(hostname) {
+        document.getElementById(`listaSessoes${hostname}`).innerHTML = '';
+
         mapSessao.get(hostname).forEach(element => {
             document.getElementById(`listaSessoes${element.hostname}`).innerHTML += `
             <li class="chamado-item selecionar-hover"><i class="fa-solid fa-circle-user"></i>${element.username}

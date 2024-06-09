@@ -457,13 +457,13 @@
     }
 
     function buscarRegistroMaquinas() {
+        var registros = [];
         JSON.parse(sessionStorage.MAQUINAS).forEach(element => {
             fetch(`/registros/tempo-real/${element.id_maquina}`).then(function (response) {
                 if (response.ok) {
-                    resetStatsMaquinas()
                     response.json().then(function (res) {
-                        console.log(`Dados recebidos: ${JSON.stringify(res)}`);
-                        console.log(res);
+                        // console.log(`Dados recebidos: ${JSON.stringify(res)}`);
+                        // console.log(res);
 
                         res = res[0]
 
@@ -502,7 +502,12 @@
 
                         Promise.all(promessas)
                             .then(() => {
-                                verificarMaquinas(ram, cpu, discos, timeRegistro);
+                                registros.push({
+                                    "ram": ram,
+                                    "cpu": cpu,
+                                    "discos": discos,
+                                    "timeRegistro": timeRegistro
+                                })
                             })
                             .catch(error => {
                                 console.error('Erro ao processar todas as promessas:', error);
@@ -514,39 +519,51 @@
             }).catch(function (error) {
                 console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
             });
+
+            return false;
         });
 
+        setTimeout(() => {
+            resetStatsMaquinas()
+            verificarMaquinas(registros);
+        }, 2000);
     }
 
-    function verificarMaquinas(ram, cpu, discos, timeRegistro) {
+    function verificarMaquinas(registros) {
+
         const config = JSON.parse(sessionStorage.CONFIG)[0];
         maxRam = config.max_ram;
         maxCpu = config.max_cpu;
         maxVol = config.max_volume;
         intervalo = config.intervalo_registro_ms
         timeAtual = Date.now()
-        var discoAlerta = false
 
-        if (timeAtual > (timeRegistro + intervalo + 1000)) {
-            document.getElementById('qtdIno').innerHTML = parseInt(document.getElementById('qtdIno').innerText) + 1
-        } else if (ram >= maxRam || cpu > maxCpu) {
-            document.getElementById('qtdAl').innerHTML = parseInt(document.getElementById('qtdAl').innerText) + 1
-            console.log("caiu no primeiro")
-        } else {
-            discos.forEach(volume => {
-                if ((100 - volume) >= maxVol) {
-                    discoAlerta = true
-                }
+        registros.forEach(r => {
+            var discoAlerta = false
 
-            })
-            if (!discoAlerta) {
-                document.getElementById('qtdOp').innerHTML = parseInt(document.getElementById('qtdOp').innerText) + 1
-                console.log("caiu no disco sem alerta")
-            } else {
+            if (timeAtual > (r.timeRegistro + intervalo + 4000)) {
+                document.getElementById('qtdIno').innerHTML = parseInt(document.getElementById('qtdIno').innerText) + 1
+                console.log()
+            } else if (r.ram >= maxRam || r.cpu > maxCpu) {
                 document.getElementById('qtdAl').innerHTML = parseInt(document.getElementById('qtdAl').innerText) + 1
-                console.log("caiu no disco com alerta")
+                console.log("caiu no primeiro")
+            } else {
+                r.discos.forEach(volume => {
+                    if ((100 - volume) >= maxVol) {
+                        discoAlerta = true
+                    }
+
+                })
+                if (!discoAlerta) {
+                    document.getElementById('qtdOp').innerHTML = parseInt(document.getElementById('qtdOp').innerText) + 1
+                    console.log("caiu no disco sem alerta")
+                } else {
+                    document.getElementById('qtdAl').innerHTML = parseInt(document.getElementById('qtdAl').innerText) + 1
+                    console.log("caiu no disco com alerta")
+                }
             }
-        }
+        })
+
     }
 
     function resetStatsMaquinas() {
