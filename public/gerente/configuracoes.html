@@ -292,9 +292,7 @@
                         if (!res.ok) {
                             throw new Error(`Erro na solicitação: ${res.statusText}`);
                         }
-                        return res.json();
-                    })
-                    .then(res => {
+                        
                         console.log(res);
                         buscarConfigAtual()
                         alert("Feedback cadastrado com sucesso");

@@ -71,12 +71,11 @@
             <div>
     </section>
 
+    <script src="../js/feedback.js"></script>
+
     <script>
-        const fbItem = document.getElementById('feedbackItem')
-        fbItem.style.display = 'none'
         
         let id_usuario = sessionStorage.ID_USUARIO;
-        buscarFeedbacks()
         let listaTarefas = []
 
         function buscarTarefas() {
@@ -100,6 +99,8 @@
         listaTarefas = []
 
         function listarTarefas() {
+            document.getElementById('tbody-task').innerHTML = '';
+
             JSON.parse(sessionStorage.TAREFAS).forEach(item => {
                 if (!item.concluida)
                     document.getElementById('tbody-task').innerHTML += `
@@ -115,6 +116,7 @@
         }
 
         function concluirTarefa(id) {
+            console.log('tarefa: ' + id)
             fetch("/usuarios/concluirTarefa", {
                 method: "POST",
                 headers: {
@@ -125,45 +127,13 @@
                 }),
             })
                 .then(res => {
-                    if (!res.ok) {
-                        throw new Error(`Erro na solicitação: ${res.statusText}`);
-                    }
-                    return res.json();
-                })
-                .then(res => {
                     console.log(res)
-                    window.location.reload();
-                })
-        }
-
-        function buscarFeedbacks() {
-            fetch(`/usuarios/buscarFeedbacks?idOperador=${id_usuario}&idConfig=${sessionStorage.ID_EMPRESA_USUARIO}`)
-                .then(res => {
                     if (!res.ok) {
                         throw new Error(`Erro na solicitação: ${res.statusText}`);
                     }
-                    return res.json();
+                    
+                    buscarTarefas();
                 })
-                .then(data => {
-                    exibirFeedback(data)
-                })
-                .catch(error => {
-                    console.error('Erro ao buscar feedbacks:', error);
-                });
-        }
-
-        function exibirFeedback(data) {
-            data.forEach(fb => {
-                var inicio = new Date(fb.inicio);
-                console.log(inicio.getTime() < new Date().getTime())
-
-
-
-                if (inicio.getTime() < new Date().getTime()) {
-                    fbItem.style.display = 'block'
-                    sessionStorage.ID_FEEDBACK = fb.id_quest;
-                }
-            })
         }
 
     </script>

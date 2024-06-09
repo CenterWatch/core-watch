@@ -49,7 +49,7 @@ function  buscarFunc(id_empresa){
 
 function buscarConfigAtual(id_empresa){
     var instrucao = `
-    select DATE_FORMAT(fim,'%d-%m-%Y %H:%i') as fim,DATE_FORMAT(inicio,'%d-%m-%Y %H:%i') as inicio,max_cpu,max_ram,max_volume,sensibilidade_mouse,timer_mouse_ms,intervalo_volume_ms,intervalo_registro_ms,id_quest,intervalo_quest_dias from config left join agendamento_quest on id_config = fk_config where id_config = ${id_empresa};
+    select FORMAT(fim, 'dd-MM-yyyy HH:mm') AS fim, FORMAT(inicio, 'dd-MM-yyyy HH:mm') AS inicio, max_cpu,max_ram,max_volume,sensibilidade_mouse,timer_mouse_ms,intervalo_volume_ms,intervalo_registro_ms,id_quest,intervalo_quest_dias from config left join agendamento_quest on id_config = fk_config where id_config = ${id_empresa};
 `
 console.log(`Executando a instrucao sql: ${instrucao}`)
 return database.executar(instrucao)
