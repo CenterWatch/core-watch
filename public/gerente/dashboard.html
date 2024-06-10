@@ -213,21 +213,20 @@
 
     });
 
-    var diasSemana = []
-    numSemana = new Date().getDay();
-    var i = numSemana - 1;
-    for (let index = numSemana; index < numSemana + 7; index++) {
-        i++;
-        if (i > 6) i = 0;
-        diasSemana.push(numParaSemana(i))
-    }
-    diasSemana.reverse();
+    // var diasSemana = []
+    // numSemana = new Date().getDay();
+    // var i = numSemana - 1;
+    // for (let index = numSemana; index < numSemana + 7; index++) {
+    //     i++;
+    //     if (i > 6) i = 0;
+    //     diasSemana.push(numParaSemana(i))
+    // }
 
     const ctx2 = document.getElementById('myLineChart');
     var chart2 = new Chart(ctx2, {
         type: 'line',
         data: {
-            labels: diasSemana,
+            labels: [],
             datasets: [{
                 label: 'Tarefas Concluídas',
                 data: [],
@@ -311,6 +310,7 @@
             return res.json();
         })
             .then(res => {
+                console.log(res)
                 atualizarGraficoTarefas(res);
             })
             .catch(erro => {
@@ -321,13 +321,30 @@
 
     function atualizarGraficoTarefas(res) {
         var dados = [];
+        var dias = [];
+        console.log(res)
 
         res.forEach(item => {
-            dados.push(item.qtdTask)
+            dados.push(item.qtd)
+            dias.push(formatarDataISO(item.dt))
         });
 
+        console.log(dados)
+        console.log(dias)
+
+
+        chart2.data.labels = dias;
         chart2.data.datasets[0].data = dados;
         chart2.update();
+    }
+
+    function formatarDataISO(dataIso) {
+        const data = new Date(dataIso);
+        const dia = String(data.getDate()).padStart(2, '0');
+        const mes = String(data.getMonth() + 1).padStart(2, '0');
+        const ano = data.getFullYear();
+        
+        return `${dia}/${mes}/${ano}`;
     }
 
     function exibirTarefasAtrasadas() {

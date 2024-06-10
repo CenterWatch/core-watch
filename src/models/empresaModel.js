@@ -113,7 +113,7 @@ function buscarTempoNoUltimoPeriodo(periodo, idGerente, ordem) {
 
 function buscarUltimasTarefasConcluidas(idGerente) {
     var instrucao = `
-    select top 7 convert(date, dt_hora_concluida) as data, count(*) as qtdtask from historico_tarefa join tarefa on id_tarefa = fk_tarefa where status='concluido' and fk_gerente=${idGerente} group by convert(date, dt_hora_concluida) order by data desc;
+    select top 7 count(*) qtd, convert(date, DATEADD(hour, -3, dt_hora_concluida)) as dt from tarefa where concluida='true' and fk_gerente = 1 group by convert(date, DATEADD(hour, -3, dt_hora_concluida));
     `;
 
     return database.executar(instrucao)

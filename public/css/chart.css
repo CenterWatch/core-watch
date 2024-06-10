@@ -17,6 +17,7 @@
 .pizza-chart-wrapper {
     display: flex;
     overflow: scroll;
+    gap: 20px;
 }
 
 .pizza-chart-wrapper::-webkit-scrollbar {

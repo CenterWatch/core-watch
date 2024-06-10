@@ -159,7 +159,7 @@ function verificaFb(idFunc){
 
 function buscarFeedbacks(idFunc, idConfig){
     var instrucao = `
-    select * from agendamento_quest where (inicio < getdate()) and (fim > getdate()) and fk_config =  ${idConfig} and (select count(*) from questionario where fk_quest = (select id_quest from agendamento_quest where (inicio < getdate()) and (fim > getdate())) and fk_funcionario = ${idFunc}) = 0 order by inicio;
+    select * from agendamento_quest where (inicio < DATEADD(hour, -3, GETDATE())) and (fim > DATEADD(hour, -3, GETDATE())) and fk_config =  ${idConfig} and (select count(*) from questionario where fk_quest = (select id_quest from agendamento_quest where (inicio < DATEADD(hour, -3, GETDATE())) and (fim > DATEADD(hour, -3, GETDATE())) and fk_funcionario = ${idFunc}) = 0 order by inicio;
     `
     console.log('Executando a instrução: '+instrucao);
     return database.executar(instrucao);

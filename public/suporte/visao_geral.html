@@ -123,6 +123,8 @@
                             desenharModal(maquina.hostname, maquina.id_maquina);
                             maquinas.push(maquina)
                         });
+
+                        buscarUltimoRegistro();
                     }, 100);
                 });
 
@@ -147,7 +149,7 @@
             cardsElements.innerHTML += `
         <div onclick="abrirModal('${maquina.hostname}','${maquina.id_maquina}')" class="card-pc selecionar-hover">
             <span class="card-title">${maquina.hostname}</span>
-            <span id="status${maquina.hostname}" class="card-circle"><i class="fa-solid fa-check"></i></span>
+            <span id="status${maquina.hostname}" class="card-circle power-off"><i class="fa-solid fa-power-off"></i></span>
             <i class="fa-solid fa-desktop"></i>
             <span id="sessaoNome${maquina.hostname}" class="card-user"></span>
         </div>
@@ -304,7 +306,9 @@
         })
             .then(res => {
                 console.log(res);
-                listarChamadosRelacionados(res);
+                setTimeout(() => {
+                    listarChamadosRelacionados(res);
+                }, 100);
             })
     }
 

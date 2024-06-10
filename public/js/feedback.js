@@ -12,6 +12,7 @@ function buscarFeedbacks() {
             return res.json();
         })
         .then(data => {
+            console.log(data)
             exibirFeedback(data)
         })
         .catch(error => {
@@ -22,9 +23,8 @@ function buscarFeedbacks() {
 function exibirFeedback(data) {
     data.forEach(fb => {
         var inicio = new Date(fb.inicio);
+        console.log(inicio)
         console.log(inicio.getTime() < new Date().getTime())
-
-
 
         if (inicio.getTime() < new Date().getTime()) {
             fbItem.style.display = 'block'
