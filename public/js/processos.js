@@ -49,11 +49,42 @@ function listarProcessos() {
 
     for (const p of processos) {
         p.addEventListener('click', () => {
-            if (p.classList.contains('on-focus')) {
-                p.classList.remove('on-focus')
+
+            if (p.parentNode.classList.contains('bloqueado')) {
+                if (p.classList.contains('on-focus', 'bloq')) {
+                    p.classList.remove('on-focus', 'bloq')
+                } else {
+                    p.classList.add('on-focus', 'bloq')
+                }
+
+                const pers = [];
+
+                for (const p1 of document.getElementsByClassName('per')) {
+                   pers.push(p1)
+                }
+
+                pers.forEach(p1 => {
+                    p1.classList.remove('per', 'on-focus')
+                })
             } else {
-                p.classList.add('on-focus')
+                if (p.classList.contains('on-focus', 'per')) {
+                    p.classList.remove('on-focus', 'per')
+                } else {
+                    p.classList.add('on-focus', 'per')
+                }
+
+                const bloqs = [];
+
+                for (const p1 of document.getElementsByClassName('bloq')) {
+                   bloqs.push(p1)
+                }
+
+                bloqs.forEach(p1 => {
+                    p1.classList.remove('bloq', 'on-focus')
+                })
             }
+
+            
         })
     }
 }

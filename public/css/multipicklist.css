@@ -1,5 +1,28 @@
-.process-container {
+.header-container {
+    display: flex;
+    align-items: self-end;
+    justify-content: space-between;
+}
 
+.header-container .edit-btn {
+    border: none;
+    background-color: #52C3E3;
+    color: white;
+    padding: 4px 8px;
+    font-size: 20px;
+    margin-right: 50px;
+    margin-bottom: 20px;
+    border-radius: 7px;
+    cursor: pointer;
+    transition: 200ms;
+
+    i {
+        margin-right: 10px;
+    }
+}
+
+.header-container .edit-btn:hover {
+    filter: brightness(0.9);
 }
 
 .perm-btns {
@@ -25,7 +48,7 @@
 
 .battle-container {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr 0.15fr 1fr;
     width: 100%;
     padding: 5px;
     height: 100%;
@@ -39,6 +62,14 @@
     gap: 5px;
     width: 100%;
     overflow: scroll;
+}
+
+.battle-itens::-webkit-scrollbar {
+    display: none;
+}
+
+.battle-itens {
+    scrollbar-width: none;
 }
 
 .battle-column {
@@ -56,15 +87,23 @@
 .battle-item {
     padding: 5px;
     border: 1px solid rgb(182, 182, 182);
-    margin-right: 20px;
+    border-radius: 4px;
 }
 
 .battle-btn {
-    width: 70%;
+    width: 40px;
     margin: 0 auto;
     border: 1px solid rgb(182, 182, 182);
     padding: 5px;
     border-radius: 7px;
+    font-size: 20px;
+}
+
+.btns {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 10px;
 }
 
 .save-btn {
@@ -84,3 +123,13 @@
 .on-focus {
     background-color: #80808025;
 }  
+
+.per {
+    border: red solid 1px;
+    background-color: rgb(255, 239, 239);
+}
+
+.bloq {
+    border: green solid 1px;
+    background-color: rgb(226, 255, 225);
+}
