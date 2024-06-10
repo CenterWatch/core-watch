@@ -116,12 +116,14 @@
                     console.log(json.volumes)
                     mapearVolumePorMaquina(json.volumes)
 
-                    desenharMaquinas(json.maquinas);
+                    setTimeout(() => {
+                        desenharMaquinas(json.maquinas);
 
-                    json.maquinas.forEach(function (maquina) {
-                        desenharModal(maquina.hostname, maquina.id_maquina);
-                        maquinas.push(maquina)
-                    });
+                        json.maquinas.forEach(function (maquina) {
+                            desenharModal(maquina.hostname, maquina.id_maquina);
+                            maquinas.push(maquina)
+                        });
+                    }, 100);
                 });
 
             } else {
@@ -190,7 +192,7 @@
     function alterarNomeSessao() {
         JSON.parse(sessionStorage.MAQUINAS).forEach(element => {
             const card = document.getElementById(`sessaoNome${element.hostname}`);
-            card.innerHTML = mapSessao.get(element.hostname)[mapSessao.get(element.hostname).length-1].username;
+            card.innerHTML = mapSessao.get(element.hostname)[mapSessao.get(element.hostname).length - 1].username;
         });
     }
 

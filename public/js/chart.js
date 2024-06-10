@@ -143,6 +143,7 @@ function desenharVolumesPorMaquina(hostname, dados) {
 
         var per = calcularPorcentagem(dados[i].volume_total, dados[i].volume_disponivel);
         
+        if (JSON.parse(sessionStorage.CONFIG)[0].max_volume < per.emUso) ctxDisco.parentNode.classList.add('card-error');
 
         new Chart(ctxDisco, {
             type: 'pie',

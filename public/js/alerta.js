@@ -21,7 +21,6 @@ function buscarUltimoRegistro(){
 }
 
 function atualizarStatusMaquina(res,hostname){
-    console.log("Atualizando status: " + hostname)
     registroMaquina = JSON.parse(res)[0]
     maxRam = JSON.parse(sessionStorage.CONFIG)[0].max_ram
     maxCpu = JSON.parse(sessionStorage.CONFIG)[0].max_cpu
@@ -34,7 +33,6 @@ function atualizarStatusMaquina(res,hostname){
     timeAtual = Date.now()
     //console.log(new Date(intervalo).getTime())
 
-    console.log(timeAtual)
     if (timeAtual > (timeRegistro + intervalo + 4000)) {
         //console.log("Máquina inoperante")
         document.getElementById(`status${hostname}`).innerHTML = `<i class="fa-solid fa-power-off"></i>`
