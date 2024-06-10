@@ -29,4 +29,14 @@ router.put("/updateListaProcessos", function (req, res){
     console.log(req)
     maquinaController.updateListaProcessos(req, res);
 })
+
+router.get("/buscarAlertaComponentes", function (req, res){
+    console.log(req)
+    maquinaController.buscarAlertaComponentes(req, res);
+})
+
+router.get("/buscarAlertaVolume", function (req, res){
+    console.log(req)
+    maquinaController.buscarAlertaVolume(req, res);
+})
 module.exports = router;

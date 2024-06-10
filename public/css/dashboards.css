@@ -9,7 +9,7 @@
 }
 
 body {
-    background-color: #f1f1f1;
+    background-color: #e7e7e7;
 }
 
 .section-body {
@@ -190,7 +190,7 @@ section {
 }
 
 .cards {
-    padding: 30px;
+    padding: 10px 30px;
     display: flex;
     gap: 30px;
     flex-wrap: wrap;

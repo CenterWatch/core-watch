@@ -55,6 +55,21 @@ function buscarMaquinasEmAlerta(){
     return database.executar(instrucao);
 }
 
+function buscarAlertaComponentes(idEmpresa){
+    var instrucao =`select count(id_registro) as qtd from maquina join sessao on fk_maquina = id_maquina join registro on fk_sessao = id_sessao 
+    where ((uso_cpu > (select max_cpu from config where id_config = ${idEmpresa})) 
+    or (CAST((uso_ram * 100.0) / (uso_ram + disponivel_ram) AS DECIMAL(5, 2)) > (select max_ram from config where id_config = ${idEmpresa}))) 
+    and (select DATEADD(ms, -(select intervalo_registro_ms from config where id_config = ${idEmpresa}), GETDATE())) < dt_hora;`
+    return database.executar(instrucao);
+}
+
+function buscarAlertaVolume(idEmpresa){
+    var instrucao =`select count(*) as qtd, fk_maquina from volume v join registro_volume rv on v.uuid = rv.fk_volume 
+    where cast(((v.volume_total - rv.volume_disponivel) * 100.0) / v.volume_total as decimal(5, 2)) > (select max_volume from config where id_config = ${idEmpresa}) 
+    and rv.dt_hora > dateadd(ms, -(select intervalo_volume_ms from config where id_config = ${idEmpresa}), getdate()) group by fk_maquina;`
+    return database.executar(instrucao);
+}
+
 function buscarChamadosRelacionados(hostname,idEmpresa){
     var instrucao = `
     select * from ocorrencia join sessao on fk_sessao = id_sessao join maquina on fk_maquina = id_maquina where tipo not like '%SISTEMA%' and hostname = '${hostname}' and fk_empresa = ${idEmpresa};
@@ -72,5 +87,7 @@ module.exports = {
     buscarChamadosRelacionados,
     buscarMaquinasEmAlerta,
     buscarListaProcessos,
-    updateListaProcessos
+    updateListaProcessos,
+    buscarAlertaComponentes,
+    buscarAlertaVolume
 };

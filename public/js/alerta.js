@@ -2,7 +2,7 @@ function buscarUltimoRegistro(){
     for (let [key, value] of mapMaquinas) {
  
         fetch(`/registros/tempo-real/${value.id_maquina}`).then(function (response) {
-            if (response.ok) {
+            if (response.ok && response.statusText != "No Content") {
                 response.json().then(function (resposta) {
                     // //console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
                     listaMaquinas = JSON.stringify(resposta)
@@ -10,8 +10,6 @@ function buscarUltimoRegistro(){
                     atualizarStatusMaquina(listaMaquinas,key)
                     
                 });
-            } else {
-                console.error('Nenhum dado encontrado ou erro na API');
             }
         })
             .catch(function (error) {

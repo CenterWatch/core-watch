@@ -111,11 +111,39 @@ function updateListaProcessos(req, res) {
         })
 }
 
+function buscarAlertaComponentes(req, res) {
+    var idEmpresa = req.query.idEmpresa;
+
+    maquinaModel.buscarAlertaComponentes(idEmpresa)
+        .then(function (result){
+            res.json(result);
+        })
+        .catch(function (erro) {
+            console.log(erro)
+            console.log(`houve um erro ao realizar o select, erro: ${erro}`)
+        })
+}
+
+function buscarAlertaVolume(req, res) {
+    var idEmpresa = req.query.idEmpresa;
+
+    maquinaModel.buscarAlertaVolume(idEmpresa)
+        .then(function (result){
+            res.json(result);
+        })
+        .catch(function (erro) {
+            console.log(erro)
+            console.log(`houve um erro ao realizar o select, erro: ${erro}`)
+        })
+}
+
 module.exports = {
     cadastrar,
     listarMaquinas,
     buscarMaquinasEmAlerta,
     buscarChamadosRelacionados,
     buscarListaProcessos,
-    updateListaProcessos
+    updateListaProcessos,
+    buscarAlertaComponentes,
+    buscarAlertaVolume
 }

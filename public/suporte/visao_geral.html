@@ -7,6 +7,7 @@
     <title>CenterWatch | Visão Geral</title>
     <link rel="stylesheet" href="../css/dashboards.css">
     <link rel="stylesheet" href="../css/chart.css">
+    <link rel="stylesheet" href="../css/kpi.css">
     <script src="../js/sessao.js"></script>
     <script src="https://kit.fontawesome.com/384071f692.js" crossorigin="anonymous"></script>
     <script src="../js/usuario.js"></script>
@@ -23,7 +24,8 @@
                 <img class="logo text-logo" src="https://i.imgur.com/RjhX0a9.png" alt="">
                 <a class="nav-btn btn-ativo" href="#"><i class="fa-solid fa-border-all"></i><span></i>Visão
                         Geral</span></a>
-                <a class="nav-btn" href="processos.html"><i class="fa-solid fa-microchip"></i><span></i>Processos</span></a>
+                <a class="nav-btn" href="processos.html"><i
+                        class="fa-solid fa-microchip"></i><span></i>Processos</span></a>
                 <a class="nav-btn" href="artigos.html"><i class="fa-solid fa-book"></i><span>Artigos</span></a>
                 <a class="nav-btn" href="chamados.html"><i class="fa-solid fa-list"></i><span>Chamados</span></a>
             </div>
@@ -51,19 +53,31 @@
                 <div class="titulo">
                     Visão Geral
                 </div>
-                <div class="cards">
-                    <!-- <div onclick="abrirModal('DESKTOP-002')" class="card-pc selecionar-hover card-error">
-                        <span class="card-title">DESKTOP-002</span>
-                        <span class="power-off"><i class="fa-solid fa-power-off"></i></span>
-                        <i class="fa-solid fa-desktop"></i>
-                        <span class="card-user">Jorge Operador</span>
+                <div class="kpis">
+                    <div class="card-kpi">
+                        <div class="kpi-body">
+                            <span id="numMaquina"></span>
+                        </div>
+                        <h4 style="margin-top: 10px;" class="card-title">Máquinas</h4>
                     </div>
-                    <div onclick="abrirModal('DESKTOP-003')" class="card-pc selecionar-hover card-error">
-                        <span class="card-title">DESKTOP-003</span>
-                        <span class="power-off"><i class="fa-solid fa-microchip"></i></span>
-                        <i class="fa-solid fa-desktop"></i>
-                        <span class="card-user">Jorge Operador</span>
-                    </div> -->
+                    <div id="kpiComp" class="card-kpi">
+                        <div class="kpi-body">
+                            <span id="compMaquina"></span>
+                        </div> 
+                        <h4 class="card-title">CPU | RAM Elevado</h4>
+                    </div>
+                    <div id="kpiVol" class="card-kpi">
+                        <div class="kpi-body">
+                            <span id="volMaquina"></span>
+                        </div>
+                        <h4 class="card-title">Armazenamento Cheio</h4>
+                    </div>
+                </div>
+                <div class="titulo">
+                    Máquinas
+                </div>
+                <div class="cards">
+
                 </div>
 
             </div>
@@ -193,8 +207,8 @@
     function alterarNomeSessao() {
         JSON.parse(sessionStorage.MAQUINAS).forEach(element => {
             const card = document.getElementById(`sessaoNome${element.hostname}`);
-            card.innerHTML = mapSessao.get(element.hostname)[mapSessao.get(element.hostname).length - 1].username;
-        });
+            if (mapSessao.get(element.hostname) != undefined) card.innerHTML = mapSessao.get(element.hostname)[mapSessao.get(element.hostname).length - 1].username;
+        })
     }
 
     function abrirModal(hostname, id_maquina) {
@@ -311,7 +325,33 @@
             })
     }
 
+    function buscarAlertaComponentes() {
+        fetch(`/maquina/buscarAlertaComponentes?idEmpresa=${sessionStorage.ID_EMPRESA_USUARIO}`).then(res => {
+            if (!res.ok) {
+                throw new Error(`Erro na solicitação: ${res.statusText}`);
+            }
+            return res.json();
+        })
+            .then(res => {
+                compMaquina.innerHTML = res[0].qtd;
+            })
+    }
+
+    function buscarAlertaVolume() {
+        fetch(`/maquina/buscarAlertaVolume?idEmpresa=${sessionStorage.ID_EMPRESA_USUARIO}`).then(res => {
+            if (!res.ok) {
+                throw new Error(`Erro na solicitação: ${res.statusText}`);
+            }
+            return res.json();
+        })
+            .then(res => {
+                volMaquina.innerHTML = res.length;
+            })
+    }
+
     function listarChamadosRelacionados(res) {
+        if (res.length == 0) return;
+
         document.getElementById(`listaChamados${res[0].hostname}`).innerHTML = ''
 
         res.forEach(element => {
@@ -326,6 +366,8 @@
     function listarSessoesRelacionadas(hostname) {
         document.getElementById(`listaSessoes${hostname}`).innerHTML = '';
 
+        if (mapSessao.get(hostname) == undefined) return;
+
         mapSessao.get(hostname).forEach(element => {
             document.getElementById(`listaSessoes${element.hostname}`).innerHTML += `
             <li class="chamado-item selecionar-hover"><i class="fa-solid fa-circle-user"></i>${element.username}
@@ -338,5 +380,17 @@
     var usuario = sessionStorage.USERNAME_USUARIO;
     var txt_nome = document.getElementById('nome-usuario');
     txt_nome.innerHTML = `${usuario}`
+
+
+    atualizarKPIs();
+    setInterval(() => {
+        atualizarKPIs();
+    }, 2000);
+
+    function atualizarKPIs() {
+        numMaquina.innerHTML = JSON.parse(sessionStorage.MAQUINAS).length;
+        buscarAlertaComponentes();
+        buscarAlertaVolume();
+    }
 
 </script>

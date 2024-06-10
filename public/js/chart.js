@@ -110,6 +110,7 @@ function obterDadosVolumes(hostname) {
     fetch(`/registros/ultimosVolume/${hostname}`, { cache: 'no-store' }).then(function (response) {
         if (response.ok) {
             response.json().then(function (resposta) {
+                
                 console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
                 resposta.reverse();
                 
@@ -279,14 +280,14 @@ function atualizarGraficos(idMaquina, dadosRam, dadosCpu, chartRam, chartCpu, ho
                     const ramParent = chartRam.canvas.parentNode
                     const cpuParent = chartCpu.canvas.parentNode
 
-                    var cpuDado = parseFloat(novoDado.ram[0])
-                    var ramDado = parseFloat(novoDado.cpu[0])
+                    var ramDado = parseFloat(novoDado.ram[0])
+                    var cpuDado = parseFloat(novoDado.cpu[0])
 
-                    if (verificarAlerta(cpuDado, config.max_ram)) ramParent.classList.add("card-error")
-                    else ramParent.classList.remove("card-error")
-                        
-                    if (verificarAlerta(ramDado, config.max_cpu)) cpuParent.classList.add("card-error")
+                    if (verificarAlerta(cpuDado,JSON.parse(sessionStorage.CONFIG)[0].max_cpu)) cpuParent.classList.add("card-error")
                     else cpuParent.classList.remove("card-error")
+                        
+                    if (verificarAlerta(ramDado,JSON.parse(sessionStorage.CONFIG)[0].max_ram)) ramParent.classList.add("card-error")
+                    else ramParent.classList.remove("card-error")
 
                     dadosRam.labels.shift()
                     dadosRam.labels.push(horario)
